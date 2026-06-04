@@ -1,0 +1,7 @@
+[toolchain]
+mops = "0.46.2"
+
+[dependencies]
+caffeineai-object-storage = "1.0.0"
+[canisters.backend]
+main = "main.mo"

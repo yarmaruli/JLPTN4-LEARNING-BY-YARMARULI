@@ -1,0 +1,24 @@
+{
+  "overview": "Offline-first Japanese JLPT N4/N5 learning app with kanji, vocabulary, adaptive quiz, and now Reading practice with smart vocabulary linking.",
+  "features": [
+    "Learning Reading with 4 progressive levels",
+    "JLPT-format reading practice (posters, schedules, emails, announcements)",
+    "Adaptive Weakness Reading targeting user's weak vocabulary",
+    "Smart Vocabulary Link — click any word for instant definition from 658-entry database",
+    "Reading Analytics tracking score, time, and word lookups",
+    "Integration with adaptive quiz, mastery system, and study plan",
+    "Offline-first — all content generated client-side with no network dependency"
+  ],
+  "category": "education",
+  "tags": [
+    "japanese",
+    "jlpt",
+    "n4",
+    "n5",
+    "reading",
+    "vocabulary",
+    "kanji",
+    "offline"
+  ],
+  "last_updated": "2026-06-04T07:09:06.052Z"
+}
