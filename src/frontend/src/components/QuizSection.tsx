@@ -34,6 +34,7 @@ import { type QuizSession, saveQuizSession } from "../lib/quizHistory";
 // ── types ──────────────────────────────────────────────────────────────────
 
 type Phase = "select" | "quiz" | "result";
+type JlptFilter = "Semua" | "N5" | "N4";
 
 interface ModeConfig {
   id: QuizMode;
@@ -119,6 +120,7 @@ const MODE_CONFIGS: ModeConfig[] = [
 export function QuizSection() {
   const [phase, setPhase] = useState<Phase>("select");
   const [selectedMode, setSelectedMode] = useState<QuizMode | null>(null);
+  const [selectedJlptLevel, setSelectedJlptLevel] = useState<JlptFilter>("N4");
 
   // quiz state
   const [questions, setQuestions] = useState<AdaptiveQuestion[]>([]);
@@ -140,7 +142,18 @@ export function QuizSection() {
 
   const safeKanji = Array.isArray(kanjiData) ? kanjiData : [];
   const safeVocab = Array.isArray(vocabularyData) ? vocabularyData : [];
-  const hasData = safeKanji.length > 0 || safeVocab.length > 0;
+
+  // Apply JLPT level filter
+  const filteredKanji =
+    selectedJlptLevel === "Semua"
+      ? safeKanji
+      : safeKanji.filter((k) => k.jlptLevel === selectedJlptLevel);
+  const filteredVocab =
+    selectedJlptLevel === "Semua"
+      ? safeVocab
+      : safeVocab.filter((v) => v.jlptLevel === selectedJlptLevel);
+
+  const hasData = filteredKanji.length > 0 || filteredVocab.length > 0;
 
   // ── start quiz ────────────────────────────────────────────────────────────
 
@@ -153,7 +166,7 @@ export function QuizSection() {
 
       // Check weakness mode — warn if no weak items
       if (mode === "weakness") {
-        const allItems = [...safeKanji, ...safeVocab];
+        const allItems = [...filteredKanji, ...filteredVocab];
         const weak = getWeakItems(allItems, 1);
         if (weak.length === 0) {
           setNoWeakItems(true);
@@ -171,8 +184,8 @@ export function QuizSection() {
       const mastery = loadMasteryData();
       const generated = generateQuizSession(
         mode,
-        safeKanji,
-        safeVocab,
+        filteredKanji,
+        filteredVocab,
         mastery,
       );
 
@@ -192,7 +205,7 @@ export function QuizSection() {
       setAnswers([]);
       setPhase("quiz");
     },
-    [hasData, safeKanji, safeVocab],
+    [hasData, filteredKanji, filteredVocab],
   );
 
   // ── answer handling ───────────────────────────────────────────────────────
@@ -313,6 +326,34 @@ export function QuizSection() {
           Pilih mode belajar yang sesuai dengan waktu dan tujuanmu.
         </p>
 
+        {/* JLPT Level Selector */}
+        <div className="space-y-2" data-ocid="quiz.level_selector">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Level JLPT
+          </p>
+          <div className="flex gap-2">
+            {(["Semua", "N5", "N4"] as JlptFilter[]).map((level) => (
+              <button
+                key={level}
+                type="button"
+                data-ocid={`quiz.level_${level.toLowerCase()}_button`}
+                onClick={() => setSelectedJlptLevel(level)}
+                className={`flex-1 py-2 px-3 rounded-lg border-2 text-sm font-semibold transition-all ${
+                  selectedJlptLevel === level
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground"
+                }`}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {filteredKanji.length} kanji · {filteredVocab.length} kosakata
+            dipilih
+          </p>
+        </div>
+
         {!hasData && (
           <Alert className="border-destructive/50">
             <AlertDescription className="flex items-center gap-2">
@@ -351,10 +392,6 @@ export function QuizSection() {
               </div>
             </button>
           ))}
-        </div>
-
-        <div className="text-xs text-muted-foreground text-center">
-          {safeKanji.length} kanji · {safeVocab.length} kosakata tersedia
         </div>
       </div>
     );

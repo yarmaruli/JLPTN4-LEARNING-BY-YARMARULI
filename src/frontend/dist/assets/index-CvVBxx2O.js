@@ -50909,6 +50909,7 @@ const MODE_CONFIGS = [
 function QuizSection() {
   const [phase, setPhase] = reactExports.useState("select");
   const [selectedMode, setSelectedMode] = reactExports.useState(null);
+  const [selectedJlptLevel, setSelectedJlptLevel] = reactExports.useState("N4");
   const [questions, setQuestions] = reactExports.useState([]);
   const [remaining, setRemaining] = reactExports.useState([]);
   const [currentIndex, setCurrentIndex] = reactExports.useState(0);
@@ -50923,7 +50924,9 @@ function QuizSection() {
   const reviewedItems = reactExports.useRef(/* @__PURE__ */ new Set());
   const safeKanji = Array.isArray(kanjiData) ? kanjiData : [];
   const safeVocab = Array.isArray(vocabularyData) ? vocabularyData : [];
-  const hasData = safeKanji.length > 0 || safeVocab.length > 0;
+  const filteredKanji = selectedJlptLevel === "Semua" ? safeKanji : safeKanji.filter((k2) => k2.jlptLevel === selectedJlptLevel);
+  const filteredVocab = selectedJlptLevel === "Semua" ? safeVocab : safeVocab.filter((v2) => v2.jlptLevel === selectedJlptLevel);
+  const hasData = filteredKanji.length > 0 || filteredVocab.length > 0;
   const startQuiz = reactExports.useCallback(
     (mode) => {
       if (!hasData) {
@@ -50931,7 +50934,7 @@ function QuizSection() {
         return;
       }
       if (mode === "weakness") {
-        const allItems = [...safeKanji, ...safeVocab];
+        const allItems = [...filteredKanji, ...filteredVocab];
         const weak = getWeakItems(allItems, 1);
         if (weak.length === 0) {
           setNoWeakItems(true);
@@ -50947,8 +50950,8 @@ function QuizSection() {
       const mastery = loadMasteryData$1();
       const generated = generateQuizSession(
         mode,
-        safeKanji,
-        safeVocab,
+        filteredKanji,
+        filteredVocab,
         mastery
       );
       if (generated.length === 0) {
@@ -50966,7 +50969,7 @@ function QuizSection() {
       setAnswers([]);
       setPhase("quiz");
     },
-    [hasData, safeKanji, safeVocab]
+    [hasData, filteredKanji, filteredVocab]
   );
   const currentQuestion = questions[currentIndex] ?? null;
   const handleAnswerSelect = reactExports.useCallback(
@@ -51062,6 +51065,26 @@ function QuizSection() {
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm", children: "Pilih mode belajar yang sesuai dengan waktu dan tujuanmu." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", "data-ocid": "quiz.level_selector", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold uppercase tracking-wide text-muted-foreground", children: "Level JLPT" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: ["Semua", "N5", "N4"].map((level) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                "data-ocid": `quiz.level_${level.toLowerCase()}_button`,
+                onClick: () => setSelectedJlptLevel(level),
+                className: `flex-1 py-2 px-3 rounded-lg border-2 text-sm font-semibold transition-all ${selectedJlptLevel === level ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground"}`,
+                children: level
+              },
+              level
+            )) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground", children: [
+              filteredKanji.length,
+              " kanji · ",
+              filteredVocab.length,
+              " kosakata dipilih"
+            ] })
+          ] }),
           !hasData && /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { className: "border-destructive/50", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDescription, { className: "flex items-center gap-2", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-4 h-4 text-destructive" }),
             "Data tidak tersedia. Silakan muat ulang halaman."
@@ -51087,13 +51110,7 @@ function QuizSection() {
               ] })
             },
             cfg.id
-          )) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground text-center", children: [
-            safeKanji.length,
-            " kanji · ",
-            safeVocab.length,
-            " kosakata tersedia"
-          ] })
+          )) })
         ]
       }
     );
