@@ -20,7 +20,9 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { type VocabularyEntry, vocabularyData } from "@/data/kanjiData";
-import { updateWordLookup } from "@/lib/readingEngine";
+import { findExampleSentences } from "@/lib/exampleSentences";
+import { deInflect } from "@/lib/morphology";
+import { updateKanjiAnalytics, updateWordLookup } from "@/lib/readingEngine";
 import { BookOpen, Flag, HelpCircle, X } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 
@@ -123,25 +125,32 @@ function getConjugationCandidates(word: string): string[] {
   return candidates;
 }
 
-/** 6-level lookup chain. Returns the matched VocabularyEntry or null. */
-function lookupEntry(word: string): VocabularyEntry | null {
+interface LookupResult {
+  entry: VocabularyEntry;
+  grammarPattern?: string;
+  grammarExplanation?: string;
+  dictionaryForm?: string;
+}
+
+/** 7-level lookup chain. Returns matched entry with optional grammar info. */
+function lookupEntryFull(word: string): LookupResult | null {
   if (!word || word.trim() === "") return null;
   const normalWord = normalizeForMatch(word);
   const all = vocabularyData;
 
-  // Level 1: exact match on vocabulary
+  // Level 1: exact match
   let found = all.find((e) => e.vocabulary === word);
-  if (found) return found;
+  if (found) return { entry: found };
 
   // Level 2: normalized match (katakana→hiragana, lowercase)
   found = all.find((e) => normalizeForMatch(e.vocabulary) === normalWord);
-  if (found) return found;
+  if (found) return { entry: found };
 
   // Level 3: romaji match
   found = all.find((e) => (e.romaji ?? "").toLowerCase().trim() === normalWord);
-  if (found) return found;
+  if (found) return { entry: found };
 
-  // Level 4: conjugation stripping — try all candidate base forms
+  // Level 4: conjugation stripping
   const candidates = getConjugationCandidates(word);
   for (const candidate of candidates) {
     const nc = normalizeForMatch(candidate);
@@ -149,26 +158,50 @@ function lookupEntry(word: string): VocabularyEntry | null {
       all.find((e) => e.vocabulary === candidate) ??
       all.find((e) => normalizeForMatch(e.vocabulary) === nc) ??
       all.find((e) => (e.romaji ?? "").toLowerCase().trim() === nc);
-    if (found) return found;
+    if (found) return { entry: found };
   }
 
-  // Level 5: prefix match — word starts with DB entry (compound words)
+  // Level 5: morphology engine V2 deInflect
+  const deInflected = deInflect(word);
+  for (const result of deInflected) {
+    const df = result.dictionaryForm;
+    const ndf = normalizeForMatch(df);
+    found =
+      all.find((e) => e.vocabulary === df) ??
+      all.find((e) => normalizeForMatch(e.vocabulary) === ndf) ??
+      all.find((e) => (e.romaji ?? "").toLowerCase().trim() === ndf);
+    if (found) {
+      return {
+        entry: found,
+        grammarPattern: result.grammarPattern,
+        grammarExplanation: result.grammarExplanation,
+        dictionaryForm: df,
+      };
+    }
+  }
+
+  // Level 6: prefix match
   found = all.find(
     (e) => e.vocabulary.length >= 2 && word.startsWith(e.vocabulary),
   );
-  if (found) return found;
+  if (found) return { entry: found };
 
-  // Level 6: fuzzy containment — DB entry includes word OR word includes DB entry
+  // Level 7: fuzzy containment
   if (word.length >= 2) {
     found = all.find(
       (e) =>
         e.vocabulary.length >= 2 &&
         (e.vocabulary.includes(word) || word.includes(e.vocabulary)),
     );
-    if (found) return found;
+    if (found) return { entry: found };
   }
 
   return null;
+}
+
+/** Backwards-compat wrapper returning just the entry */
+function _lookupEntry(word: string): VocabularyEntry | null {
+  return lookupEntryFull(word)?.entry ?? null;
 }
 
 /** Appends word to localStorage 'vocabAuditList' (deduplicated). */
@@ -177,23 +210,41 @@ interface AuditItem {
   word: string;
   timestamp: number;
   context: string;
+  occurrences?: number;
 }
 
-/** Appends word to localStorage 'vocabAuditList' (deduplicated). */
+/** Appends word to localStorage 'vocabAuditList' (deduplicated). Increments occurrences if exists. */
 function addToAuditList(word: string): void {
   try {
     const raw = localStorage.getItem("vocabAuditList");
     const list: (AuditItem | string)[] = raw
       ? (JSON.parse(raw) as (AuditItem | string)[])
       : [];
-    const alreadyIn = list.some((item) => {
+    const existingIdx = list.findIndex((item) => {
       const w = typeof item === "string" ? item : item.word;
       return w === word;
     });
-    if (!alreadyIn) {
-      list.push({ word, timestamp: Date.now(), context: "reading" });
-      localStorage.setItem("vocabAuditList", JSON.stringify(list));
+    if (existingIdx >= 0) {
+      const existing = list[existingIdx];
+      if (typeof existing === "string") {
+        list[existingIdx] = {
+          word,
+          timestamp: Date.now(),
+          context: "reading",
+          occurrences: 2,
+        };
+      } else {
+        existing.occurrences = (existing.occurrences ?? 1) + 1;
+      }
+    } else {
+      list.push({
+        word,
+        timestamp: Date.now(),
+        context: "reading",
+        occurrences: 1,
+      });
     }
+    localStorage.setItem("vocabAuditList", JSON.stringify(list));
   } catch {
     // ignore storage errors
   }
@@ -203,13 +254,28 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reported, setReported] = useState(false);
+  const [examples, setExamples] = useState<string[]>([]);
   const clickCountRef = useRef(0);
 
-  const entry = useMemo(() => lookupEntry(word), [word]);
+  const lookupResult = useMemo(() => lookupEntryFull(word), [word]);
+  const entry = lookupResult?.entry ?? null;
+  const grammarPattern = lookupResult?.grammarPattern;
+  const grammarExplanation = lookupResult?.grammarExplanation;
+  const dictionaryForm = lookupResult?.dictionaryForm;
+
+  // Load example sentences when entry changes
+  useMemo(() => {
+    if (entry) {
+      setExamples(findExampleSentences(entry.vocabulary || word, 2));
+    } else {
+      setExamples([]);
+    }
+  }, [entry, word]);
 
   const handleTriggerClick = useCallback(() => {
     clickCountRef.current += 1;
     updateWordLookup(word);
+    if (entry) updateKanjiAnalytics(word);
     if (clickCountRef.current === 1) {
       setPopoverOpen(true);
     } else {
@@ -217,7 +283,7 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
       setDialogOpen(true);
       clickCountRef.current = 0;
     }
-  }, [word]);
+  }, [word, entry]);
 
   const handleUnderstood = useCallback(() => {
     updateWordLookup(word, "understood");
@@ -279,6 +345,16 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
                   Lihat Detail &rarr;
                 </Button>
               </div>
+              {examples.length > 0 && (
+                <div className="mt-2 pt-2 border-t border-gray-700">
+                  <p className="text-xs text-gray-400 mb-1">Contoh Kalimat:</p>
+                  {examples.map((sentence) => (
+                    <p key={sentence} className="text-sm text-gray-200 mb-1">
+                      {sentence}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-2">
@@ -355,6 +431,42 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
                 </div>
               </div>
 
+              {grammarPattern && (
+                <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 space-y-1">
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide">
+                    Deteksi Grammar
+                  </p>
+                  {dictionaryForm && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground w-24 shrink-0">
+                        Bentuk Dasar:
+                      </span>
+                      <span className="text-sm font-bold text-foreground">
+                        {dictionaryForm}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground w-24 shrink-0">
+                      Grammar:
+                    </span>
+                    <span className="text-sm font-medium text-primary">
+                      {grammarPattern}
+                    </span>
+                  </div>
+                  {grammarExplanation && (
+                    <div className="flex items-start gap-2">
+                      <span className="text-xs text-muted-foreground w-24 shrink-0">
+                        Penjelasan:
+                      </span>
+                      <span className="text-xs text-muted-foreground leading-relaxed">
+                        {grammarExplanation}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{entry.jlptLevel}</Badge>
                 <Badge variant="outline">{entry.wordType}</Badge>
@@ -374,6 +486,17 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
                   <p className="text-muted-foreground leading-relaxed">
                     {entry.explanation}
                   </p>
+                </div>
+              )}
+
+              {examples.length > 0 && (
+                <div className="mt-2 pt-2 border-t border-gray-700">
+                  <p className="text-xs text-gray-400 mb-1">Contoh Kalimat:</p>
+                  {examples.map((sentence) => (
+                    <p key={sentence} className="text-sm text-gray-200 mb-1">
+                      {sentence}
+                    </p>
+                  ))}
                 </div>
               )}
 

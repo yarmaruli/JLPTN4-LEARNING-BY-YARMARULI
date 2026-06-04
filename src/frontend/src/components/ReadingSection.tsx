@@ -16,6 +16,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { vocabularyData } from "@/data/kanjiData";
 import {
+  calculateCoverage,
   getAdaptivePassage,
   getJlptPassage,
   getReadingPassage,
@@ -23,6 +24,8 @@ import {
   saveReadingSession,
 } from "@/lib/readingEngine";
 import type { ReadingLevel, ReadingPassage } from "@/lib/readingEngine";
+import type { AllTestResults } from "@/lib/readingEngineTests";
+import { runAllTests } from "@/lib/readingEngineTests";
 import {
   BarChart3,
   BookOpen,
@@ -36,6 +39,28 @@ import { useCallback, useEffect, useState } from "react";
 import { QuestionBlock } from "./QuestionBlock";
 import { ReadingDashboard } from "./ReadingDashboard";
 import { ReadingText } from "./ReadingText";
+
+// ============================================================================
+// COVERAGE BANNER
+// ============================================================================
+
+function CoverageBanner({ sentences }: { sentences: string[] }) {
+  const text = sentences.join(" ");
+  const { coverage } = calculateCoverage(text, vocabularyData);
+  if (coverage >= 90) return null;
+  return (
+    <div
+      className="flex items-center gap-2 rounded-md border border-amber-400/60 bg-amber-50/80 px-3 py-2 text-sm text-amber-800 dark:bg-amber-900/20 dark:text-amber-300 dark:border-amber-600/40 mb-3"
+      data-ocid="reading.coverage_banner"
+    >
+      <span className="shrink-0">⚠️</span>
+      <span>
+        Cakupan kosakata: <strong>{Math.round(coverage)}%</strong> — beberapa
+        kata mungkin belum tersedia
+      </span>
+    </div>
+  );
+}
 
 // ============================================================================
 // LEVEL METADATA
@@ -306,6 +331,7 @@ function BelajarMembaca() {
           <CardTitle className="text-lg">{passage.title}</CardTitle>
         </CardHeader>
         <CardContent>
+          <CoverageBanner sentences={passage.sentences} />
           <ReadingText
             sentences={passage.sentences}
             targetVocabulary={passage.targetVocabulary}
@@ -688,6 +714,22 @@ function AuditReportDialog({
     Array<string | { word: string; timestamp?: string; context?: string }>
   >([]);
   const [lookupSuccess, setLookupSuccess] = useState(0);
+  const [testResults, setTestResults] = useState<AllTestResults | null>(null);
+  const [testRunning, setTestRunning] = useState(false);
+
+  const handleRunTests = () => {
+    setTestRunning(true);
+    // Run in next tick so UI can show loading state
+    setTimeout(() => {
+      try {
+        const results = runAllTests();
+        setTestResults(results);
+      } catch {
+        setTestResults(null);
+      }
+      setTestRunning(false);
+    }, 50);
+  };
 
   const reload = useCallback(() => {
     try {
@@ -808,6 +850,111 @@ function AuditReportDialog({
               </div>
             </div>
           )}
+          {/* ---- Testing Engine V3 ---- */}
+          <div
+            className="border border-border rounded-lg p-3 space-y-3"
+            data-ocid="reading.test_engine_section"
+          >
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <p className="text-sm font-semibold text-foreground">
+                🧪 Testing Engine V3
+              </p>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                disabled={testRunning}
+                onClick={handleRunTests}
+                data-ocid="reading.run_tests_button"
+              >
+                {testRunning ? "Menjalankan…" : "Jalankan Test"}
+              </Button>
+            </div>
+
+            {testResults && (
+              <div className="space-y-2">
+                <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                  <div className="bg-muted/40 rounded p-2">
+                    <p className="text-lg font-bold text-foreground">
+                      {testResults.summary.total}
+                    </p>
+                    <p className="text-muted-foreground">Total</p>
+                  </div>
+                  <div className="bg-muted/40 rounded p-2">
+                    <p className="text-lg font-bold text-green-600">
+                      {testResults.summary.passed}
+                    </p>
+                    <p className="text-muted-foreground">Lulus</p>
+                  </div>
+                  <div className="bg-muted/40 rounded p-2">
+                    <p className="text-lg font-bold text-destructive">
+                      {testResults.summary.failed}
+                    </p>
+                    <p className="text-muted-foreground">Gagal</p>
+                  </div>
+                  <div className="bg-muted/40 rounded p-2">
+                    <p className="text-lg font-bold text-primary">
+                      {testResults.summary.successRate}%
+                    </p>
+                    <p className="text-muted-foreground">Sukses</p>
+                  </div>
+                </div>
+
+                <div className="max-h-48 overflow-y-auto rounded border border-border">
+                  <table className="w-full text-xs">
+                    <thead className="bg-muted/60 sticky top-0">
+                      <tr>
+                        <th className="px-2 py-1.5 text-left font-medium text-muted-foreground">
+                          Input
+                        </th>
+                        <th className="px-2 py-1.5 text-left font-medium text-muted-foreground">
+                          Expected
+                        </th>
+                        <th className="px-2 py-1.5 text-left font-medium text-muted-foreground">
+                          Actual
+                        </th>
+                        <th className="px-2 py-1.5 text-center font-medium text-muted-foreground">
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        ...testResults.tokenizer,
+                        ...testResults.morphology,
+                        ...testResults.lookup,
+                      ].map((r, i) => (
+                        <tr
+                          key={`test-row-${r.input}-${i}`}
+                          className={`border-t border-border ${
+                            r.passed ? "" : "bg-destructive/5"
+                          }`}
+                        >
+                          <td className="px-2 py-1 font-jp max-w-[80px] truncate">
+                            {r.input}
+                          </td>
+                          <td className="px-2 py-1 text-muted-foreground max-w-[100px] truncate">
+                            {r.expected}
+                          </td>
+                          <td className="px-2 py-1 max-w-[100px] truncate">
+                            {r.actual}
+                          </td>
+                          <td className="px-2 py-1 text-center">
+                            {r.passed ? (
+                              <span className="text-green-600">✓</span>
+                            ) : (
+                              <span className="text-destructive">✗</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="flex justify-end gap-2 pt-1">
             {auditList.length > 0 && (
               <Button

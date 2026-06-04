@@ -183,6 +183,130 @@ export function getWeakReadingVocabulary(threshold = 3): VocabularyEntry[] {
     return [];
   }
 }
+// ============================================================================
+// KANJI ANALYTICS
+// ============================================================================
+
+const KANJI_STATS_KEY = "kanjiLookupStats";
+
+export interface KanjiStatEntry {
+  lookupCount: number;
+  lastSeen: number;
+  wordContexts: string[];
+}
+
+export function updateKanjiAnalytics(word: string): void {
+  try {
+    const raw = localStorage.getItem(KANJI_STATS_KEY);
+    const stats: Record<string, KanjiStatEntry> = raw
+      ? (JSON.parse(raw) as Record<string, KanjiStatEntry>)
+      : {};
+    // Extract kanji characters from the word
+    const kanjiChars = [...word].filter(
+      (ch) => ch.charCodeAt(0) >= 0x4e00 && ch.charCodeAt(0) <= 0x9fff,
+    );
+    for (const kanji of kanjiChars) {
+      const existing = stats[kanji] ?? {
+        lookupCount: 0,
+        lastSeen: 0,
+        wordContexts: [],
+      };
+      existing.lookupCount += 1;
+      existing.lastSeen = Date.now();
+      if (!existing.wordContexts.includes(word)) {
+        existing.wordContexts = [...existing.wordContexts, word].slice(-5);
+      }
+      stats[kanji] = existing;
+    }
+    localStorage.setItem(KANJI_STATS_KEY, JSON.stringify(stats));
+  } catch (e) {
+    console.warn("[readingEngine] updateKanjiAnalytics failed:", e);
+  }
+}
+
+// ============================================================================
+// COVERAGE VALIDATION
+// ============================================================================
+
+/**
+ * Calculate what percentage of tokens in a passage can be found in
+ * the vocabulary database using a simplified 3-level lookup.
+ */
+export function calculateCoverage(
+  passageText: string,
+  vocab: VocabularyEntry[],
+): { coverage: number; knownWords: string[]; unknownWords: string[] } {
+  try {
+    // Inline a minimal tokenizer (avoid circular imports — tokenizer imports kanjiData)
+    const JAPANESE_RE = /[\u3041-\u9FFF\uFF66-\uFF9F\u30A0-\u30FF]+/g;
+    const matches = passageText.match(JAPANESE_RE) ?? [];
+    // Split on particles for a rough token list
+    const PARTICLES = [
+      "は",
+      "が",
+      "を",
+      "に",
+      "で",
+      "と",
+      "へ",
+      "の",
+      "も",
+      "か",
+    ];
+    const rawTokens: string[] = [];
+    for (const m of matches) {
+      let rem = m;
+      while (rem.length > 0) {
+        let found = false;
+        for (const p of PARTICLES) {
+          if (rem.startsWith(p)) {
+            rawTokens.push(p);
+            rem = rem.slice(p.length);
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          // Grab up to next particle
+          let cutAt = rem.length;
+          for (const p of PARTICLES) {
+            const idx = rem.indexOf(p, 1);
+            if (idx !== -1 && idx < cutAt) cutAt = idx;
+          }
+          rawTokens.push(rem.slice(0, cutAt));
+          rem = rem.slice(cutAt);
+        }
+      }
+    }
+
+    const tokens = rawTokens.filter(
+      (t) => t.length > 0 && !/^[\u3041-\u3096]+$/.test(t),
+    );
+    if (tokens.length === 0)
+      return { coverage: 100, knownWords: [], unknownWords: [] };
+
+    const knownWords: string[] = [];
+    const unknownWords: string[] = [];
+
+    for (const token of tokens) {
+      const nm = token.toLowerCase();
+      const found =
+        vocab.find((e) => e.vocabulary === token) ??
+        vocab.find((e) => e.vocabulary.toLowerCase() === nm) ??
+        vocab.find((e) => (e.romaji ?? "").toLowerCase() === nm);
+      if (found) {
+        knownWords.push(token);
+      } else {
+        unknownWords.push(token);
+      }
+    }
+
+    const coverage = Math.round((knownWords.length / tokens.length) * 100);
+    return { coverage, knownWords, unknownWords };
+  } catch {
+    return { coverage: 0, knownWords: [], unknownWords: [] };
+  }
+}
 
 // ============================================================================
 // PASSAGE LIBRARY
@@ -191,7 +315,7 @@ export function getWeakReadingVocabulary(threshold = 3): VocabularyEntry[] {
 // Each passage is hand-crafted with natural, coherent Japanese content.
 // Theme-word clusters ensure contextually related vocabulary appears together.
 
-const LEARNING_PASSAGES: ReadingPassage[] = [
+export const LEARNING_PASSAGES: ReadingPassage[] = [
   // ─── Level 1: Single Sentence ─────────────────────────────────────────
   {
     id: "lrn-l1-office-1",
@@ -493,7 +617,7 @@ const LEARNING_PASSAGES: ReadingPassage[] = [
   },
 ];
 
-const JLPT_PASSAGES: ReadingPassage[] = [
+export const JLPT_PASSAGES: ReadingPassage[] = [
   {
     id: "jlpt-poster-1",
     mode: "jlpt",
@@ -684,7 +808,7 @@ const JLPT_PASSAGES: ReadingPassage[] = [
   },
 ];
 
-const ADAPTIVE_PASSAGES: ReadingPassage[] = [
+export const ADAPTIVE_PASSAGES: ReadingPassage[] = [
   {
     id: "adp-keigo-1",
     mode: "adaptive",

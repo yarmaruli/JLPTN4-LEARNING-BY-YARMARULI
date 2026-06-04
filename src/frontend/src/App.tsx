@@ -5,6 +5,7 @@ import { BackupManager } from "./components/BackupManager";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { KanjiList } from "./components/KanjiList";
+import { KanjiWeaknessAnalyzer } from "./components/KanjiWeaknessAnalyzer";
 import { QuizSection } from "./components/QuizSection";
 import { RadicalSection } from "./components/RadicalSection";
 import { ReadingSection } from "./components/ReadingSection";
@@ -124,6 +125,7 @@ function App() {
               wordType={selectedWordType}
               radical={selectedRadical}
             />
+            <KanjiWeaknessAnalyzer />
           </TabsContent>
 
           <TabsContent value="vocabulary" className="space-y-6">

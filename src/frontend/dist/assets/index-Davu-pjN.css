@@ -838,6 +838,9 @@ video {
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mt-8 {
+  margin-top: 2rem;
+}
 .mt-auto {
   margin-top: auto;
 }
@@ -1061,6 +1064,9 @@ video {
 .w-2\.5 {
   width: 0.625rem;
 }
+.w-24 {
+  width: 6rem;
+}
 .w-3 {
   width: 0.75rem;
 }
@@ -1150,6 +1156,12 @@ video {
 .max-w-7xl {
   max-width: 80rem;
 }
+.max-w-\[100px\] {
+  max-width: 100px;
+}
+.max-w-\[80px\] {
+  max-width: 80px;
+}
 .max-w-\[calc\(100\%-2rem\)\] {
   max-width: calc(100% - 2rem);
 }
@@ -1223,6 +1235,10 @@ video {
 }
 .translate-y-\[calc\(-50\%_-_2px\)\] {
   --tw-translate-y: calc(-50% - 2px);
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-180 {
+  --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .rotate-45 {
@@ -1412,6 +1428,11 @@ video {
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+}
 .self-start {
   align-self: flex-start;
 }
@@ -1534,6 +1555,9 @@ video {
 .border-dashed {
   border-style: dashed;
 }
+.border-amber-400\/60 {
+  border-color: rgb(251 191 36 / 0.6);
+}
 .border-border {
   border-color: oklch(var(--border));
 }
@@ -1544,6 +1568,9 @@ video {
 .border-destructive\/20 {
   border-color: oklch(var(--destructive) / 0.2);
 }
+.border-destructive\/30 {
+  border-color: oklch(var(--destructive) / 0.3);
+}
 .border-destructive\/40 {
   border-color: oklch(var(--destructive) / 0.4);
 }
@@ -1552,6 +1579,10 @@ video {
 }
 .border-destructive\/60 {
   border-color: oklch(var(--destructive) / 0.6);
+}
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
 }
 .border-green-200 {
   --tw-border-opacity: 1;
@@ -1573,6 +1604,9 @@ video {
 .border-primary {
   --tw-border-opacity: 1;
   border-color: oklch(var(--primary) / var(--tw-border-opacity, 1));
+}
+.border-primary\/20 {
+  border-color: oklch(var(--primary) / 0.2);
 }
 .border-primary\/30 {
   border-color: oklch(var(--primary) / 0.3);
@@ -1616,6 +1650,9 @@ video {
 .bg-accent\/10 {
   background-color: oklch(var(--accent) / 0.1);
 }
+.bg-amber-50\/80 {
+  background-color: rgb(255 251 235 / 0.8);
+}
 .bg-background {
   background-color: oklch(var(--background));
 }
@@ -1634,6 +1671,9 @@ video {
 }
 .bg-destructive\/10 {
   background-color: oklch(var(--destructive) / 0.1);
+}
+.bg-destructive\/5 {
+  background-color: oklch(var(--destructive) / 0.05);
 }
 .bg-foreground {
   background-color: oklch(var(--foreground));
@@ -2026,6 +2066,10 @@ video {
 .text-accent-foreground {
   color: oklch(var(--accent-foreground));
 }
+.text-amber-800 {
+  --tw-text-opacity: 1;
+  color: rgb(146 64 14 / var(--tw-text-opacity, 1));
+}
 .text-card-foreground {
   color: oklch(var(--card-foreground));
 }
@@ -2041,6 +2085,14 @@ video {
 }
 .text-foreground {
   color: oklch(var(--foreground));
+}
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 .text-green-500 {
   --tw-text-opacity: 1;
@@ -3393,12 +3445,18 @@ video {
 .peer\/menu-button[data-active="true"] ~ .peer-data-\[active\=true\]\/menu-button\:text-sidebar-accent-foreground {
   color: oklch(var(--sidebar-accent-foreground));
 }
+.dark\:border-amber-600\/40:is(.dark *) {
+  border-color: rgb(217 119 6 / 0.4);
+}
 .dark\:border-green-800:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(22 101 52 / var(--tw-border-opacity, 1));
 }
 .dark\:border-input:is(.dark *) {
   border-color: oklch(var(--input));
+}
+.dark\:bg-amber-900\/20:is(.dark *) {
+  background-color: rgb(120 53 15 / 0.2);
 }
 .dark\:bg-destructive\/60:is(.dark *) {
   background-color: oklch(var(--destructive) / 0.6);
@@ -3424,6 +3482,10 @@ video {
 }
 .dark\:bg-red-950\/30:is(.dark *) {
   background-color: rgb(69 10 10 / 0.3);
+}
+.dark\:text-amber-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(252 211 77 / var(--tw-text-opacity, 1));
 }
 .dark\:text-green-200:is(.dark *) {
   --tw-text-opacity: 1;
