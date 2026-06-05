@@ -180,7 +180,10 @@ function App() {
           </TabsContent>
 
           <TabsContent value="kanji-quiz">
-            <KanjiQuizSection onClose={() => setActiveTab("kanji")} />
+            <KanjiQuizSection
+              onClose={() => setActiveTab("kanji")}
+              onViewRadical={() => setActiveTab("radicals")}
+            />
           </TabsContent>
 
           <TabsContent value="radical-quiz">

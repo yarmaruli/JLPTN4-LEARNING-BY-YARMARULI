@@ -59,6 +59,14 @@ type RadicalMasteryPublic =
    status: MasteryStatus;
    wrongCount: nat;
  };
+type RadicalMastery = 
+ record {
+   correctCount: nat;
+   masteryLevel: nat;
+   radical: text;
+   seenCount: nat;
+   wrongCount: nat;
+ };
 type RadicalDashboardStats = 
  record {
    intermediate: nat;
@@ -67,6 +75,13 @@ type RadicalDashboardStats =
    total: nat;
    untouched: nat;
    weakItems: vec WeakItem;
+ };
+type QuizAnalytics = 
+ record {
+   accuracy: float64;
+   totalCorrect: nat;
+   totalQuizzes: nat;
+   totalWrong: nat;
  };
 type MasteryStatus = 
  variant {
@@ -86,6 +101,17 @@ type KanjiMasteryPublic =
    masteryLevel: nat;
    seenCount: nat;
    status: MasteryStatus;
+   wrongCount: nat;
+ };
+type KanjiMastery = 
+ record {
+   correctCount: nat;
+   kanji: text;
+   lastCorrect: int;
+   lastSeen: int;
+   lastWrong: int;
+   masteryLevel: nat;
+   seenCount: nat;
    wrongCount: nat;
  };
 type KanjiDashboardStats = 
@@ -116,19 +142,29 @@ type AdaptiveQuizRatio =
 service : {
   completeAdaptiveSession: (sessionId: text, totalQuestions: nat,
    correctAnswers: nat) -> ();
+  getAllKanjiMastery: () -> (vec KanjiMastery) query;
+  getAllRadicalMastery: () -> (vec RadicalMastery) query;
+  getDokkaiPriorityKanji: (dokkaiKanji: vec text) -> (vec text) query;
   getKanjiDashboard: () -> (KanjiDashboardStats) query;
   getKanjiMastery: (kanjiId: text) -> (opt KanjiMasteryPublic) query;
+  getKanjiMasteryByChar: (kanji: text) -> (opt KanjiMastery) query;
+  getQuizAnalytics: () -> (QuizAnalytics) query;
   getRadicalDashboard: () -> (RadicalDashboardStats) query;
   getRadicalMastery: (radicalId: text) -> (opt RadicalMasteryPublic) query;
+  getRadicalMasteryByChar: (radical: text) -> (opt RadicalMastery) query;
   getScoreSummary: () -> (ScoreSummary) query;
+  getUntouchedKanji: (allKanji: vec text) -> (vec text) query;
   getVocabDashboard: () -> (VocabDashboardStats) query;
   getVocabMastery: (vocabId: text) -> (opt VocabMasteryPublic) query;
   getWeakKanji: (topN: nat) -> (vec WeakItem) query;
+  getWeakKanjiByThreshold: (threshold: nat) -> (vec KanjiMastery) query;
   getWeakRadicals: (topN: nat) -> (vec WeakItem) query;
   getWeakVocab: (topN: nat) -> (vec WeakItem) query;
   listKanjiMastery: (offset: nat, limit: nat) ->
    (vec KanjiMasteryPublic) query;
   listReadingSessions: (limit: nat) -> (vec ReadingSessionPublic) query;
+  recordQuizResult: (itemId: text, itemType: text, isCorrect: bool, quizMode:
+   text) -> ();
   saveReadingSession: (sessionId: text, score: nat, durationSeconds: 
    nat, wordsLookedUp: vec text, unknownWords: vec text, kanjiFailures:
    vec text) -> ();
@@ -145,4 +181,6 @@ service : {
   trackVocabLookup: (vocabId: text) -> ();
   trackVocabSeen: (vocabId: text) -> ();
   trackVocabWrong: (vocabId: text) -> ();
+  updateKanjiMastery: (kanji: text, isCorrect: bool) -> (KanjiMastery);
+  updateRadicalMastery: (radical: text, isCorrect: bool) -> (RadicalMastery);
 }

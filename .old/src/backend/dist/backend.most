@@ -20,6 +20,14 @@ type Nat__1040412405 = Nat__920180692;
 type Nat__920180692 = Nat;
 type Node__1000929467<K, V> =
   {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type QuizResult__992252830 =
+  {
+    isCorrect : Bool;
+    itemId : Text;
+    itemType : Text;
+    quizMode : Text;
+    timestamp : Int
+  };
 type RadicalMasteryRecord__758306102 =
   {
     var correctCount : Nat;
@@ -57,6 +65,12 @@ actor {
     {
       var root : Node__1000929467<Text, KanjiMasteryRecord__943601087>;
       var size : Nat__1040412405
+    };
+  stable quizResults :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?QuizResult__992252830]];
+      var elementIndex : Nat__1040412405
     };
   stable radicalMastery :
     {

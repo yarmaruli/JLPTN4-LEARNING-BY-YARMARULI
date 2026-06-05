@@ -447,14 +447,18 @@ function ChoiceButton({
       onClick={onClick}
       disabled={disabled}
       data-ocid={`radical_quiz.choice.${index + 1}`}
-      className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`}
+      className={`flex items-start gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`}
     >
-      <span className="w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0">
+      <span className="w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0 mt-0.5">
         {letters[index]}
       </span>
-      <span className="text-3xl font-bold text-white leading-none">{char}</span>
+      <span className="text-3xl font-bold text-white leading-tight break-words min-w-0 flex-1">
+        {char}
+      </span>
       {state !== "idle" && (
-        <span className="ml-auto text-sm text-gray-300">{label}</span>
+        <span className="ml-auto text-sm text-gray-300 shrink-0 text-right max-w-[40%] whitespace-normal break-words leading-snug">
+          {label}
+        </span>
       )}
     </button>
   );
@@ -494,20 +498,447 @@ function MultiChoiceButton({
       onClick={onClick}
       disabled={disabled}
       data-ocid={`radical_quiz.multi_choice.${index + 1}`}
-      className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`}
+      className={`flex items-start gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`}
     >
-      <span className="w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0">
+      <span className="w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0 mt-0.5">
         {letters[index] ?? index + 1}
       </span>
-      <span className="text-2xl font-bold text-white leading-none">{char}</span>
+      <span className="text-2xl font-bold text-white leading-tight break-words min-w-0 flex-1">
+        {char}
+      </span>
       {state !== "idle" && (
-        <span className="ml-auto text-sm text-gray-300">{label}</span>
+        <span className="ml-auto text-sm text-gray-300 shrink-0 text-right max-w-[40%] whitespace-normal break-words leading-snug">
+          {label}
+        </span>
       )}
       {selected && state === "idle" && (
-        <span className="ml-auto text-xs text-cyan-400">✓ Dipilih</span>
+        <span className="ml-auto text-xs text-cyan-400 shrink-0">
+          ✓ Dipilih
+        </span>
       )}
     </button>
   );
+}
+
+// ─── Example sentences lookup (reused from KanjiAnswerPanel) ─────────────────
+
+const RADICAL_QUIZ_SENTENCES: Record<
+  string,
+  { japanese: string; romaji: string; meaning: string }
+> = {
+  会: {
+    japanese: "会社で会議があります。",
+    romaji: "Kaisha de kaigi ga arimasu.",
+    meaning: "Ada rapat di kantor.",
+  },
+  学: {
+    japanese: "大学で日本語を学びます。",
+    romaji: "Daigaku de Nihongo o manabimasu.",
+    meaning: "Saya belajar bahasa Jepang di universitas.",
+  },
+  食: {
+    japanese: "毎朝、ご飯を食べます。",
+    romaji: "Maiasa, gohan o tabemasu.",
+    meaning: "Setiap pagi, saya makan nasi.",
+  },
+  飲: {
+    japanese: "お茶を飲みます。",
+    romaji: "Ocha o nomimasu.",
+    meaning: "Saya minum teh.",
+  },
+  行: {
+    japanese: "学校へ行きます。",
+    romaji: "Gakkou e ikimasu.",
+    meaning: "Saya pergi ke sekolah.",
+  },
+  来: {
+    japanese: "友達が来ました。",
+    romaji: "Tomodachi ga kimashita.",
+    meaning: "Teman saya datang.",
+  },
+  見: {
+    japanese: "テレビを見ます。",
+    romaji: "Terebi o mimasu.",
+    meaning: "Saya menonton TV.",
+  },
+  聞: {
+    japanese: "音楽を聴きます。",
+    romaji: "Ongaku o kikimasu.",
+    meaning: "Saya mendengarkan musik.",
+  },
+  読: {
+    japanese: "本を読みます。",
+    romaji: "Hon o yomimasu.",
+    meaning: "Saya membaca buku.",
+  },
+  書: {
+    japanese: "手紙を書きます。",
+    romaji: "Tegami o kakimasu.",
+    meaning: "Saya menulis surat.",
+  },
+  話: {
+    japanese: "日本語で話します。",
+    romaji: "Nihongo de hanashimasu.",
+    meaning: "Saya berbicara dalam bahasa Jepang.",
+  },
+  買: {
+    japanese: "スーパーで野菜を買いました。",
+    romaji: "Suupaa de yasai o kaimashita.",
+    meaning: "Saya membeli sayuran di supermarket.",
+  },
+  作: {
+    japanese: "料理を作ります。",
+    romaji: "Ryouri o tsukurimasu.",
+    meaning: "Saya memasak.",
+  },
+  使: {
+    japanese: "パソコンを使います。",
+    romaji: "Pasokon o tsukaimasu.",
+    meaning: "Saya menggunakan komputer.",
+  },
+  出: {
+    japanese: "家を出ます。",
+    romaji: "Ie o demasu.",
+    meaning: "Saya keluar dari rumah.",
+  },
+  入: {
+    japanese: "部屋に入ります。",
+    romaji: "Heya ni hairimasu.",
+    meaning: "Saya masuk ke kamar.",
+  },
+  帰: {
+    japanese: "家に帰ります。",
+    romaji: "Ie ni kaerimasu.",
+    meaning: "Saya pulang ke rumah.",
+  },
+  起: {
+    japanese: "毎朝6時に起きます。",
+    romaji: "Maiasa rokuji ni okimasu.",
+    meaning: "Setiap pagi saya bangun pukul 6.",
+  },
+  寝: {
+    japanese: "11時に寝ます。",
+    romaji: "Juuichiji ni nemasu.",
+    meaning: "Saya tidur pukul 11.",
+  },
+  働: {
+    japanese: "会社で働きます。",
+    romaji: "Kaisha de hatarakimasu.",
+    meaning: "Saya bekerja di kantor.",
+  },
+  勉: {
+    japanese: "毎日勉強します。",
+    romaji: "Mainichi benkyou shimasu.",
+    meaning: "Saya belajar setiap hari.",
+  },
+  経: {
+    japanese: "日本で働いた経験があります。",
+    romaji: "Nihon de hataraita keiken ga arimasu.",
+    meaning: "Saya memiliki pengalaman bekerja di Jepang.",
+  },
+  発: {
+    japanese: "会議で発表します。",
+    romaji: "Kaigi de happyou shimasu.",
+    meaning: "Saya presentasi dalam rapat.",
+  },
+  説: {
+    japanese: "先生が説明してくれました。",
+    romaji: "Sensei ga setsumei shite kuremashita.",
+    meaning: "Guru menjelaskan kepada saya.",
+  },
+  準: {
+    japanese: "試験の準備をします。",
+    romaji: "Shiken no junbi o shimasu.",
+    meaning: "Saya mempersiapkan diri untuk ujian.",
+  },
+  利: {
+    japanese: "インターネットを利用します。",
+    romaji: "Intaanetto o riyou shimasu.",
+    meaning: "Saya menggunakan internet.",
+  },
+  連: {
+    japanese: "後で連絡します。",
+    romaji: "Ato de renraku shimasu.",
+    meaning: "Saya akan menghubungi nanti.",
+  },
+  約: {
+    japanese: "レストランを予約しました。",
+    romaji: "Resutoran o yoyaku shimashita.",
+    meaning: "Saya memesan restoran.",
+  },
+  確: {
+    japanese: "予定を確認してください。",
+    romaji: "Yotei o kakunin shite kudasai.",
+    meaning: "Tolong konfirmasi jadwal.",
+  },
+  必: {
+    japanese: "パスポートが必要です。",
+    romaji: "Pasupooto ga hitsuyou desu.",
+    meaning: "Paspor diperlukan.",
+  },
+  研: {
+    japanese: "大学で研究しています。",
+    romaji: "Daigaku de kenkyuu shite imasu.",
+    meaning: "Saya sedang meneliti di universitas.",
+  },
+  運: {
+    japanese: "車の運転が好きです。",
+    romaji: "Kuruma no unten ga suki desu.",
+    meaning: "Saya suka mengemudi.",
+  },
+  卒: {
+    japanese: "来年、大学を卒業します。",
+    romaji: "Rainen, daigaku o sotsugyou shimasu.",
+    meaning: "Tahun depan saya lulus universitas.",
+  },
+  旅: {
+    japanese: "日本へ旅行します。",
+    romaji: "Nihon e ryokou shimasu.",
+    meaning: "Saya pergi wisata ke Jepang.",
+  },
+  特: {
+    japanese: "今日は特別な日です。",
+    romaji: "Kyou wa tokubetsu na hi desu.",
+    meaning: "Hari ini adalah hari istimewa.",
+  },
+  原: {
+    japanese: "事故の原因は何ですか。",
+    romaji: "Jiko no gen'in wa nan desu ka.",
+    meaning: "Apa penyebab kecelakaan itu?",
+  },
+  安: {
+    japanese: "この道は安全ですか。",
+    romaji: "Kono michi wa anzen desu ka.",
+    meaning: "Apakah jalan ini aman?",
+  },
+  交: {
+    japanese: "交通が便利な場所に住みたい。",
+    romaji: "Koutsuu ga benri na basho ni sumitai.",
+    meaning: "Saya ingin tinggal di tempat transportasi mudah.",
+  },
+  文: {
+    japanese: "日本の文化を勉強しています。",
+    romaji: "Nihon no bunka o benkyou shite imasu.",
+    meaning: "Saya mempelajari budaya Jepang.",
+  },
+  生: {
+    japanese: "毎日、生活が忙しいです。",
+    romaji: "Mainichi, seikatsu ga isogashii desu.",
+    meaning: "Kehidupan sehari-hari saya sibuk.",
+  },
+  試: {
+    japanese: "今月、日本語の試験があります。",
+    romaji: "Kongetsu, Nihongo no shiken ga arimasu.",
+    meaning: "Bulan ini ada ujian bahasa Jepang.",
+  },
+  海: {
+    japanese: "海へ行きます。",
+    romaji: "Umi e ikimasu.",
+    meaning: "Saya pergi ke laut.",
+  },
+  山: {
+    japanese: "山に登ります。",
+    romaji: "Yama ni noborimasu.",
+    meaning: "Saya mendaki gunung.",
+  },
+  川: {
+    japanese: "川で魚を釣ります。",
+    romaji: "Kawa de sakana o tsurimasu.",
+    meaning: "Saya memancing ikan di sungai.",
+  },
+  電: {
+    japanese: "電車で会社へ行きます。",
+    romaji: "Densha de kaisha e ikimasu.",
+    meaning: "Saya pergi ke kantor naik kereta.",
+  },
+  車: {
+    japanese: "車で旅行します。",
+    romaji: "Kuruma de ryokou shimasu.",
+    meaning: "Saya berwisata naik mobil.",
+  },
+  駅: {
+    japanese: "駅まで歩いて10分です。",
+    romaji: "Eki made aruite juppun desu.",
+    meaning: "Jarak ke stasiun 10 menit jalan kaki.",
+  },
+  病: {
+    japanese: "病院に行きます。",
+    romaji: "Byouin ni ikimasu.",
+    meaning: "Saya pergi ke rumah sakit.",
+  },
+  薬: {
+    japanese: "薬を飲んでください。",
+    romaji: "Kusuri o nonde kudasai.",
+    meaning: "Tolong minum obatnya.",
+  },
+  店: {
+    japanese: "店でコーヒーを飲みます。",
+    romaji: "Mise de koohii o nomimasu.",
+    meaning: "Saya minum kopi di toko.",
+  },
+  家: {
+    japanese: "新しい家を買いました。",
+    romaji: "Atarashii ie o kaimashita.",
+    meaning: "Saya membeli rumah baru.",
+  },
+  国: {
+    japanese: "どの国から来ましたか。",
+    romaji: "Dono kuni kara kimashita ka.",
+    meaning: "Anda berasal dari negara mana?",
+  },
+  人: {
+    japanese: "あの人は誰ですか。",
+    romaji: "Ano hito wa dare desu ka.",
+    meaning: "Siapa orang itu?",
+  },
+  時: {
+    japanese: "今、何時ですか。",
+    romaji: "Ima, nanji desu ka.",
+    meaning: "Sekarang jam berapa?",
+  },
+  間: {
+    japanese: "授業は2時間あります。",
+    romaji: "Jugyou wa nijikan arimasu.",
+    meaning: "Pelajaran berlangsung 2 jam.",
+  },
+  週: {
+    japanese: "来週、友達と会います。",
+    romaji: "Raishuu, tomodachi to aimasu.",
+    meaning: "Minggu depan saya bertemu teman.",
+  },
+  月: {
+    japanese: "毎月、給料をもらいます。",
+    romaji: "Maitsuki, kyuuryou o moraimasu.",
+    meaning: "Setiap bulan saya menerima gaji.",
+  },
+  年: {
+    japanese: "来年、日本へ行きたいです。",
+    romaji: "Rainen, Nihon e ikitai desu.",
+    meaning: "Tahun depan saya ingin pergi ke Jepang.",
+  },
+  今: {
+    japanese: "今から勉強します。",
+    romaji: "Ima kara benkyou shimasu.",
+    meaning: "Saya akan mulai belajar sekarang.",
+  },
+  先: {
+    japanese: "先生に質問します。",
+    romaji: "Sensei ni shitsumon shimasu.",
+    meaning: "Saya bertanya kepada guru.",
+  },
+  高: {
+    japanese: "この山はとても高いです。",
+    romaji: "Kono yama wa totemo takai desu.",
+    meaning: "Gunung ini sangat tinggi.",
+  },
+  長: {
+    japanese: "この映画は長いです。",
+    romaji: "Kono eiga wa nagai desu.",
+    meaning: "Film ini panjang.",
+  },
+  新: {
+    japanese: "新しいスマホを買いました。",
+    romaji: "Atarashii sumaho o kaimashita.",
+    meaning: "Saya membeli HP baru.",
+  },
+  古: {
+    japanese: "古い建物を見ました。",
+    romaji: "Furui tatemono o mimashita.",
+    meaning: "Saya melihat bangunan tua.",
+  },
+  大: {
+    japanese: "大学は大きいです。",
+    romaji: "Daigaku wa ookii desu.",
+    meaning: "Universitas itu besar.",
+  },
+  小: {
+    japanese: "小さい猫がいます。",
+    romaji: "Chiisai neko ga imasu.",
+    meaning: "Ada kucing kecil.",
+  },
+  水: {
+    japanese: "毎日水を飲みます。",
+    romaji: "Mainichi mizu o nomimasu.",
+    meaning: "Saya minum air setiap hari.",
+  },
+  火: {
+    japanese: "火曜日に試験があります。",
+    romaji: "Kayoubi ni shiken ga arimasu.",
+    meaning: "Ada ujian pada hari Selasa.",
+  },
+  木: {
+    japanese: "公園に木がたくさんあります。",
+    romaji: "Kouen ni ki ga takusan arimasu.",
+    meaning: "Di taman banyak terdapat pohon.",
+  },
+  日: {
+    japanese: "今日は何曜日ですか。",
+    romaji: "Kyou wa nanyoubi desu ka.",
+    meaning: "Hari ini hari apa?",
+  },
+  本: {
+    japanese: "図書館で本を借ります。",
+    romaji: "Toshokan de hon o karimasu.",
+    meaning: "Saya meminjam buku di perpustakaan.",
+  },
+  語: {
+    japanese: "日本語を毎日練習します。",
+    romaji: "Nihongo o mainichi renshuu shimasu.",
+    meaning: "Saya berlatih bahasa Jepang setiap hari.",
+  },
+  友: {
+    japanese: "友達とカフェに行きます。",
+    romaji: "Tomodachi to kafe ni ikimasu.",
+    meaning: "Saya pergi ke kafe bersama teman.",
+  },
+  校: {
+    japanese: "学校は8時に始まります。",
+    romaji: "Gakkou wa hachiji ni hajimarimasu.",
+    meaning: "Sekolah dimulai pukul 8.",
+  },
+};
+
+/** Find multiple related vocabulary for a kanji char */
+function findRelatedVocabList(
+  kanjiChar: string,
+  max = 3,
+): Array<{ vocabulary: string; romaji: string; meaning: string }> {
+  const results: Array<{
+    vocabulary: string;
+    romaji: string;
+    meaning: string;
+  }> = [];
+  for (const v of vocabularyData) {
+    const word = v.vocabulary ?? "";
+    if (word.includes(kanjiChar) && word !== kanjiChar && word.length > 1) {
+      results.push({ vocabulary: word, romaji: v.romaji, meaning: v.meaning });
+      if (results.length >= max) break;
+    }
+  }
+  return results;
+}
+
+/** Get example sentence for a kanji char */
+function getExampleSentence(
+  kanjiChar: string,
+  relatedVocab: Array<{ vocabulary: string; romaji: string; meaning: string }>,
+): { japanese: string; romaji: string; meaning: string } {
+  if (RADICAL_QUIZ_SENTENCES[kanjiChar]) {
+    return RADICAL_QUIZ_SENTENCES[kanjiChar];
+  }
+  if (relatedVocab.length > 0) {
+    const v = relatedVocab[0];
+    return {
+      japanese: `${v.vocabulary}はとても大切です。`,
+      romaji: `${v.romaji} wa totemo taisetsu desu.`,
+      meaning: `${v.meaning} sangat penting.`,
+    };
+  }
+  return {
+    japanese: `この${kanjiChar}は大切な漢字です。`,
+    romaji: "Kono kanji wa taisetsu desu.",
+    meaning: "Kanji ini adalah kanji yang penting.",
+  };
 }
 
 // ─── Result Panel ─────────────────────────────────────────────────────────────
@@ -528,106 +959,243 @@ function ResultPanel({
   isLast,
 }: ResultPanelProps) {
   const { radical, symbol } = question;
+
+  // Resolve the correct kanji character and its entry
   const correctChar =
     question.type === "multi" ? question.correctChars[0] : question.correctChar;
-  const correctEntry =
+  const correctEntry: KanjiEntry =
     question.type === "multi"
       ? (question.allOptions.find((o) => o.isCorrect)?.entry ??
         question.allOptions[0].entry)
       : question.correctEntry;
-  const example = findExampleVocab(correctChar);
+
+  // Data
+  const kanjiChar = correctEntry.character;
   const reading = correctEntry.romaji ?? "";
   const kanjiMeaning = correctEntry.meaning;
   const radicalMeaning = radical.meaning;
+  const kanjiExplanation = correctEntry.explanation ?? "";
+
+  // Related vocabulary (up to 3)
+  const relatedVocab = useMemo(
+    () => findRelatedVocabList(kanjiChar, 3),
+    [kanjiChar],
+  );
+
+  // Example sentence
+  const exampleSentence = useMemo(
+    () => getExampleSentence(kanjiChar, relatedVocab),
+    [kanjiChar, relatedVocab],
+  );
+
+  // Also keep the single findExampleVocab for highlighting
+  const singleVocab = findExampleVocab(correctChar);
 
   return (
     <div className="space-y-4 animate-in fade-in duration-300">
-      {/* Verdict */}
+      {/* ── Verdict Banner ─────────────────────────────────────────────── */}
       <div
-        className={`flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg ${
+        data-ocid="radical_quiz.result_verdict"
+        className={`flex items-center gap-2 text-sm font-semibold px-3 py-2.5 rounded-xl ${
           wasCorrect
-            ? "bg-emerald-900/60 text-emerald-300"
-            : "bg-red-900/60 text-red-300"
+            ? "bg-emerald-900/60 border border-emerald-700 text-emerald-300"
+            : "bg-red-900/60 border border-red-700 text-red-300"
         }`}
       >
-        <span>{wasCorrect ? "✅ Benar!" : "❌ Kurang tepat"}</span>
+        <span className="text-lg">{wasCorrect ? "✅" : "❌"}</span>
+        <span>
+          {wasCorrect
+            ? "Benar! Bagus sekali!"
+            : "Kurang tepat — pelajari penjelasan di bawah."}
+        </span>
       </div>
 
-      {/* Kanji hero */}
-      <div className="bg-gray-800 rounded-xl p-5 text-center space-y-1">
-        <div className="text-6xl font-bold text-white leading-none mb-2">
-          {correctChar}
-        </div>
-        <div className="text-cyan-400 text-lg font-medium">{reading}</div>
-        <div className="text-gray-300 text-base">{kanjiMeaning}</div>
-      </div>
-
-      {/* Explanation */}
-      <div className="bg-gray-800/80 rounded-xl p-4 space-y-2">
-        <p className="text-xs font-bold uppercase tracking-wide text-gray-400">
-          Penjelasan Radikal
-        </p>
-        <div className="flex items-start gap-3">
-          <span className="text-4xl leading-none text-cyan-300 mt-1">
-            {symbol}
+      {/* ── Kanji Hero ─────────────────────────────────────────────────── */}
+      <div
+        data-ocid="radical_quiz.answer_kanji_hero"
+        className="bg-gray-800 rounded-2xl p-5 flex items-center gap-5"
+      >
+        {/* Big kanji */}
+        <div className="text-center shrink-0">
+          <div className="text-7xl font-bold text-white leading-none">
+            {kanjiChar}
+          </div>
+          <span className="mt-2 inline-block text-xs px-2 py-0.5 rounded-full bg-cyan-900/60 border border-cyan-700 text-cyan-300 font-medium">
+            {correctEntry.jlptLevel}
           </span>
-          <div className="space-y-1">
-            <p className="text-sm text-gray-200">
-              Radikal <span className="font-bold text-cyan-300">{symbol}</span>{" "}
-              berarti{" "}
-              <span className="font-bold text-white">{radicalMeaning}</span>.
+        </div>
+        {/* Reading & meaning */}
+        <div className="flex-1 min-w-0 space-y-2">
+          <div>
+            <p className="text-gray-500 text-xs uppercase tracking-wider">
+              Cara Baca / Romaji
             </p>
-            <p className="text-sm text-gray-200">
-              Kanji <span className="font-bold text-white">{correctChar}</span>{" "}
-              berarti{" "}
-              <span className="font-bold text-white">{kanjiMeaning}</span>.
+            <p
+              className="text-cyan-300 font-bold text-xl leading-tight"
+              data-ocid="radical_quiz.answer_reading"
+            >
+              {reading}
             </p>
-            <p className="text-sm text-gray-300">
-              Karena <span className="italic">{kanjiMeaning}</span> berhubungan
-              dengan{" "}
-              <span className="italic">{radicalMeaning.toLowerCase()}</span>,
-              kanji ini menggunakan radikal{" "}
-              <span className="font-bold text-cyan-300">{symbol}</span>.
+          </div>
+          <div>
+            <p className="text-gray-500 text-xs uppercase tracking-wider">
+              Arti Indonesia
+            </p>
+            <p
+              className="text-white font-semibold text-lg leading-tight"
+              data-ocid="radical_quiz.answer_meaning"
+            >
+              {kanjiMeaning}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Example sentence */}
-      {example && (
-        <div className="bg-gray-800/60 rounded-xl p-4 space-y-1">
-          <p className="text-xs font-bold uppercase tracking-wide text-gray-400">
-            Contoh Penggunaan
+      {/* ── Penjelasan Kanji ────────────────────────────────────────────── */}
+      {kanjiExplanation && (
+        <div
+          className="bg-gray-800/70 rounded-xl p-4"
+          data-ocid="radical_quiz.answer_explanation"
+        >
+          <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">
+            Penjelasan
           </p>
-          <p className="text-lg text-white">
-            {example.vocabulary.split("").map((ch, i) => {
-              const k = `char-${i}`;
-              return ch === correctChar ? (
-                <mark
-                  key={k}
-                  className="bg-cyan-500/30 text-cyan-200 px-0.5 rounded not-italic"
-                >
-                  {ch}
-                </mark>
-              ) : (
-                <span key={k}>{ch}</span>
-              );
-            })}
+          <p className="text-sm text-gray-300 leading-relaxed">
+            {kanjiExplanation}
           </p>
-          <p className="text-sm text-gray-400">{example.romaji}</p>
-          <p className="text-sm text-gray-300">{example.meaning}</p>
         </div>
       )}
 
-      {/* Action buttons */}
-      <div className="flex gap-3">
+      {/* ── Penjelasan Hubungan Radikal-Kanji ───────────────────────────── */}
+      <div
+        className="bg-gray-800/80 rounded-xl p-4"
+        data-ocid="radical_quiz.answer_radical_explanation"
+      >
+        <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">
+          Hubungan Radikal & Kanji
+        </p>
+        <div className="flex items-start gap-4">
+          {/* Radical symbol box */}
+          <div className="shrink-0 bg-gray-700/80 rounded-xl p-3 text-center min-w-[4rem]">
+            <div className="text-4xl font-bold text-yellow-300 leading-none">
+              {symbol}
+            </div>
+            <p className="text-gray-400 text-xs mt-1">Radikal</p>
+          </div>
+          {/* Arrow and explanation */}
+          <div className="flex-1 min-w-0 space-y-2">
+            <div className="flex items-center gap-2 text-sm">
+              <span className="font-bold text-yellow-300">{symbol}</span>
+              <span className="text-gray-500">→</span>
+              <span className="text-white font-semibold">{radicalMeaning}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="font-bold text-white">{kanjiChar}</span>
+              <span className="text-gray-500">→</span>
+              <span className="text-white font-semibold">{kanjiMeaning}</span>
+            </div>
+            <p className="text-sm text-gray-300 leading-relaxed pt-1 border-t border-gray-700">
+              Radikal{" "}
+              <span className="font-bold text-yellow-300">{symbol}</span>{" "}
+              artinya{" "}
+              <span className="font-bold text-white">"{radicalMeaning}"</span>.
+              Kanji <span className="font-bold text-white">{kanjiChar}</span>{" "}
+              berarti{" "}
+              <span className="font-bold text-cyan-300">"{kanjiMeaning}"</span>.
+              Karena{" "}
+              <span className="italic">{kanjiMeaning.toLowerCase()}</span>{" "}
+              berhubungan dengan{" "}
+              <span className="italic">{radicalMeaning.toLowerCase()}</span>,
+              kanji ini menggunakan radikal{" "}
+              <span className="font-bold text-yellow-300">{symbol}</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Contoh Kosakata (3 items) ───────────────────────────────────── */}
+      {relatedVocab.length > 0 && (
+        <div
+          className="bg-gray-800/60 rounded-xl p-4"
+          data-ocid="radical_quiz.answer_vocab_examples"
+        >
+          <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">
+            Contoh Kosakata
+          </p>
+          <div className="space-y-2.5">
+            {relatedVocab.map((v, i) => (
+              <div
+                key={`${v.vocabulary}-${i}`}
+                className="flex items-start gap-3"
+                data-ocid={`radical_quiz.answer_vocab.${i + 1}`}
+              >
+                <span className="text-cyan-300 font-bold text-base min-w-[5.5rem] shrink-0">
+                  {v.vocabulary}
+                </span>
+                <span className="text-gray-400 text-sm leading-snug">
+                  ({v.romaji}){" "}
+                  <span className="text-gray-200">— {v.meaning}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Fallback: single vocab highlight if no related vocab from list */}
+      {relatedVocab.length === 0 && singleVocab && (
+        <div className="bg-gray-800/60 rounded-xl p-4 space-y-1">
+          <p className="text-xs font-bold uppercase tracking-wide text-gray-400">
+            Contoh Kosakata
+          </p>
+          <p className="text-base text-white font-semibold">
+            {singleVocab.vocabulary}
+          </p>
+          <p className="text-sm text-gray-400">{singleVocab.romaji}</p>
+          <p className="text-sm text-gray-300">{singleVocab.meaning}</p>
+        </div>
+      )}
+
+      {/* ── Contoh Kalimat ──────────────────────────────────────────────── */}
+      <div
+        className="bg-gray-800/60 rounded-xl p-4 border-l-2 border-cyan-700"
+        data-ocid="radical_quiz.answer_example_sentence"
+      >
+        <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
+          Contoh Kalimat
+        </p>
+        <p className="text-white font-medium text-base leading-relaxed">
+          {exampleSentence.japanese.split("").map((ch, i) => {
+            const key = `s-${i}`;
+            return ch === kanjiChar ? (
+              <mark
+                key={key}
+                className="bg-cyan-500/30 text-cyan-200 px-0.5 rounded not-italic"
+              >
+                {ch}
+              </mark>
+            ) : (
+              <span key={key}>{ch}</span>
+            );
+          })}
+        </p>
+        <p className="text-gray-400 text-sm mt-1 italic">
+          ({exampleSentence.romaji})
+        </p>
+        <p className="text-cyan-200 text-sm mt-0.5">
+          {exampleSentence.meaning}
+        </p>
+      </div>
+
+      {/* ── Action Buttons ──────────────────────────────────────────────── */}
+      <div className="flex gap-3" data-ocid="radical_quiz.answer_actions">
         <button
           type="button"
           data-ocid="radical_quiz.view_radical_button"
           onClick={() => onViewRadical(radical.name)}
-          className="flex-1 px-4 py-2.5 rounded-xl border border-cyan-600 text-cyan-300 text-sm font-medium hover:bg-cyan-900/40 transition-colors"
+          className="flex-1 px-4 py-2.5 rounded-xl border border-yellow-600 text-yellow-300 text-sm font-medium hover:bg-yellow-900/30 transition-colors"
         >
-          Lihat Radikal
+          🔍 Lihat Radikal
         </button>
         <button
           type="button"
@@ -635,7 +1203,7 @@ function ResultPanel({
           onClick={onNext}
           className="flex-1 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold transition-colors"
         >
-          {isLast ? "Lihat Hasil" : "Lanjut"}
+          {isLast ? "Lihat Hasil" : "Lanjut →"}
         </button>
       </div>
     </div>

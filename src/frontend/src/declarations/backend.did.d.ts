@@ -32,6 +32,16 @@ export interface KanjiDashboardStats {
   'highFrequency' : bigint,
   'untouched' : bigint,
 }
+export interface KanjiMastery {
+  'wrongCount' : bigint,
+  'lastCorrect' : bigint,
+  'lastWrong' : bigint,
+  'masteryLevel' : bigint,
+  'seenCount' : bigint,
+  'correctCount' : bigint,
+  'kanji' : string,
+  'lastSeen' : bigint,
+}
 export interface KanjiMasteryPublic {
   'status' : MasteryStatus,
   'wrongCount' : bigint,
@@ -48,6 +58,12 @@ export type MasteryStatus = { 'Learning' : null } |
   { 'Untouched' : null } |
   { 'Intermediate' : null } |
   { 'Mastered' : null };
+export interface QuizAnalytics {
+  'totalCorrect' : bigint,
+  'totalQuizzes' : bigint,
+  'totalWrong' : bigint,
+  'accuracy' : number,
+}
 export interface RadicalDashboardStats {
   'total' : bigint,
   'intermediate' : bigint,
@@ -55,6 +71,13 @@ export interface RadicalDashboardStats {
   'learning' : bigint,
   'weakItems' : Array<WeakItem>,
   'untouched' : bigint,
+}
+export interface RadicalMastery {
+  'wrongCount' : bigint,
+  'radical' : string,
+  'masteryLevel' : bigint,
+  'seenCount' : bigint,
+  'correctCount' : bigint,
 }
 export interface RadicalMasteryPublic {
   'status' : MasteryStatus,
@@ -113,18 +136,30 @@ export interface WeakItem {
 }
 export interface _SERVICE {
   'completeAdaptiveSession' : ActorMethod<[string, bigint, bigint], undefined>,
+  'getAllKanjiMastery' : ActorMethod<[], Array<KanjiMastery>>,
+  'getAllRadicalMastery' : ActorMethod<[], Array<RadicalMastery>>,
+  'getDokkaiPriorityKanji' : ActorMethod<[Array<string>], Array<string>>,
   'getKanjiDashboard' : ActorMethod<[], KanjiDashboardStats>,
   'getKanjiMastery' : ActorMethod<[string], [] | [KanjiMasteryPublic]>,
+  'getKanjiMasteryByChar' : ActorMethod<[string], [] | [KanjiMastery]>,
+  'getQuizAnalytics' : ActorMethod<[], QuizAnalytics>,
   'getRadicalDashboard' : ActorMethod<[], RadicalDashboardStats>,
   'getRadicalMastery' : ActorMethod<[string], [] | [RadicalMasteryPublic]>,
+  'getRadicalMasteryByChar' : ActorMethod<[string], [] | [RadicalMastery]>,
   'getScoreSummary' : ActorMethod<[], ScoreSummary>,
+  'getUntouchedKanji' : ActorMethod<[Array<string>], Array<string>>,
   'getVocabDashboard' : ActorMethod<[], VocabDashboardStats>,
   'getVocabMastery' : ActorMethod<[string], [] | [VocabMasteryPublic]>,
   'getWeakKanji' : ActorMethod<[bigint], Array<WeakItem>>,
+  'getWeakKanjiByThreshold' : ActorMethod<[bigint], Array<KanjiMastery>>,
   'getWeakRadicals' : ActorMethod<[bigint], Array<WeakItem>>,
   'getWeakVocab' : ActorMethod<[bigint], Array<WeakItem>>,
   'listKanjiMastery' : ActorMethod<[bigint, bigint], Array<KanjiMasteryPublic>>,
   'listReadingSessions' : ActorMethod<[bigint], Array<ReadingSessionPublic>>,
+  'recordQuizResult' : ActorMethod<
+    [string, string, boolean, string],
+    undefined
+  >,
   'saveReadingSession' : ActorMethod<
     [string, bigint, bigint, Array<string>, Array<string>, Array<string>],
     undefined
@@ -144,6 +179,8 @@ export interface _SERVICE {
   'trackVocabLookup' : ActorMethod<[string], undefined>,
   'trackVocabSeen' : ActorMethod<[string], undefined>,
   'trackVocabWrong' : ActorMethod<[string], undefined>,
+  'updateKanjiMastery' : ActorMethod<[string, boolean], KanjiMastery>,
+  'updateRadicalMastery' : ActorMethod<[string, boolean], RadicalMastery>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

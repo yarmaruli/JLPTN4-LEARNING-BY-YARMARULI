@@ -8,6 +8,23 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const KanjiMastery = IDL.Record({
+  'wrongCount' : IDL.Nat,
+  'lastCorrect' : IDL.Int,
+  'lastWrong' : IDL.Int,
+  'masteryLevel' : IDL.Nat,
+  'seenCount' : IDL.Nat,
+  'correctCount' : IDL.Nat,
+  'kanji' : IDL.Text,
+  'lastSeen' : IDL.Int,
+});
+export const RadicalMastery = IDL.Record({
+  'wrongCount' : IDL.Nat,
+  'radical' : IDL.Text,
+  'masteryLevel' : IDL.Nat,
+  'seenCount' : IDL.Nat,
+  'correctCount' : IDL.Nat,
+});
 export const WeakItem = IDL.Record({
   'itemId' : IDL.Text,
   'wrongCount' : IDL.Nat,
@@ -43,6 +60,12 @@ export const KanjiMasteryPublic = IDL.Record({
   'lookupCount' : IDL.Nat,
   'kanjiId' : IDL.Text,
   'lastSeen' : IDL.Int,
+});
+export const QuizAnalytics = IDL.Record({
+  'totalCorrect' : IDL.Nat,
+  'totalQuizzes' : IDL.Nat,
+  'totalWrong' : IDL.Nat,
+  'accuracy' : IDL.Float64,
 });
 export const RadicalDashboardStats = IDL.Record({
   'total' : IDL.Nat,
@@ -114,19 +137,42 @@ export const AdaptiveQuizSessionPublic = IDL.Record({
 
 export const idlService = IDL.Service({
   'completeAdaptiveSession' : IDL.Func([IDL.Text, IDL.Nat, IDL.Nat], [], []),
+  'getAllKanjiMastery' : IDL.Func([], [IDL.Vec(KanjiMastery)], ['query']),
+  'getAllRadicalMastery' : IDL.Func([], [IDL.Vec(RadicalMastery)], ['query']),
+  'getDokkaiPriorityKanji' : IDL.Func(
+      [IDL.Vec(IDL.Text)],
+      [IDL.Vec(IDL.Text)],
+      ['query'],
+    ),
   'getKanjiDashboard' : IDL.Func([], [KanjiDashboardStats], ['query']),
   'getKanjiMastery' : IDL.Func(
       [IDL.Text],
       [IDL.Opt(KanjiMasteryPublic)],
       ['query'],
     ),
+  'getKanjiMasteryByChar' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(KanjiMastery)],
+      ['query'],
+    ),
+  'getQuizAnalytics' : IDL.Func([], [QuizAnalytics], ['query']),
   'getRadicalDashboard' : IDL.Func([], [RadicalDashboardStats], ['query']),
   'getRadicalMastery' : IDL.Func(
       [IDL.Text],
       [IDL.Opt(RadicalMasteryPublic)],
       ['query'],
     ),
+  'getRadicalMasteryByChar' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(RadicalMastery)],
+      ['query'],
+    ),
   'getScoreSummary' : IDL.Func([], [ScoreSummary], ['query']),
+  'getUntouchedKanji' : IDL.Func(
+      [IDL.Vec(IDL.Text)],
+      [IDL.Vec(IDL.Text)],
+      ['query'],
+    ),
   'getVocabDashboard' : IDL.Func([], [VocabDashboardStats], ['query']),
   'getVocabMastery' : IDL.Func(
       [IDL.Text],
@@ -134,6 +180,11 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'getWeakKanji' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+  'getWeakKanjiByThreshold' : IDL.Func(
+      [IDL.Nat],
+      [IDL.Vec(KanjiMastery)],
+      ['query'],
+    ),
   'getWeakRadicals' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
   'getWeakVocab' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
   'listKanjiMastery' : IDL.Func(
@@ -145,6 +196,11 @@ export const idlService = IDL.Service({
       [IDL.Nat],
       [IDL.Vec(ReadingSessionPublic)],
       ['query'],
+    ),
+  'recordQuizResult' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Bool, IDL.Text],
+      [],
+      [],
     ),
   'saveReadingSession' : IDL.Func(
       [
@@ -174,11 +230,30 @@ export const idlService = IDL.Service({
   'trackVocabLookup' : IDL.Func([IDL.Text], [], []),
   'trackVocabSeen' : IDL.Func([IDL.Text], [], []),
   'trackVocabWrong' : IDL.Func([IDL.Text], [], []),
+  'updateKanjiMastery' : IDL.Func([IDL.Text, IDL.Bool], [KanjiMastery], []),
+  'updateRadicalMastery' : IDL.Func([IDL.Text, IDL.Bool], [RadicalMastery], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const KanjiMastery = IDL.Record({
+    'wrongCount' : IDL.Nat,
+    'lastCorrect' : IDL.Int,
+    'lastWrong' : IDL.Int,
+    'masteryLevel' : IDL.Nat,
+    'seenCount' : IDL.Nat,
+    'correctCount' : IDL.Nat,
+    'kanji' : IDL.Text,
+    'lastSeen' : IDL.Int,
+  });
+  const RadicalMastery = IDL.Record({
+    'wrongCount' : IDL.Nat,
+    'radical' : IDL.Text,
+    'masteryLevel' : IDL.Nat,
+    'seenCount' : IDL.Nat,
+    'correctCount' : IDL.Nat,
+  });
   const WeakItem = IDL.Record({
     'itemId' : IDL.Text,
     'wrongCount' : IDL.Nat,
@@ -214,6 +289,12 @@ export const idlFactory = ({ IDL }) => {
     'lookupCount' : IDL.Nat,
     'kanjiId' : IDL.Text,
     'lastSeen' : IDL.Int,
+  });
+  const QuizAnalytics = IDL.Record({
+    'totalCorrect' : IDL.Nat,
+    'totalQuizzes' : IDL.Nat,
+    'totalWrong' : IDL.Nat,
+    'accuracy' : IDL.Float64,
   });
   const RadicalDashboardStats = IDL.Record({
     'total' : IDL.Nat,
@@ -285,19 +366,42 @@ export const idlFactory = ({ IDL }) => {
   
   return IDL.Service({
     'completeAdaptiveSession' : IDL.Func([IDL.Text, IDL.Nat, IDL.Nat], [], []),
+    'getAllKanjiMastery' : IDL.Func([], [IDL.Vec(KanjiMastery)], ['query']),
+    'getAllRadicalMastery' : IDL.Func([], [IDL.Vec(RadicalMastery)], ['query']),
+    'getDokkaiPriorityKanji' : IDL.Func(
+        [IDL.Vec(IDL.Text)],
+        [IDL.Vec(IDL.Text)],
+        ['query'],
+      ),
     'getKanjiDashboard' : IDL.Func([], [KanjiDashboardStats], ['query']),
     'getKanjiMastery' : IDL.Func(
         [IDL.Text],
         [IDL.Opt(KanjiMasteryPublic)],
         ['query'],
       ),
+    'getKanjiMasteryByChar' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(KanjiMastery)],
+        ['query'],
+      ),
+    'getQuizAnalytics' : IDL.Func([], [QuizAnalytics], ['query']),
     'getRadicalDashboard' : IDL.Func([], [RadicalDashboardStats], ['query']),
     'getRadicalMastery' : IDL.Func(
         [IDL.Text],
         [IDL.Opt(RadicalMasteryPublic)],
         ['query'],
       ),
+    'getRadicalMasteryByChar' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(RadicalMastery)],
+        ['query'],
+      ),
     'getScoreSummary' : IDL.Func([], [ScoreSummary], ['query']),
+    'getUntouchedKanji' : IDL.Func(
+        [IDL.Vec(IDL.Text)],
+        [IDL.Vec(IDL.Text)],
+        ['query'],
+      ),
     'getVocabDashboard' : IDL.Func([], [VocabDashboardStats], ['query']),
     'getVocabMastery' : IDL.Func(
         [IDL.Text],
@@ -305,6 +409,11 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'getWeakKanji' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+    'getWeakKanjiByThreshold' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Vec(KanjiMastery)],
+        ['query'],
+      ),
     'getWeakRadicals' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
     'getWeakVocab' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
     'listKanjiMastery' : IDL.Func(
@@ -316,6 +425,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Nat],
         [IDL.Vec(ReadingSessionPublic)],
         ['query'],
+      ),
+    'recordQuizResult' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Bool, IDL.Text],
+        [],
+        [],
       ),
     'saveReadingSession' : IDL.Func(
         [
@@ -345,6 +459,12 @@ export const idlFactory = ({ IDL }) => {
     'trackVocabLookup' : IDL.Func([IDL.Text], [], []),
     'trackVocabSeen' : IDL.Func([IDL.Text], [], []),
     'trackVocabWrong' : IDL.Func([IDL.Text], [], []),
+    'updateKanjiMastery' : IDL.Func([IDL.Text, IDL.Bool], [KanjiMastery], []),
+    'updateRadicalMastery' : IDL.Func(
+        [IDL.Text, IDL.Bool],
+        [RadicalMastery],
+        [],
+      ),
   });
 };
 

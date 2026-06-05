@@ -31259,7 +31259,7 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$G = [
+const __iconNode$H = [
   ["path", { d: "M10 2v8l3-3 3 3V2", key: "sqw3rj" }],
   [
     "path",
@@ -31269,14 +31269,14 @@ const __iconNode$G = [
     }
   ]
 ];
-const BookMarked = createLucideIcon("book-marked", __iconNode$G);
+const BookMarked = createLucideIcon("book-marked", __iconNode$H);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$F = [
+const __iconNode$G = [
   ["path", { d: "M12 7v14", key: "1akyts" }],
   [
     "path",
@@ -31286,14 +31286,14 @@ const __iconNode$F = [
     }
   ]
 ];
-const BookOpen = createLucideIcon("book-open", __iconNode$F);
+const BookOpen = createLucideIcon("book-open", __iconNode$G);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$E = [
+const __iconNode$F = [
   ["path", { d: "m14.5 7-5 5", key: "dy991v" }],
   [
     "path",
@@ -31304,14 +31304,14 @@ const __iconNode$E = [
   ],
   ["path", { d: "m9.5 7 5 5", key: "s45iea" }]
 ];
-const BookX = createLucideIcon("book-x", __iconNode$E);
+const BookX = createLucideIcon("book-x", __iconNode$F);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$D = [
+const __iconNode$E = [
   [
     "path",
     {
@@ -31334,7 +31334,20 @@ const __iconNode$D = [
   ["path", { d: "M6 18a4 4 0 0 1-1.967-.516", key: "2e4loj" }],
   ["path", { d: "M19.967 17.484A4 4 0 0 1 18 18", key: "159ez6" }]
 ];
-const Brain = createLucideIcon("brain", __iconNode$D);
+const Brain = createLucideIcon("brain", __iconNode$E);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$D = [
+  ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
+  ["path", { d: "M18 17V9", key: "2bz60n" }],
+  ["path", { d: "M13 17V5", key: "1frdt8" }],
+  ["path", { d: "M8 17v-3", key: "17ska0" }]
+];
+const ChartColumn = createLucideIcon("chart-column", __iconNode$D);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31342,56 +31355,55 @@ const Brain = createLucideIcon("brain", __iconNode$D);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$C = [
-  ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
-  ["path", { d: "M18 17V9", key: "2bz60n" }],
-  ["path", { d: "M13 17V5", key: "1frdt8" }],
-  ["path", { d: "M8 17v-3", key: "17ska0" }]
-];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$C);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$B = [
   ["line", { x1: "18", x2: "18", y1: "20", y2: "10", key: "1xfpm4" }],
   ["line", { x1: "12", x2: "12", y1: "20", y2: "4", key: "be30l9" }],
   ["line", { x1: "6", x2: "6", y1: "20", y2: "14", key: "1r4le6" }]
 ];
-const ChartNoAxesColumn = createLucideIcon("chart-no-axes-column", __iconNode$B);
+const ChartNoAxesColumn = createLucideIcon("chart-no-axes-column", __iconNode$C);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$A = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$A);
+const __iconNode$B = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$B);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$z = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-const ChevronDown = createLucideIcon("chevron-down", __iconNode$z);
+const __iconNode$A = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+const ChevronDown = createLucideIcon("chevron-down", __iconNode$A);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$y = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$y);
+const __iconNode$z = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$z);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$x = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-const ChevronUp = createLucideIcon("chevron-up", __iconNode$x);
+const __iconNode$y = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+const ChevronUp = createLucideIcon("chevron-up", __iconNode$y);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$x = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+];
+const CircleAlert = createLucideIcon("circle-alert", __iconNode$x);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31399,11 +31411,10 @@ const ChevronUp = createLucideIcon("chevron-up", __iconNode$x);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$w = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+  ["path", { d: "M21.801 10A10 10 0 1 1 17 3.335", key: "yps3ct" }],
+  ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
 ];
-const CircleAlert = createLucideIcon("circle-alert", __iconNode$w);
+const CircleCheckBig = createLucideIcon("circle-check-big", __iconNode$w);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31411,10 +31422,10 @@ const CircleAlert = createLucideIcon("circle-alert", __iconNode$w);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$v = [
-  ["path", { d: "M21.801 10A10 10 0 1 1 17 3.335", key: "yps3ct" }],
-  ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
 ];
-const CircleCheckBig = createLucideIcon("circle-check-big", __iconNode$v);
+const CircleCheck = createLucideIcon("circle-check", __iconNode$v);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31423,9 +31434,10 @@ const CircleCheckBig = createLucideIcon("circle-check-big", __iconNode$v);
  */
 const __iconNode$u = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+  ["path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", key: "1u773s" }],
+  ["path", { d: "M12 17h.01", key: "p32p05" }]
 ];
-const CircleCheck = createLucideIcon("circle-check", __iconNode$u);
+const CircleHelp = createLucideIcon("circle-help", __iconNode$u);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31434,10 +31446,10 @@ const CircleCheck = createLucideIcon("circle-check", __iconNode$u);
  */
 const __iconNode$t = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", key: "1u773s" }],
-  ["path", { d: "M12 17h.01", key: "p32p05" }]
+  ["path", { d: "m15 9-6 6", key: "1uzhvr" }],
+  ["path", { d: "m9 9 6 6", key: "z0biqf" }]
 ];
-const CircleHelp = createLucideIcon("circle-help", __iconNode$t);
+const CircleX = createLucideIcon("circle-x", __iconNode$t);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31445,11 +31457,13 @@ const CircleHelp = createLucideIcon("circle-help", __iconNode$t);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$s = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "m15 9-6 6", key: "1uzhvr" }],
-  ["path", { d: "m9 9 6 6", key: "z0biqf" }]
+  ["rect", { width: "8", height: "4", x: "8", y: "2", rx: "1", ry: "1", key: "tgr4d6" }],
+  ["path", { d: "M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2", key: "4jdomd" }],
+  ["path", { d: "M16 4h2a2 2 0 0 1 2 2v4", key: "3hqy98" }],
+  ["path", { d: "M21 14H11", key: "1bme5i" }],
+  ["path", { d: "m15 10-4 4 4 4", key: "5dvupr" }]
 ];
-const CircleX = createLucideIcon("circle-x", __iconNode$s);
+const ClipboardCopy = createLucideIcon("clipboard-copy", __iconNode$s);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31457,13 +31471,10 @@ const CircleX = createLucideIcon("circle-x", __iconNode$s);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$r = [
-  ["rect", { width: "8", height: "4", x: "8", y: "2", rx: "1", ry: "1", key: "tgr4d6" }],
-  ["path", { d: "M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2", key: "4jdomd" }],
-  ["path", { d: "M16 4h2a2 2 0 0 1 2 2v4", key: "3hqy98" }],
-  ["path", { d: "M21 14H11", key: "1bme5i" }],
-  ["path", { d: "m15 10-4 4 4 4", key: "5dvupr" }]
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
 ];
-const ClipboardCopy = createLucideIcon("clipboard-copy", __iconNode$r);
+const Clock = createLucideIcon("clock", __iconNode$r);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31471,10 +31482,11 @@ const ClipboardCopy = createLucideIcon("clipboard-copy", __iconNode$r);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$q = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
+  ["ellipse", { cx: "12", cy: "5", rx: "9", ry: "3", key: "msslwz" }],
+  ["path", { d: "M3 5V19A9 3 0 0 0 21 19V5", key: "1wlel7" }],
+  ["path", { d: "M3 12A9 3 0 0 0 21 12", key: "mv7ke4" }]
 ];
-const Clock = createLucideIcon("clock", __iconNode$q);
+const Database = createLucideIcon("database", __iconNode$q);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31482,11 +31494,11 @@ const Clock = createLucideIcon("clock", __iconNode$q);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$p = [
-  ["ellipse", { cx: "12", cy: "5", rx: "9", ry: "3", key: "msslwz" }],
-  ["path", { d: "M3 5V19A9 3 0 0 0 21 19V5", key: "1wlel7" }],
-  ["path", { d: "M3 12A9 3 0 0 0 21 12", key: "mv7ke4" }]
+  ["path", { d: "M12 15V3", key: "m9g1x1" }],
+  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+  ["path", { d: "m7 10 5 5 5-5", key: "brsn70" }]
 ];
-const Database = createLucideIcon("database", __iconNode$p);
+const Download = createLucideIcon("download", __iconNode$p);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31494,18 +31506,6 @@ const Database = createLucideIcon("database", __iconNode$p);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$o = [
-  ["path", { d: "M12 15V3", key: "m9g1x1" }],
-  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
-  ["path", { d: "m7 10 5 5 5-5", key: "brsn70" }]
-];
-const Download = createLucideIcon("download", __iconNode$o);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$n = [
   [
     "path",
     {
@@ -31524,7 +31524,19 @@ const __iconNode$n = [
   ],
   ["path", { d: "m9.6 14.4 4.8-4.8", key: "6umqxw" }]
 ];
-const Dumbbell = createLucideIcon("dumbbell", __iconNode$n);
+const Dumbbell = createLucideIcon("dumbbell", __iconNode$o);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$n = [
+  ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
+  ["path", { d: "M10 14 21 3", key: "gplh6r" }],
+  ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
+];
+const ExternalLink = createLucideIcon("external-link", __iconNode$n);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -46289,6 +46301,427 @@ const vocabularyData = [
     jlptLevel: "N4",
     batchCode: "KE_VERBS",
     category: "emotion"
+  },
+  // ============================================================
+  // N4 EXTRA VOCABULARY PACK - KEV_N4_EXTRA_001 to KEV_N4_EXTRA_038
+  // ============================================================
+  {
+    id: "KEV_N4_EXTRA_001",
+    vocabulary: "引越し",
+    romaji: "hikkoshi",
+    meaning: "Pindah rumah",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "引",
+    explanation: "Proses berpindah tempat tinggal ke alamat baru."
+  },
+  {
+    id: "KEV_N4_EXTRA_002",
+    vocabulary: "転勤",
+    romaji: "tenkin",
+    meaning: "Mutasi kerja",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "転",
+    explanation: "Pindah tempat bekerja ke cabang atau kota lain atas perintah perusahaan."
+  },
+  {
+    id: "KEV_N4_EXTRA_003",
+    vocabulary: "就職",
+    romaji: "shuushoku",
+    meaning: "Mendapat pekerjaan, mulai bekerja",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "就",
+    explanation: "Mendapatkan pekerjaan pertama atau memulai karier di perusahaan."
+  },
+  {
+    id: "KEV_N4_EXTRA_004",
+    vocabulary: "失業",
+    romaji: "shitsugyou",
+    meaning: "Pengangguran, kehilangan pekerjaan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "失",
+    explanation: "Kondisi tidak memiliki pekerjaan akibat dipecat atau resign."
+  },
+  {
+    id: "KEV_N4_EXTRA_005",
+    vocabulary: "面接",
+    romaji: "mensetsu",
+    meaning: "Wawancara kerja",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "面",
+    explanation: "Sesi tanya jawab antara pelamar dan perusahaan sebelum diterima kerja."
+  },
+  {
+    id: "KEV_N4_EXTRA_006",
+    vocabulary: "採用",
+    romaji: "saiyou",
+    meaning: "Penerimaan, rekrutmen",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "手",
+    explanation: "Proses menerima karyawan baru atau menggunakan sesuatu secara resmi."
+  },
+  {
+    id: "KEV_N4_EXTRA_007",
+    vocabulary: "賞与",
+    romaji: "shouyo",
+    meaning: "Bonus",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "財",
+    explanation: "Pembayaran ekstra di luar gaji pokok, biasanya diberikan setengah tahun sekali."
+  },
+  {
+    id: "KEV_N4_EXTRA_008",
+    vocabulary: "残高",
+    romaji: "zandaka",
+    meaning: "Sisa saldo",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "残",
+    explanation: "Jumlah uang yang tersisa di rekening bank atau dompet."
+  },
+  {
+    id: "KEV_N4_EXTRA_009",
+    vocabulary: "預金",
+    romaji: "yokin",
+    meaning: "Tabungan, simpanan bank",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "金",
+    explanation: "Uang yang disimpan di bank sebagai tabungan."
+  },
+  {
+    id: "KEV_N4_EXTRA_010",
+    vocabulary: "振込",
+    romaji: "furikomi",
+    meaning: "Transfer bank",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "收",
+    explanation: "Pengiriman uang dari satu rekening ke rekening lain melalui bank."
+  },
+  {
+    id: "KEV_N4_EXTRA_011",
+    vocabulary: "為替",
+    romaji: "kawase",
+    meaning: "Valuta asing, kurs",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "火",
+    explanation: "Nilai tukar mata uang asing terhadap yen Jepang."
+  },
+  {
+    id: "KEV_N4_EXTRA_012",
+    vocabulary: "保険",
+    romaji: "hoken",
+    meaning: "Asuransi",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "人",
+    explanation: "Sistem perlindungan finansial terhadap risiko kecelakaan, sakit, atau kematian."
+  },
+  {
+    id: "KEV_N4_EXTRA_013",
+    vocabulary: "契約",
+    romaji: "keiyaku",
+    meaning: "Kontrak, perjanjian",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "糸",
+    explanation: "Perjanjian resmi antara dua pihak yang mengikat secara hukum."
+  },
+  {
+    id: "KEV_N4_EXTRA_014",
+    vocabulary: "更新",
+    romaji: "koushin",
+    meaning: "Pembaruan, perpanjangan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "日",
+    explanation: "Memperpanjang masa berlaku kontrak atau memperbarui informasi."
+  },
+  {
+    id: "KEV_N4_EXTRA_015",
+    vocabulary: "解約",
+    romaji: "kaiyaku",
+    meaning: "Pembatalan kontrak",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "角",
+    explanation: "Mengakhiri atau membatalkan perjanjian atau kontrak sebelum habis masa berlakunya."
+  },
+  {
+    id: "KEV_N4_EXTRA_016",
+    vocabulary: "申込",
+    romaji: "moushikomi",
+    meaning: "Pendaftaran, aplikasi",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "田",
+    explanation: "Proses mendaftarkan diri atau mengajukan permohonan secara resmi."
+  },
+  {
+    id: "KEV_N4_EXTRA_017",
+    vocabulary: "届出",
+    romaji: "todokede",
+    meaning: "Pemberitahuan resmi, pelaporan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "届",
+    explanation: "Menyampaikan informasi atau laporan kepada pihak berwenang secara resmi."
+  },
+  {
+    id: "KEV_N4_EXTRA_018",
+    vocabulary: "承認",
+    romaji: "shounin",
+    meaning: "Persetujuan, pengesahan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "手",
+    explanation: "Memberikan persetujuan atau pengesahan resmi terhadap suatu permintaan."
+  },
+  {
+    id: "KEV_N4_EXTRA_019",
+    vocabulary: "拒否",
+    romaji: "kyohi",
+    meaning: "Penolakan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "手",
+    explanation: "Menolak permintaan, tawaran, atau perintah secara tegas."
+  },
+  {
+    id: "KEV_N4_EXTRA_020",
+    vocabulary: "条件",
+    romaji: "jouken",
+    meaning: "Syarat, kondisi",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "条",
+    explanation: "Persyaratan yang harus dipenuhi agar sesuatu dapat terlaksana."
+  },
+  {
+    id: "KEV_N4_EXTRA_021",
+    vocabulary: "警告",
+    romaji: "keikoku",
+    meaning: "Peringatan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "言",
+    explanation: "Pemberitahuan resmi tentang adanya bahaya atau pelanggaran yang harus dihindari."
+  },
+  {
+    id: "KEV_N4_EXTRA_022",
+    vocabulary: "禁止",
+    romaji: "kinshi",
+    meaning: "Larangan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "示",
+    explanation: "Tindakan yang tidak diperbolehkan atau dilarang secara resmi."
+  },
+  {
+    id: "KEV_N4_EXTRA_023",
+    vocabulary: "義務",
+    romaji: "gimu",
+    meaning: "Kewajiban",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "羊",
+    explanation: "Sesuatu yang harus dilakukan berdasarkan aturan, hukum, atau moral."
+  },
+  {
+    id: "KEV_N4_EXTRA_024",
+    vocabulary: "権利",
+    romaji: "kenri",
+    meaning: "Hak",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "木",
+    explanation: "Sesuatu yang boleh atau berhak didapatkan oleh seseorang."
+  },
+  {
+    id: "KEV_N4_EXTRA_025",
+    vocabulary: "責任",
+    romaji: "sekinin",
+    meaning: "Tanggung jawab",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "負",
+    explanation: "Kewajiban menanggung akibat dari tindakan atau keputusan yang telah dibuat."
+  },
+  {
+    id: "KEV_N4_EXTRA_026",
+    vocabulary: "信頼",
+    romaji: "shinrai",
+    meaning: "Kepercayaan, rasa percaya",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "人",
+    explanation: "Keyakinan bahwa seseorang atau sesuatu dapat diandalkan dan dipercaya."
+  },
+  {
+    id: "KEV_N4_EXTRA_027",
+    vocabulary: "期待",
+    romaji: "kitai",
+    meaning: "Harapan, ekspektasi",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "木",
+    explanation: "Perasaan menunggu sesuatu yang positif terjadi di masa depan."
+  },
+  {
+    id: "KEV_N4_EXTRA_028",
+    vocabulary: "希望",
+    romaji: "kibou",
+    meaning: "Harapan, keinginan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "布",
+    explanation: "Keinginan atau harapan yang ingin dicapai di masa depan."
+  },
+  {
+    id: "KEV_N4_EXTRA_029",
+    vocabulary: "失望",
+    romaji: "shitsubou",
+    meaning: "Kekecewaan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "望",
+    explanation: "Perasaan kecewa karena harapan tidak terpenuhi."
+  },
+  {
+    id: "KEV_N4_EXTRA_030",
+    vocabulary: "満足",
+    romaji: "manzoku",
+    meaning: "Kepuasan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "氵",
+    explanation: "Perasaan puas karena sesuatu berjalan sesuai harapan."
+  },
+  {
+    id: "KEV_N4_EXTRA_031",
+    vocabulary: "不満",
+    romaji: "fuman",
+    meaning: "Ketidakpuasan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "一",
+    explanation: "Perasaan tidak puas atau kecewa terhadap situasi tertentu."
+  },
+  {
+    id: "KEV_N4_EXTRA_032",
+    vocabulary: "謝罪",
+    romaji: "shazai",
+    meaning: "Permintaan maaf resmi",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "言",
+    explanation: "Permohonan maaf yang disampaikan secara formal atau resmi."
+  },
+  {
+    id: "KEV_N4_EXTRA_033",
+    vocabulary: "伝言",
+    romaji: "dengon",
+    meaning: "Pesan titipan",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "人",
+    explanation: "Pesan yang dititipkan kepada orang lain untuk disampaikan ke pihak ketiga."
+  },
+  {
+    id: "KEV_N4_EXTRA_034",
+    vocabulary: "連絡先",
+    romaji: "renrakusaki",
+    meaning: "Informasi kontak",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "辿",
+    explanation: "Informasi tentang cara menghubungi seseorang seperti nomor telepon atau alamat."
+  },
+  {
+    id: "KEV_N4_EXTRA_035",
+    vocabulary: "電話番号",
+    romaji: "denwabangou",
+    meaning: "Nomor telepon",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "雨",
+    explanation: "Deretan angka yang digunakan untuk menghubungi seseorang melalui telepon."
+  },
+  {
+    id: "KEV_N4_EXTRA_036",
+    vocabulary: "生年月日",
+    romaji: "seinengappi",
+    meaning: "Tanggal lahir",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "日",
+    explanation: "Tanggal, bulan, dan tahun kelahiran seseorang."
+  },
+  {
+    id: "KEV_N4_EXTRA_037",
+    vocabulary: "年齢",
+    romaji: "nenrei",
+    meaning: "Usia",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "年",
+    explanation: "Jumlah tahun yang telah dilalui sejak kelahiran seseorang."
+  },
+  {
+    id: "KEV_N4_EXTRA_038",
+    vocabulary: "性別",
+    romaji: "seibetsu",
+    meaning: "Jenis kelamin",
+    wordType: "noun",
+    jlptLevel: "N4",
+    category: "N4_EXTRA",
+    radical: "心",
+    explanation: "Kategori biologis seseorang sebagai laki-laki atau perempuan."
   }
 ];
 console.log(`✅ Total vocabulary entries: ${vocabularyData.length}`);
@@ -46570,6 +47003,23 @@ const radicalData = [
     relatedConcepts: "alam, tumbuhan",
     kanjiList: ["花", "茶", "草", "菜", "葉", "薬"],
     vocabularyList: []
+  },
+  {
+    name: "足 (ashi)",
+    origin: "Gambar kaki manusia yang berjalan",
+    meaning: "Kaki / Foot / Leg",
+    relatedConcepts: "Berjalan, berlari, melompat, berdiri, jalan kaki",
+    kanjiList: ["足", "走", "起", "路", "跳", "踏", "距", "蹴", "躁", "践"],
+    vocabularyList: [
+      "足",
+      "走る",
+      "起きる",
+      "道路",
+      "跳ぶ",
+      "踏む",
+      "足りる",
+      "足元"
+    ]
   }
 ];
 console.log(`✅ Total radical entries: ${radicalData.length}`);
@@ -51751,12 +52201,649 @@ function KanjiList({
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: kanjiList.map((kanji) => /* @__PURE__ */ jsxRuntimeExports.jsx(KanjiCard, { kanji }, kanji.character)) })
   ] });
 }
+function findRelatedVocab(kanji, vocab, max2 = 3) {
+  const results = [];
+  for (const v2 of vocab) {
+    const word = v2.vocabulary ?? "";
+    if (word.includes(kanji) && word !== kanji && word.length > 1) {
+      results.push(v2);
+      if (results.length >= max2) break;
+    }
+  }
+  return results;
+}
+function findRadicalMeaning(radicalChar) {
+  if (!radicalChar) return "";
+  const clean2 = radicalChar.replace(/\s*\(.*\)/, "").trim();
+  const found = radicalData.find((r2) => {
+    const rname = r2.name.replace(/\s*\(.*\)/, "").trim();
+    return rname === clean2 || rname.startsWith(clean2) || clean2.startsWith(rname);
+  });
+  return (found == null ? void 0 : found.meaning) ?? "";
+}
+const EXAMPLE_SENTENCES = {
+  "会": {
+    japanese: "会社で会議があります。",
+    romaji: "Kaisha de kaigi ga arimasu.",
+    meaning: "Ada rapat di kantor."
+  },
+  "学": {
+    japanese: "大学で日本語を学びます。",
+    romaji: "Daigaku de Nihongo o manabimasu.",
+    meaning: "Saya belajar bahasa Jepang di universitas."
+  },
+  "食": {
+    japanese: "毎朝、ご飯を食べます。",
+    romaji: "Maiasa, gohan o tabemasu.",
+    meaning: "Setiap pagi, saya makan nasi."
+  },
+  "飲": {
+    japanese: "お茶を飲みます。",
+    romaji: "Ocha o nomimasu.",
+    meaning: "Saya minum teh."
+  },
+  "行": {
+    japanese: "学校へ行きます。",
+    romaji: "Gakkou e ikimasu.",
+    meaning: "Saya pergi ke sekolah."
+  },
+  "来": {
+    japanese: "友達が来ました。",
+    romaji: "Tomodachi ga kimashita.",
+    meaning: "Teman saya datang."
+  },
+  "見": {
+    japanese: "テレビを見ます。",
+    romaji: "Terebi o mimasu.",
+    meaning: "Saya menonton TV."
+  },
+  "耳": {
+    japanese: "音楽を耳きます。",
+    romaji: "Ongaku o kikimasu.",
+    meaning: "Saya mendengarkan musik."
+  },
+  "読": {
+    japanese: "本を読みます。",
+    romaji: "Hon o yomimasu.",
+    meaning: "Saya membaca buku."
+  },
+  "書": {
+    japanese: "手紙を書きます。",
+    romaji: "Tegami o kakimasu.",
+    meaning: "Saya menulis surat."
+  },
+  "話": {
+    japanese: "日本語で話します。",
+    romaji: "Nihongo de hanashimasu.",
+    meaning: "Saya berbicara dalam bahasa Jepang."
+  },
+  "買": {
+    japanese: "スーパーで野菜を買いました。",
+    romaji: "Suupaa de yasai o kaimashita.",
+    meaning: "Saya membeli sayuran di supermarket."
+  },
+  "作": {
+    japanese: "料理を作ります。",
+    romaji: "Ryouri o tsukurimasu.",
+    meaning: "Saya memasak."
+  },
+  "使": {
+    japanese: "パソコンを使います。",
+    romaji: "Pasokon o tsukaimasu.",
+    meaning: "Saya menggunakan komputer."
+  },
+  "出": {
+    japanese: "家を出ます。",
+    romaji: "Ie o demasu.",
+    meaning: "Saya keluar dari rumah."
+  },
+  "入": {
+    japanese: "部屋に入ります。",
+    romaji: "Heya ni hairimasu.",
+    meaning: "Saya masuk ke kamar."
+  },
+  "帰": {
+    japanese: "家に帰ります。",
+    romaji: "Ie ni kaerimasu.",
+    meaning: "Saya pulang ke rumah."
+  },
+  "起": {
+    japanese: "毎朝6時に起きます。",
+    romaji: "Maiasa rokuji ni okimasu.",
+    meaning: "Setiap pagi saya bangun pukul 6."
+  },
+  "寝": {
+    japanese: "11時に寝ます。",
+    romaji: "Juuichiji ni nemasu.",
+    meaning: "Saya tidur pukul 11."
+  },
+  "働": {
+    japanese: "会社で働きます。",
+    romaji: "Kaisha de hatarakimasu.",
+    meaning: "Saya bekerja di kantor."
+  },
+  "勉": {
+    japanese: "毎日勉強します。",
+    romaji: "Mainichi benkyou shimasu.",
+    meaning: "Saya belajar setiap hari."
+  },
+  "経": {
+    japanese: "日本で働いた経験があります。",
+    romaji: "Nihon de hataraita keiken ga arimasu.",
+    meaning: "Saya memiliki pengalaman bekerja di Jepang."
+  },
+  "発": {
+    japanese: "会議で発表します。",
+    romaji: "Kaigi de happyou shimasu.",
+    meaning: "Saya presentasi dalam rapat."
+  },
+  "説": {
+    japanese: "先生が説明してくれました。",
+    romaji: "Sensei ga setsumei shite kuremashita.",
+    meaning: "Guru menjelaskan kepada saya."
+  },
+  "準": {
+    japanese: "試験の準備をします。",
+    romaji: "Shiken no junbi o shimasu.",
+    meaning: "Saya mempersiapkan diri untuk ujian."
+  },
+  "利": {
+    japanese: "インターネットを利用します。",
+    romaji: "Intaanetto o riyou shimasu.",
+    meaning: "Saya menggunakan internet."
+  },
+  "連": {
+    japanese: "後で連絡します。",
+    romaji: "Ato de renraku shimasu.",
+    meaning: "Saya akan menghubungi nanti."
+  },
+  "約": {
+    japanese: "レストランを予約しました。",
+    romaji: "Resutoran o yoyaku shimashita.",
+    meaning: "Saya memesan restoran."
+  },
+  "確": {
+    japanese: "予定を確認してください。",
+    romaji: "Yotei o kakunin shite kudasai.",
+    meaning: "Tolong konfirmasi jadwal."
+  },
+  "必": {
+    japanese: "パスポートが必要です。",
+    romaji: "Pasupooto ga hitsuyou desu.",
+    meaning: "Paspor diperlukan."
+  },
+  "研": {
+    japanese: "大学で研究しています。",
+    romaji: "Daigaku de kenkyuu shite imasu.",
+    meaning: "Saya sedang meneliti di universitas."
+  },
+  "運": {
+    japanese: "車の運転が好きです。",
+    romaji: "Kuruma no unten ga suki desu.",
+    meaning: "Saya suka mengemudi."
+  },
+  "卒": {
+    japanese: "来年、大学を卒業します。",
+    romaji: "Rainen, daigaku o sotsugyou shimasu.",
+    meaning: "Tahun depan saya lulus universitas."
+  },
+  "旅": {
+    japanese: "日本へ旅行します。",
+    romaji: "Nihon e ryokou shimasu.",
+    meaning: "Saya pergi wisata ke Jepang."
+  },
+  "特": {
+    japanese: "今日は特別な日です。",
+    romaji: "Kyou wa tokubetsu na hi desu.",
+    meaning: "Hari ini adalah hari istimewa."
+  },
+  "原": {
+    japanese: "事故の原因は何ですか。",
+    romaji: "Jiko no gen'in wa nan desu ka.",
+    meaning: "Apa penyebab kecelakaan itu?"
+  },
+  "安": {
+    japanese: "この道は安全ですか。",
+    romaji: "Kono michi wa anzen desu ka.",
+    meaning: "Apakah jalan ini aman?"
+  },
+  "交": {
+    japanese: "交通が便利な場所に住みたい。",
+    romaji: "Koutsuu ga benri na basho ni sumitai.",
+    meaning: "Saya ingin tinggal di tempat transportasi yang mudah."
+  },
+  "文": {
+    japanese: "日本の文化を勉強しています。",
+    romaji: "Nihon no bunka o benkyou shite imasu.",
+    meaning: "Saya mempelajari budaya Jepang."
+  },
+  "生": {
+    japanese: "毎日、生活が忙しいです。",
+    romaji: "Mainichi, seikatsu ga isogashii desu.",
+    meaning: "Kehidupan sehari-hari saya sibuk."
+  },
+  "試": {
+    japanese: "今月、日本語の試験があります。",
+    romaji: "Kongetsu, Nihongo no shiken ga arimasu.",
+    meaning: "Bulan ini ada ujian bahasa Jepang."
+  },
+  "海": {
+    japanese: "海へ行きます。",
+    romaji: "Umi e ikimasu.",
+    meaning: "Saya pergi ke laut."
+  },
+  "山": {
+    japanese: "山に登ります。",
+    romaji: "Yama ni noborimasu.",
+    meaning: "Saya mendaki gunung."
+  },
+  "川": {
+    japanese: "川で魚を釣ります。",
+    romaji: "Kawa de sakana o tsurimasu.",
+    meaning: "Saya memancing ikan di sungai."
+  },
+  "電": {
+    japanese: "電車で会社へ行きます。",
+    romaji: "Densha de kaisha e ikimasu.",
+    meaning: "Saya pergi ke kantor naik kereta."
+  },
+  "車": {
+    japanese: "車で旅行します。",
+    romaji: "Kuruma de ryokou shimasu.",
+    meaning: "Saya berwisata naik mobil."
+  },
+  "駅": {
+    japanese: "駅まで歩いて０分です。",
+    romaji: "Eki made aruite juppun desu.",
+    meaning: "Jarak ke stasiun 10 menit jalan kaki."
+  },
+  "病": {
+    japanese: "病院に行きます。",
+    romaji: "Byouin ni ikimasu.",
+    meaning: "Saya pergi ke rumah sakit."
+  },
+  "薬": {
+    japanese: "薬を飲んでください。",
+    romaji: "Kusuri o nonde kudasai.",
+    meaning: "Tolong minum obatnya."
+  },
+  "店": {
+    japanese: "店でコーヒーを飲みます。",
+    romaji: "Mise de koohii o nomimasu.",
+    meaning: "Saya minum kopi di toko."
+  },
+  "家": {
+    japanese: "新しい家を買いました。",
+    romaji: "Atarashii ie o kaimashita.",
+    meaning: "Saya membeli rumah baru."
+  },
+  "国": {
+    japanese: "どの国から来ましたか。",
+    romaji: "Dono kuni kara kimashita ka.",
+    meaning: "Anda berasal dari negara mana?"
+  },
+  "人": {
+    japanese: "あの人は誤ですか。",
+    romaji: "Ano hito wa dare desu ka.",
+    meaning: "Siapa orang itu?"
+  },
+  "時": {
+    japanese: "今、何時ですか。",
+    romaji: "Ima, nanji desu ka.",
+    meaning: "Sekarang jam berapa?"
+  },
+  "間": {
+    japanese: "授業は2時間あります。",
+    romaji: "Jugyou wa nijikan arimasu.",
+    meaning: "Pelajaran berlangsung 2 jam."
+  },
+  "週": {
+    japanese: "来週、友達と会います。",
+    romaji: "Raishuu, tomodachi to aimasu.",
+    meaning: "Minggu depan saya bertemu teman."
+  },
+  "月": {
+    japanese: "毎月、給料をもらいます。",
+    romaji: "Maitsuki, kyuuryou o moraimasu.",
+    meaning: "Setiap bulan saya menerima gaji."
+  },
+  "年": {
+    japanese: "来年、日本へ行きたいです。",
+    romaji: "Rainen, Nihon e ikitai desu.",
+    meaning: "Tahun depan saya ingin pergi ke Jepang."
+  },
+  "今": {
+    japanese: "今から勉強します。",
+    romaji: "Ima kara benkyou shimasu.",
+    meaning: "Saya akan mulai belajar sekarang."
+  },
+  "先": {
+    japanese: "先生に質問します。",
+    romaji: "Sensei ni shitsumon shimasu.",
+    meaning: "Saya bertanya kepada guru."
+  },
+  "高": {
+    japanese: "この山はとても高いです。",
+    romaji: "Kono yama wa totemo takai desu.",
+    meaning: "Gunung ini sangat tinggi."
+  },
+  "長": {
+    japanese: "この映画は長いです。",
+    romaji: "Kono eiga wa nagai desu.",
+    meaning: "Film ini panjang."
+  },
+  "新": {
+    japanese: "新しいスマホを買いました。",
+    romaji: "Atarashii sumaho o kaimashita.",
+    meaning: "Saya membeli HP baru."
+  },
+  "古": {
+    japanese: "古い建物を見ました。",
+    romaji: "Furui tatemono o mimashita.",
+    meaning: "Saya melihat bangunan tua."
+  },
+  "大": {
+    japanese: "大学は大きいです。",
+    romaji: "Daigaku wa ookii desu.",
+    meaning: "Universitas itu besar."
+  },
+  "小": {
+    japanese: "小さい猫がいます。",
+    romaji: "Chiisai neko ga imasu.",
+    meaning: "Ada kucing kecil."
+  }
+};
+function buildExampleSentence(entry, relatedVocab) {
+  if (EXAMPLE_SENTENCES[entry.character]) {
+    return EXAMPLE_SENTENCES[entry.character];
+  }
+  if (relatedVocab.length > 0) {
+    const v2 = relatedVocab[0];
+    return {
+      japanese: `${v2.vocabulary}は大切です。`,
+      romaji: `${v2.romaji} wa taisetsu desu.`,
+      meaning: `${v2.meaning} itu penting.`
+    };
+  }
+  return {
+    japanese: `この${entry.character}は大切な漢字です。`,
+    romaji: `Kono ${entry.romaji} wa taisetsu na kanji desu.`,
+    meaning: `Kanji "${entry.meaning}" ini adalah kanji yang penting.`
+  };
+}
+function KanjiAnswerPanel({
+  isCorrect,
+  entry,
+  onNext,
+  onReviewAgain,
+  onViewRadical,
+  nextLabel = "Lanjut →"
+}) {
+  const safeVocab = reactExports.useMemo(
+    () => Array.isArray(vocabularyData) ? vocabularyData : [],
+    []
+  );
+  const relatedVocab = reactExports.useMemo(
+    () => findRelatedVocab(entry.character, safeVocab, 3),
+    [entry.character, safeVocab]
+  );
+  const radicalMeaning = reactExports.useMemo(
+    () => findRadicalMeaning(entry.radical),
+    [entry.radical]
+  );
+  const exampleSentence = reactExports.useMemo(
+    () => buildExampleSentence(entry, relatedVocab),
+    [entry, relatedVocab]
+  );
+  const borderCls = isCorrect ? "border-green-600 bg-green-950/20" : "border-red-600 bg-red-950/20";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: borderCls, "data-ocid": "kanji_quiz.answer_panel", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "pt-5 pb-4 space-y-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: isCorrect ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-6 h-6 text-green-400 shrink-0" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-green-400 text-base", children: "Benar!" })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-6 h-6 text-red-400 shrink-0" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-red-400 text-base", children: "Salah" })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-xl p-4 flex items-start gap-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center shrink-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "text-6xl font-bold text-white leading-none",
+            "data-ocid": "kanji_quiz.answer_kanji",
+            children: entry.character
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Badge,
+          {
+            variant: "outline",
+            className: "mt-2 text-xs border-cyan-700 text-cyan-300",
+            children: entry.jlptLevel
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2 min-w-0 flex-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Bacaan / Romaji" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "p",
+            {
+              className: "text-cyan-300 font-semibold text-lg leading-tight",
+              "data-ocid": "kanji_quiz.answer_romaji",
+              children: entry.romaji
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Arti Indonesia" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "p",
+            {
+              className: "text-white font-medium text-base",
+              "data-ocid": "kanji_quiz.answer_meaning",
+              children: entry.meaning
+            }
+          )
+        ] })
+      ] })
+    ] }),
+    entry.explanation && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-900/40 rounded-lg p-3",
+        "data-ocid": "kanji_quiz.answer_explanation",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide mb-1", children: "Penjelasan" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 text-sm leading-relaxed", children: entry.explanation })
+        ]
+      }
+    ),
+    entry.radical && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-900/40 rounded-lg p-3 flex items-start gap-4",
+        "data-ocid": "kanji_quiz.answer_radical",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center shrink-0 bg-gray-800 rounded-lg p-2 min-w-[3rem]", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-3xl font-bold text-yellow-300 leading-none", children: entry.radical.replace(/\s*\(.*\)/, "").trim() }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs mt-1", children: "Radikal" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide mb-0.5", children: "Arti Radikal" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-yellow-200 font-medium text-sm", children: radicalMeaning || entry.radical }),
+            onViewRadical && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: onViewRadical,
+                className: "mt-1.5 inline-flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300 transition-colors",
+                "data-ocid": "kanji_quiz.view_radical_inline_link",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { className: "w-3 h-3" }),
+                  "Lihat halaman radikal"
+                ]
+              }
+            )
+          ] })
+        ]
+      }
+    ),
+    relatedVocab.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-900/40 rounded-lg p-3",
+        "data-ocid": "kanji_quiz.answer_vocab_examples",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide mb-2", children: "Contoh Kosakata" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: relatedVocab.map((v2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex items-start gap-2",
+              "data-ocid": `kanji_quiz.answer_vocab.${i + 1}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-cyan-300 font-bold text-base min-w-[5rem] shrink-0", children: v2.vocabulary }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-gray-400 text-sm leading-snug", children: [
+                  "(",
+                  v2.romaji,
+                  ")",
+                  " ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-gray-300", children: [
+                    "— ",
+                    v2.meaning
+                  ] })
+                ] })
+              ]
+            },
+            v2.vocabulary
+          )) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-900/40 rounded-lg p-3 border-l-2 border-cyan-700",
+        "data-ocid": "kanji_quiz.answer_example_sentence",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide mb-1", children: "Contoh Kalimat" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-white font-medium text-base leading-relaxed", children: exampleSentence.japanese }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-400 text-sm mt-1 italic", children: [
+            "(",
+            exampleSentence.romaji,
+            ")"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-200 text-sm mt-0.5", children: exampleSentence.meaning })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "flex flex-wrap gap-2 pt-1",
+        "data-ocid": "kanji_quiz.answer_actions",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              type: "button",
+              variant: "outline",
+              onClick: onReviewAgain,
+              size: "sm",
+              className: "border-yellow-700 text-yellow-300 hover:bg-yellow-950/40 hover:text-yellow-200",
+              "data-ocid": "kanji_quiz.review_again_button",
+              children: "Pelajari Lagi"
+            }
+          ),
+          onViewRadical && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Button,
+            {
+              type: "button",
+              variant: "outline",
+              onClick: onViewRadical,
+              size: "sm",
+              className: "border-purple-700 text-purple-300 hover:bg-purple-950/40 hover:text-purple-200 flex items-center gap-1",
+              "data-ocid": "kanji_quiz.view_radical_button",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { className: "w-3.5 h-3.5" }),
+                "Lihat Radikal"
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button,
+            {
+              type: "button",
+              onClick: onNext,
+              size: "sm",
+              className: "flex-1 min-w-[6rem] bg-cyan-600 hover:bg-cyan-500 text-white",
+              "data-ocid": "kanji_quiz.next_button",
+              children: nextLabel
+            }
+          )
+        ]
+      }
+    )
+  ] }) });
+}
 const TAB_LABELS = {
   "k-kana": "K→かな",
   "kana-k": "かな→K",
   "k-arti": "K→Arti",
   "arti-k": "Arti→K",
   konteks: "Konteks"
+};
+const DOKKAI_PRIORITY_KANJI = /* @__PURE__ */ new Set([
+  "経",
+  "験",
+  "発",
+  "表",
+  "説",
+  "明",
+  "準",
+  "備",
+  "利",
+  "用",
+  "連",
+  "絡",
+  "約",
+  "束",
+  "必",
+  "要",
+  "相",
+  "談",
+  "卒",
+  "業",
+  "入",
+  "学",
+  "予",
+  "定",
+  "特",
+  "別",
+  "原",
+  "因",
+  "運",
+  "転",
+  "研",
+  "究",
+  "文",
+  "化",
+  "生",
+  "活",
+  "交",
+  "通",
+  "確",
+  "認",
+  "安",
+  "全"
+]);
+const FILTER_LABELS = {
+  all: "Semua Kanji",
+  n5: "N5 Saja",
+  n4: "N4 Saja",
+  weak: "Kanji Lemah",
+  unmastered: "Belum Dikuasai",
+  dokkai: "Prioritas Dokkai"
 };
 const CHOICE_LABELS = ["A", "B", "C", "D"];
 const SESSION_SIZE = 10;
@@ -51834,16 +52921,21 @@ function buildQuestion$1(entry, type, pool) {
     }
   }
 }
-function generateSession(type, pool) {
+function generateSession(type, pool, _filter, allKanji) {
   if (pool.length < 4) return [];
-  const n5 = pool.filter((e) => e.jlptLevel === "N5");
   const n4 = pool.filter((e) => e.jlptLevel === "N4");
+  const n5 = pool.filter((e) => e.jlptLevel === "N5");
   const rest = pool.filter((e) => e.jlptLevel !== "N5" && e.jlptLevel !== "N4");
-  const prioritized = shuffle$1([...n5, ...n4]);
-  const remaining = shuffle$1(rest);
-  const ordered = [...prioritized, ...remaining];
+  const n4Count = Math.ceil(SESSION_SIZE * 0.8);
+  const n5Count2 = SESSION_SIZE - n4Count;
+  const n4picks = shuffle$1(n4).slice(0, n4Count);
+  const n5picks = shuffle$1(n5).slice(0, n5Count2);
+  const fills = shuffle$1(rest);
+  const needed = SESSION_SIZE - n4picks.length - n5picks.length;
+  const ordered = [...n4picks, ...n5picks, ...fills.slice(0, needed)];
   const picks = ordered.slice(0, SESSION_SIZE);
-  return picks.map((entry) => buildQuestion$1(entry, type, pool));
+  const distractorPool = allKanji.length >= 4 ? allKanji : pool;
+  return picks.map((entry) => buildQuestion$1(entry, type, distractorPool));
 }
 function findExampleVocab$1(kanji, vocab) {
   return vocab.find((v2) => {
@@ -51851,8 +52943,12 @@ function findExampleVocab$1(kanji, vocab) {
     return w2.includes(kanji);
   }) ?? null;
 }
-function KanjiQuizSection({ onClose }) {
+function KanjiQuizSection({
+  onClose,
+  onViewRadical
+}) {
   const [selectedType, setSelectedType] = reactExports.useState("k-kana");
+  const [kanjiFilter, setKanjiFilter] = reactExports.useState("all");
   const [phase, setPhase] = reactExports.useState("select");
   const [questions, setQuestions] = reactExports.useState([]);
   const [currentIdx, setCurrentIdx] = reactExports.useState(0);
@@ -51864,6 +52960,33 @@ function KanjiQuizSection({ onClose }) {
     () => Array.isArray(kanjiData) ? kanjiData : [],
     []
   );
+  const filteredKanji = reactExports.useMemo(() => {
+    if (kanjiFilter === "all") return safeKanji;
+    if (kanjiFilter === "n5")
+      return safeKanji.filter((e) => e.jlptLevel === "N5");
+    if (kanjiFilter === "n4")
+      return safeKanji.filter((e) => e.jlptLevel === "N4");
+    if (kanjiFilter === "dokkai")
+      return safeKanji.filter((e) => DOKKAI_PRIORITY_KANJI.has(e.character));
+    if (kanjiFilter === "weak" || kanjiFilter === "unmastered") {
+      const tracking = loadKanjiTracking();
+      if (kanjiFilter === "weak") {
+        const weak = safeKanji.filter((e) => {
+          const rec = tracking[e.character];
+          if (!rec) return false;
+          return rec.wrongCount > rec.correctCount || rec.masteryLevel < 2;
+        });
+        return weak.length >= 4 ? weak : safeKanji;
+      }
+      const unmastered = safeKanji.filter((e) => {
+        const rec = tracking[e.character];
+        if (!rec) return true;
+        return rec.masteryLevel < 4;
+      });
+      return unmastered.length >= 4 ? unmastered : safeKanji;
+    }
+    return safeKanji;
+  }, [kanjiFilter, safeKanji]);
   const safeVocab = reactExports.useMemo(
     () => Array.isArray(vocabularyData) ? vocabularyData : [],
     []
@@ -51874,7 +52997,7 @@ function KanjiQuizSection({ onClose }) {
       if (repeatK) {
         qs = [buildQuestion$1(repeatK, type, safeKanji)];
       } else {
-        qs = generateSession(type, safeKanji);
+        qs = generateSession(type, filteredKanji, kanjiFilter, safeKanji);
       }
       if (qs.length === 0) return;
       recordKanjiSeen(qs[0].entry.character);
@@ -51886,7 +53009,7 @@ function KanjiQuizSection({ onClose }) {
       setRepeatEntry(null);
       setPhase("quiz");
     },
-    [safeKanji]
+    [filteredKanji, kanjiFilter, safeKanji]
   );
   const handleTypeSelect = reactExports.useCallback(
     (t) => {
@@ -51941,7 +53064,7 @@ function KanjiQuizSection({ onClose }) {
     setRepeatEntry(null);
   }, []);
   const progressPct = questions.length > 0 ? (currentIdx + (isAnswered ? 1 : 0)) / questions.length * 100 : 0;
-  const exampleVocab = currentQ ? findExampleVocab$1(currentQ.entry.character, safeVocab) : null;
+  currentQ ? findExampleVocab$1(currentQ.entry.character, safeVocab) : null;
   const promptLabel = {
     "k-kana": "Bagaimana cara membaca kanji ini?",
     "kana-k": "Pilih kanji yang sesuai dengan bacaan:",
@@ -51971,6 +53094,49 @@ function KanjiQuizSection({ onClose }) {
             )
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-sm", children: "Pilih jenis quiz, lalu kerjakan 10 soal pilihan ganda A/B/C/D." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", "data-ocid": "kanji_quiz.filter_section", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-gray-500 uppercase tracking-wider", children: "Filter Kanji" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2", children: Object.keys(FILTER_LABELS).map((f2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: () => setKanjiFilter(f2),
+                "data-ocid": `kanji_quiz.filter_${f2}_button`,
+                className: `px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${kanjiFilter === f2 ? "border-cyan-400 bg-cyan-950/60 text-cyan-300" : "border-gray-700 bg-gray-800 text-gray-400 hover:border-cyan-600 hover:text-cyan-400"}`,
+                children: [
+                  FILTER_LABELS[f2],
+                  f2 === "all" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-gray-500", children: [
+                    "(",
+                    safeKanji.length,
+                    ")"
+                  ] }),
+                  f2 === "n4" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-gray-500", children: [
+                    "(",
+                    safeKanji.filter((e) => e.jlptLevel === "N4").length,
+                    ")"
+                  ] }),
+                  f2 === "n5" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-gray-500", children: [
+                    "(",
+                    safeKanji.filter((e) => e.jlptLevel === "N5").length,
+                    ")"
+                  ] }),
+                  f2 === "dokkai" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-gray-500", children: [
+                    "(",
+                    safeKanji.filter(
+                      (e) => DOKKAI_PRIORITY_KANJI.has(e.character)
+                    ).length,
+                    ")"
+                  ] })
+                ]
+              },
+              f2
+            )) }),
+            kanjiFilter !== "all" && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-cyan-500", children: [
+              filteredKanji.length,
+              " kanji tersedia untuk filter ini.",
+              filteredKanji.length < 4 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-yellow-400 ml-1", children: "(Terlalu sedikit — akan pakai semua kanji)" })
+            ] })
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 gap-3", children: Object.keys(TAB_LABELS).map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
@@ -52072,7 +53238,6 @@ function KanjiQuizSection({ onClose }) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center min-h-[300px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400", children: "Memuat soal..." }) });
   }
   const isCorrect = chosenIdx !== null && chosenIdx === currentQ.correctIndex;
-  const exampleWord = exampleVocab ? exampleVocab.word ?? exampleVocab.vocabulary ?? "" : null;
   const isLargePrompt = currentQ.type === "k-kana" || currentQ.type === "k-arti" || currentQ.type === "konteks";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
@@ -52145,7 +53310,7 @@ function KanjiQuizSection({ onClose }) {
                     const isSelected = chosenIdx === idx;
                     const isCorrectOpt = idx === currentQ.correctIndex;
                     const revealed = isAnswered;
-                    let cls = "w-full p-3.5 text-left rounded-lg border-2 transition-all flex items-center gap-3 ";
+                    let cls = "w-full p-3.5 text-left rounded-lg border-2 transition-all flex items-start gap-3 ";
                     if (revealed) {
                       if (isCorrectOpt)
                         cls += "border-green-500 bg-green-950/40 text-green-300";
@@ -52166,9 +53331,9 @@ function KanjiQuizSection({ onClose }) {
                         "data-ocid": `kanji_quiz.option.${idx + 1}`,
                         children: [
                           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-xs font-bold shrink-0", children: CHOICE_LABELS[idx] }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-base flex-1", children: opt }),
-                          revealed && isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-5 h-5 text-green-400 shrink-0" }),
-                          revealed && isSelected && !isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5 text-red-400 shrink-0" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-base flex-1 whitespace-normal break-words leading-snug min-w-0", children: opt }),
+                          revealed && isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-5 h-5 text-green-400 shrink-0 mt-0.5" }),
+                          revealed && isSelected && !isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5 text-red-400 shrink-0 mt-0.5" })
                         ]
                       },
                       opt
@@ -52180,74 +53345,14 @@ function KanjiQuizSection({ onClose }) {
           }
         ),
         isAnswered && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Card,
+          KanjiAnswerPanel,
           {
-            className: isCorrect ? "border-green-600 bg-green-950/30" : "border-red-600 bg-red-950/30",
-            "data-ocid": "kanji_quiz.answer_panel",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "pt-5 pb-4 space-y-4", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: isCorrect ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-6 h-6 text-green-400 shrink-0" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-green-400 text-base", children: "Benar!" })
-              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-6 h-6 text-red-400 shrink-0" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-red-400 text-base", children: "Salah" })
-              ] }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2 text-sm", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Kanji" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-4xl font-bold text-white", children: currentQ.entry.character })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Bacaan" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-300 font-semibold text-base", children: currentQ.entry.romaji })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1 col-span-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Arti" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-white font-medium", children: currentQ.entry.meaning })
-                ] })
-              ] }),
-              currentQ.entry.explanation && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/40 rounded-lg p-3 space-y-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Penjelasan" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 text-sm leading-relaxed", children: currentQ.entry.explanation })
-              ] }),
-              exampleWord && exampleVocab && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/40 rounded-lg p-3 space-y-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Contoh" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-300 font-semibold", children: exampleWord }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-400 text-sm", children: [
-                  exampleVocab.romaji,
-                  " — ",
-                  exampleVocab.meaning
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3 pt-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  Button,
-                  {
-                    type: "button",
-                    variant: "outline",
-                    onClick: handlePelajariLagi,
-                    size: "sm",
-                    className: "flex-1 border-yellow-700 text-yellow-300 hover:bg-yellow-950/40 hover:text-yellow-200",
-                    "data-ocid": "kanji_quiz.review_again_button",
-                    children: "Pelajari Lagi"
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  Button,
-                  {
-                    type: "button",
-                    onClick: handleNext,
-                    size: "sm",
-                    className: "flex-1 bg-cyan-600 hover:bg-cyan-500 text-white",
-                    "data-ocid": "kanji_quiz.next_button",
-                    children: [
-                      currentIdx + 1 >= questions.length ? "Lihat Skor" : "Lanjut",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "w-4 h-4 ml-1" })
-                    ]
-                  }
-                )
-              ] })
-            ] })
+            isCorrect,
+            entry: currentQ.entry,
+            onNext: handleNext,
+            onReviewAgain: handlePelajariLagi,
+            onViewRadical,
+            nextLabel: currentIdx + 1 >= questions.length ? "Lihat Skor" : "Lanjut →"
           }
         )
       ]
@@ -53478,10 +54583,10 @@ function QuizSection() {
               disabled: isAnswered,
               className: cls,
               "data-ocid": `quiz.option.${idx + 1}`,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base font-medium", children: option }),
-                showResult && isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-5 h-5 text-green-600 shrink-0" }),
-                showResult && isSelected && !isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5 text-red-500 shrink-0" })
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-2 min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base font-medium whitespace-normal break-words leading-snug min-w-0 flex-1", children: option }),
+                showResult && isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-5 h-5 text-green-600 shrink-0 mt-0.5" }),
+                showResult && isSelected && !isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5 text-red-500 shrink-0 mt-0.5" })
               ] })
             },
             `opt_${option}`
@@ -55060,11 +56165,11 @@ function ChoiceButton({
       onClick,
       disabled,
       "data-ocid": `radical_quiz.choice.${index2 + 1}`,
-      className: `flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
+      className: `flex items-start gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0", children: letters[index2] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-white leading-none", children: char }),
-        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300", children: label })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0 mt-0.5", children: letters[index2] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-white leading-tight break-words min-w-0 flex-1", children: char }),
+        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300 shrink-0 text-right max-w-[40%] whitespace-normal break-words leading-snug", children: label })
       ]
     }
   );
@@ -55091,15 +56196,416 @@ function MultiChoiceButton({
       onClick,
       disabled,
       "data-ocid": `radical_quiz.multi_choice.${index2 + 1}`,
-      className: `flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
+      className: `flex items-start gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0", children: letters[index2] ?? index2 + 1 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl font-bold text-white leading-none", children: char }),
-        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300", children: label }),
-        selected && state === "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-xs text-cyan-400", children: "✓ Dipilih" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0 mt-0.5", children: letters[index2] ?? index2 + 1 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl font-bold text-white leading-tight break-words min-w-0 flex-1", children: char }),
+        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300 shrink-0 text-right max-w-[40%] whitespace-normal break-words leading-snug", children: label }),
+        selected && state === "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-xs text-cyan-400 shrink-0", children: "✓ Dipilih" })
       ]
     }
   );
+}
+const RADICAL_QUIZ_SENTENCES = {
+  会: {
+    japanese: "会社で会議があります。",
+    romaji: "Kaisha de kaigi ga arimasu.",
+    meaning: "Ada rapat di kantor."
+  },
+  学: {
+    japanese: "大学で日本語を学びます。",
+    romaji: "Daigaku de Nihongo o manabimasu.",
+    meaning: "Saya belajar bahasa Jepang di universitas."
+  },
+  食: {
+    japanese: "毎朝、ご飯を食べます。",
+    romaji: "Maiasa, gohan o tabemasu.",
+    meaning: "Setiap pagi, saya makan nasi."
+  },
+  飲: {
+    japanese: "お茶を飲みます。",
+    romaji: "Ocha o nomimasu.",
+    meaning: "Saya minum teh."
+  },
+  行: {
+    japanese: "学校へ行きます。",
+    romaji: "Gakkou e ikimasu.",
+    meaning: "Saya pergi ke sekolah."
+  },
+  来: {
+    japanese: "友達が来ました。",
+    romaji: "Tomodachi ga kimashita.",
+    meaning: "Teman saya datang."
+  },
+  見: {
+    japanese: "テレビを見ます。",
+    romaji: "Terebi o mimasu.",
+    meaning: "Saya menonton TV."
+  },
+  聞: {
+    japanese: "音楽を聴きます。",
+    romaji: "Ongaku o kikimasu.",
+    meaning: "Saya mendengarkan musik."
+  },
+  読: {
+    japanese: "本を読みます。",
+    romaji: "Hon o yomimasu.",
+    meaning: "Saya membaca buku."
+  },
+  書: {
+    japanese: "手紙を書きます。",
+    romaji: "Tegami o kakimasu.",
+    meaning: "Saya menulis surat."
+  },
+  話: {
+    japanese: "日本語で話します。",
+    romaji: "Nihongo de hanashimasu.",
+    meaning: "Saya berbicara dalam bahasa Jepang."
+  },
+  買: {
+    japanese: "スーパーで野菜を買いました。",
+    romaji: "Suupaa de yasai o kaimashita.",
+    meaning: "Saya membeli sayuran di supermarket."
+  },
+  作: {
+    japanese: "料理を作ります。",
+    romaji: "Ryouri o tsukurimasu.",
+    meaning: "Saya memasak."
+  },
+  使: {
+    japanese: "パソコンを使います。",
+    romaji: "Pasokon o tsukaimasu.",
+    meaning: "Saya menggunakan komputer."
+  },
+  出: {
+    japanese: "家を出ます。",
+    romaji: "Ie o demasu.",
+    meaning: "Saya keluar dari rumah."
+  },
+  入: {
+    japanese: "部屋に入ります。",
+    romaji: "Heya ni hairimasu.",
+    meaning: "Saya masuk ke kamar."
+  },
+  帰: {
+    japanese: "家に帰ります。",
+    romaji: "Ie ni kaerimasu.",
+    meaning: "Saya pulang ke rumah."
+  },
+  起: {
+    japanese: "毎朝6時に起きます。",
+    romaji: "Maiasa rokuji ni okimasu.",
+    meaning: "Setiap pagi saya bangun pukul 6."
+  },
+  寝: {
+    japanese: "11時に寝ます。",
+    romaji: "Juuichiji ni nemasu.",
+    meaning: "Saya tidur pukul 11."
+  },
+  働: {
+    japanese: "会社で働きます。",
+    romaji: "Kaisha de hatarakimasu.",
+    meaning: "Saya bekerja di kantor."
+  },
+  勉: {
+    japanese: "毎日勉強します。",
+    romaji: "Mainichi benkyou shimasu.",
+    meaning: "Saya belajar setiap hari."
+  },
+  経: {
+    japanese: "日本で働いた経験があります。",
+    romaji: "Nihon de hataraita keiken ga arimasu.",
+    meaning: "Saya memiliki pengalaman bekerja di Jepang."
+  },
+  発: {
+    japanese: "会議で発表します。",
+    romaji: "Kaigi de happyou shimasu.",
+    meaning: "Saya presentasi dalam rapat."
+  },
+  説: {
+    japanese: "先生が説明してくれました。",
+    romaji: "Sensei ga setsumei shite kuremashita.",
+    meaning: "Guru menjelaskan kepada saya."
+  },
+  準: {
+    japanese: "試験の準備をします。",
+    romaji: "Shiken no junbi o shimasu.",
+    meaning: "Saya mempersiapkan diri untuk ujian."
+  },
+  利: {
+    japanese: "インターネットを利用します。",
+    romaji: "Intaanetto o riyou shimasu.",
+    meaning: "Saya menggunakan internet."
+  },
+  連: {
+    japanese: "後で連絡します。",
+    romaji: "Ato de renraku shimasu.",
+    meaning: "Saya akan menghubungi nanti."
+  },
+  約: {
+    japanese: "レストランを予約しました。",
+    romaji: "Resutoran o yoyaku shimashita.",
+    meaning: "Saya memesan restoran."
+  },
+  確: {
+    japanese: "予定を確認してください。",
+    romaji: "Yotei o kakunin shite kudasai.",
+    meaning: "Tolong konfirmasi jadwal."
+  },
+  必: {
+    japanese: "パスポートが必要です。",
+    romaji: "Pasupooto ga hitsuyou desu.",
+    meaning: "Paspor diperlukan."
+  },
+  研: {
+    japanese: "大学で研究しています。",
+    romaji: "Daigaku de kenkyuu shite imasu.",
+    meaning: "Saya sedang meneliti di universitas."
+  },
+  運: {
+    japanese: "車の運転が好きです。",
+    romaji: "Kuruma no unten ga suki desu.",
+    meaning: "Saya suka mengemudi."
+  },
+  卒: {
+    japanese: "来年、大学を卒業します。",
+    romaji: "Rainen, daigaku o sotsugyou shimasu.",
+    meaning: "Tahun depan saya lulus universitas."
+  },
+  旅: {
+    japanese: "日本へ旅行します。",
+    romaji: "Nihon e ryokou shimasu.",
+    meaning: "Saya pergi wisata ke Jepang."
+  },
+  特: {
+    japanese: "今日は特別な日です。",
+    romaji: "Kyou wa tokubetsu na hi desu.",
+    meaning: "Hari ini adalah hari istimewa."
+  },
+  原: {
+    japanese: "事故の原因は何ですか。",
+    romaji: "Jiko no gen'in wa nan desu ka.",
+    meaning: "Apa penyebab kecelakaan itu?"
+  },
+  安: {
+    japanese: "この道は安全ですか。",
+    romaji: "Kono michi wa anzen desu ka.",
+    meaning: "Apakah jalan ini aman?"
+  },
+  交: {
+    japanese: "交通が便利な場所に住みたい。",
+    romaji: "Koutsuu ga benri na basho ni sumitai.",
+    meaning: "Saya ingin tinggal di tempat transportasi mudah."
+  },
+  文: {
+    japanese: "日本の文化を勉強しています。",
+    romaji: "Nihon no bunka o benkyou shite imasu.",
+    meaning: "Saya mempelajari budaya Jepang."
+  },
+  生: {
+    japanese: "毎日、生活が忙しいです。",
+    romaji: "Mainichi, seikatsu ga isogashii desu.",
+    meaning: "Kehidupan sehari-hari saya sibuk."
+  },
+  試: {
+    japanese: "今月、日本語の試験があります。",
+    romaji: "Kongetsu, Nihongo no shiken ga arimasu.",
+    meaning: "Bulan ini ada ujian bahasa Jepang."
+  },
+  海: {
+    japanese: "海へ行きます。",
+    romaji: "Umi e ikimasu.",
+    meaning: "Saya pergi ke laut."
+  },
+  山: {
+    japanese: "山に登ります。",
+    romaji: "Yama ni noborimasu.",
+    meaning: "Saya mendaki gunung."
+  },
+  川: {
+    japanese: "川で魚を釣ります。",
+    romaji: "Kawa de sakana o tsurimasu.",
+    meaning: "Saya memancing ikan di sungai."
+  },
+  電: {
+    japanese: "電車で会社へ行きます。",
+    romaji: "Densha de kaisha e ikimasu.",
+    meaning: "Saya pergi ke kantor naik kereta."
+  },
+  車: {
+    japanese: "車で旅行します。",
+    romaji: "Kuruma de ryokou shimasu.",
+    meaning: "Saya berwisata naik mobil."
+  },
+  駅: {
+    japanese: "駅まで歩いて10分です。",
+    romaji: "Eki made aruite juppun desu.",
+    meaning: "Jarak ke stasiun 10 menit jalan kaki."
+  },
+  病: {
+    japanese: "病院に行きます。",
+    romaji: "Byouin ni ikimasu.",
+    meaning: "Saya pergi ke rumah sakit."
+  },
+  薬: {
+    japanese: "薬を飲んでください。",
+    romaji: "Kusuri o nonde kudasai.",
+    meaning: "Tolong minum obatnya."
+  },
+  店: {
+    japanese: "店でコーヒーを飲みます。",
+    romaji: "Mise de koohii o nomimasu.",
+    meaning: "Saya minum kopi di toko."
+  },
+  家: {
+    japanese: "新しい家を買いました。",
+    romaji: "Atarashii ie o kaimashita.",
+    meaning: "Saya membeli rumah baru."
+  },
+  国: {
+    japanese: "どの国から来ましたか。",
+    romaji: "Dono kuni kara kimashita ka.",
+    meaning: "Anda berasal dari negara mana?"
+  },
+  人: {
+    japanese: "あの人は誰ですか。",
+    romaji: "Ano hito wa dare desu ka.",
+    meaning: "Siapa orang itu?"
+  },
+  時: {
+    japanese: "今、何時ですか。",
+    romaji: "Ima, nanji desu ka.",
+    meaning: "Sekarang jam berapa?"
+  },
+  間: {
+    japanese: "授業は2時間あります。",
+    romaji: "Jugyou wa nijikan arimasu.",
+    meaning: "Pelajaran berlangsung 2 jam."
+  },
+  週: {
+    japanese: "来週、友達と会います。",
+    romaji: "Raishuu, tomodachi to aimasu.",
+    meaning: "Minggu depan saya bertemu teman."
+  },
+  月: {
+    japanese: "毎月、給料をもらいます。",
+    romaji: "Maitsuki, kyuuryou o moraimasu.",
+    meaning: "Setiap bulan saya menerima gaji."
+  },
+  年: {
+    japanese: "来年、日本へ行きたいです。",
+    romaji: "Rainen, Nihon e ikitai desu.",
+    meaning: "Tahun depan saya ingin pergi ke Jepang."
+  },
+  今: {
+    japanese: "今から勉強します。",
+    romaji: "Ima kara benkyou shimasu.",
+    meaning: "Saya akan mulai belajar sekarang."
+  },
+  先: {
+    japanese: "先生に質問します。",
+    romaji: "Sensei ni shitsumon shimasu.",
+    meaning: "Saya bertanya kepada guru."
+  },
+  高: {
+    japanese: "この山はとても高いです。",
+    romaji: "Kono yama wa totemo takai desu.",
+    meaning: "Gunung ini sangat tinggi."
+  },
+  長: {
+    japanese: "この映画は長いです。",
+    romaji: "Kono eiga wa nagai desu.",
+    meaning: "Film ini panjang."
+  },
+  新: {
+    japanese: "新しいスマホを買いました。",
+    romaji: "Atarashii sumaho o kaimashita.",
+    meaning: "Saya membeli HP baru."
+  },
+  古: {
+    japanese: "古い建物を見ました。",
+    romaji: "Furui tatemono o mimashita.",
+    meaning: "Saya melihat bangunan tua."
+  },
+  大: {
+    japanese: "大学は大きいです。",
+    romaji: "Daigaku wa ookii desu.",
+    meaning: "Universitas itu besar."
+  },
+  小: {
+    japanese: "小さい猫がいます。",
+    romaji: "Chiisai neko ga imasu.",
+    meaning: "Ada kucing kecil."
+  },
+  水: {
+    japanese: "毎日水を飲みます。",
+    romaji: "Mainichi mizu o nomimasu.",
+    meaning: "Saya minum air setiap hari."
+  },
+  火: {
+    japanese: "火曜日に試験があります。",
+    romaji: "Kayoubi ni shiken ga arimasu.",
+    meaning: "Ada ujian pada hari Selasa."
+  },
+  木: {
+    japanese: "公園に木がたくさんあります。",
+    romaji: "Kouen ni ki ga takusan arimasu.",
+    meaning: "Di taman banyak terdapat pohon."
+  },
+  日: {
+    japanese: "今日は何曜日ですか。",
+    romaji: "Kyou wa nanyoubi desu ka.",
+    meaning: "Hari ini hari apa?"
+  },
+  本: {
+    japanese: "図書館で本を借ります。",
+    romaji: "Toshokan de hon o karimasu.",
+    meaning: "Saya meminjam buku di perpustakaan."
+  },
+  語: {
+    japanese: "日本語を毎日練習します。",
+    romaji: "Nihongo o mainichi renshuu shimasu.",
+    meaning: "Saya berlatih bahasa Jepang setiap hari."
+  },
+  友: {
+    japanese: "友達とカフェに行きます。",
+    romaji: "Tomodachi to kafe ni ikimasu.",
+    meaning: "Saya pergi ke kafe bersama teman."
+  },
+  校: {
+    japanese: "学校は8時に始まります。",
+    romaji: "Gakkou wa hachiji ni hajimarimasu.",
+    meaning: "Sekolah dimulai pukul 8."
+  }
+};
+function findRelatedVocabList(kanjiChar, max2 = 3) {
+  const results = [];
+  for (const v2 of vocabularyData) {
+    const word = v2.vocabulary ?? "";
+    if (word.includes(kanjiChar) && word !== kanjiChar && word.length > 1) {
+      results.push({ vocabulary: word, romaji: v2.romaji, meaning: v2.meaning });
+      if (results.length >= max2) break;
+    }
+  }
+  return results;
+}
+function getExampleSentence(kanjiChar, relatedVocab) {
+  if (RADICAL_QUIZ_SENTENCES[kanjiChar]) {
+    return RADICAL_QUIZ_SENTENCES[kanjiChar];
+  }
+  if (relatedVocab.length > 0) {
+    const v2 = relatedVocab[0];
+    return {
+      japanese: `${v2.vocabulary}はとても大切です。`,
+      romaji: `${v2.romaji} wa totemo taisetsu desu.`,
+      meaning: `${v2.meaning} sangat penting.`
+    };
+  }
+  return {
+    japanese: `この${kanjiChar}は大切な漢字です。`,
+    romaji: "Kono kanji wa taisetsu desu.",
+    meaning: "Kanji ini adalah kanji yang penting."
+  };
 }
 function ResultPanel({
   question,
@@ -55112,85 +56618,215 @@ function ResultPanel({
   const { radical, symbol } = question;
   const correctChar = question.type === "multi" ? question.correctChars[0] : question.correctChar;
   const correctEntry = question.type === "multi" ? ((_a2 = question.allOptions.find((o) => o.isCorrect)) == null ? void 0 : _a2.entry) ?? question.allOptions[0].entry : question.correctEntry;
-  const example = findExampleVocab(correctChar);
+  const kanjiChar = correctEntry.character;
   const reading = correctEntry.romaji ?? "";
   const kanjiMeaning = correctEntry.meaning;
   const radicalMeaning = radical.meaning;
+  const kanjiExplanation = correctEntry.explanation ?? "";
+  const relatedVocab = reactExports.useMemo(
+    () => findRelatedVocabList(kanjiChar, 3),
+    [kanjiChar]
+  );
+  const exampleSentence = reactExports.useMemo(
+    () => getExampleSentence(kanjiChar, relatedVocab),
+    [kanjiChar, relatedVocab]
+  );
+  const singleVocab = findExampleVocab(correctChar);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4 animate-in fade-in duration-300", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        className: `flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg ${wasCorrect ? "bg-emerald-900/60 text-emerald-300" : "bg-red-900/60 text-red-300"}`,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: wasCorrect ? "✅ Benar!" : "❌ Kurang tepat" })
+        "data-ocid": "radical_quiz.result_verdict",
+        className: `flex items-center gap-2 text-sm font-semibold px-3 py-2.5 rounded-xl ${wasCorrect ? "bg-emerald-900/60 border border-emerald-700 text-emerald-300" : "bg-red-900/60 border border-red-700 text-red-300"}`,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-lg", children: wasCorrect ? "✅" : "❌" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: wasCorrect ? "Benar! Bagus sekali!" : "Kurang tepat — pelajari penjelasan di bawah." })
+        ]
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-xl p-5 text-center space-y-1", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-6xl font-bold text-white leading-none mb-2", children: correctChar }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-cyan-400 text-lg font-medium", children: reading }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-gray-300 text-base", children: kanjiMeaning })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800/80 rounded-xl p-4 space-y-2", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400", children: "Penjelasan Radikal" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-4xl leading-none text-cyan-300 mt-1", children: symbol }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-200", children: [
-            "Radikal ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-cyan-300", children: symbol }),
-            " ",
-            "berarti",
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: radicalMeaning }),
-            "."
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        "data-ocid": "radical_quiz.answer_kanji_hero",
+        className: "bg-gray-800 rounded-2xl p-5 flex items-center gap-5",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center shrink-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-7xl font-bold text-white leading-none", children: kanjiChar }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mt-2 inline-block text-xs px-2 py-0.5 rounded-full bg-cyan-900/60 border border-cyan-700 text-cyan-300 font-medium", children: correctEntry.jlptLevel })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-200", children: [
-            "Kanji ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: correctChar }),
-            " ",
-            "berarti",
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: kanjiMeaning }),
-            "."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-300", children: [
-            "Karena ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: kanjiMeaning }),
-            " berhubungan dengan",
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: radicalMeaning.toLowerCase() }),
-            ", kanji ini menggunakan radikal",
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-cyan-300", children: symbol }),
-            "."
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0 space-y-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wider", children: "Cara Baca / Romaji" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "p",
+                {
+                  className: "text-cyan-300 font-bold text-xl leading-tight",
+                  "data-ocid": "radical_quiz.answer_reading",
+                  children: reading
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wider", children: "Arti Indonesia" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "p",
+                {
+                  className: "text-white font-semibold text-lg leading-tight",
+                  "data-ocid": "radical_quiz.answer_meaning",
+                  children: kanjiMeaning
+                }
+              )
+            ] })
           ] })
-        ] })
-      ] })
+        ]
+      }
+    ),
+    kanjiExplanation && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-800/70 rounded-xl p-4",
+        "data-ocid": "radical_quiz.answer_explanation",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400 mb-1", children: "Penjelasan" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: kanjiExplanation })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-800/80 rounded-xl p-4",
+        "data-ocid": "radical_quiz.answer_radical_explanation",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400 mb-3", children: "Hubungan Radikal & Kanji" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "shrink-0 bg-gray-700/80 rounded-xl p-3 text-center min-w-[4rem]", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-4xl font-bold text-yellow-300 leading-none", children: symbol }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-xs mt-1", children: "Radikal" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0 space-y-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-yellow-300", children: symbol }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-500", children: "→" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-white font-semibold", children: radicalMeaning })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: kanjiChar }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-500", children: "→" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-white font-semibold", children: kanjiMeaning })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-300 leading-relaxed pt-1 border-t border-gray-700", children: [
+                "Radikal",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-yellow-300", children: symbol }),
+                " ",
+                "artinya",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-white", children: [
+                  '"',
+                  radicalMeaning,
+                  '"'
+                ] }),
+                ". Kanji ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: kanjiChar }),
+                " ",
+                "berarti",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-cyan-300", children: [
+                  '"',
+                  kanjiMeaning,
+                  '"'
+                ] }),
+                ". Karena",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: kanjiMeaning.toLowerCase() }),
+                " ",
+                "berhubungan dengan",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: radicalMeaning.toLowerCase() }),
+                ", kanji ini menggunakan radikal",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-yellow-300", children: symbol }),
+                "."
+              ] })
+            ] })
+          ] })
+        ]
+      }
+    ),
+    relatedVocab.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-800/60 rounded-xl p-4",
+        "data-ocid": "radical_quiz.answer_vocab_examples",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400 mb-3", children: "Contoh Kosakata" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2.5", children: relatedVocab.map((v2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex items-start gap-3",
+              "data-ocid": `radical_quiz.answer_vocab.${i + 1}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-cyan-300 font-bold text-base min-w-[5.5rem] shrink-0", children: v2.vocabulary }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-gray-400 text-sm leading-snug", children: [
+                  "(",
+                  v2.romaji,
+                  ")",
+                  " ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-gray-200", children: [
+                    "— ",
+                    v2.meaning
+                  ] })
+                ] })
+              ]
+            },
+            `${v2.vocabulary}-${i}`
+          )) })
+        ]
+      }
+    ),
+    relatedVocab.length === 0 && singleVocab && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800/60 rounded-xl p-4 space-y-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400", children: "Contoh Kosakata" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base text-white font-semibold", children: singleVocab.vocabulary }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: singleVocab.romaji }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-300", children: singleVocab.meaning })
     ] }),
-    example && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800/60 rounded-xl p-4 space-y-1", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400", children: "Contoh Penggunaan" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-white", children: example.vocabulary.split("").map((ch, i) => {
-        const k2 = `char-${i}`;
-        return ch === correctChar ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "mark",
-          {
-            className: "bg-cyan-500/30 text-cyan-200 px-0.5 rounded not-italic",
-            children: ch
-          },
-          k2
-        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: ch }, k2);
-      }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: example.romaji }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-300", children: example.meaning })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "bg-gray-800/60 rounded-xl p-4 border-l-2 border-cyan-700",
+        "data-ocid": "radical_quiz.answer_example_sentence",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400 mb-2", children: "Contoh Kalimat" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-white font-medium text-base leading-relaxed", children: exampleSentence.japanese.split("").map((ch, i) => {
+            const key = `s-${i}`;
+            return ch === kanjiChar ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "mark",
+              {
+                className: "bg-cyan-500/30 text-cyan-200 px-0.5 rounded not-italic",
+                children: ch
+              },
+              key
+            ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: ch }, key);
+          }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-400 text-sm mt-1 italic", children: [
+            "(",
+            exampleSentence.romaji,
+            ")"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-200 text-sm mt-0.5", children: exampleSentence.meaning })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3", "data-ocid": "radical_quiz.answer_actions", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           type: "button",
           "data-ocid": "radical_quiz.view_radical_button",
           onClick: () => onViewRadical(radical.name),
-          className: "flex-1 px-4 py-2.5 rounded-xl border border-cyan-600 text-cyan-300 text-sm font-medium hover:bg-cyan-900/40 transition-colors",
-          children: "Lihat Radikal"
+          className: "flex-1 px-4 py-2.5 rounded-xl border border-yellow-600 text-yellow-300 text-sm font-medium hover:bg-yellow-900/30 transition-colors",
+          children: "🔍 Lihat Radikal"
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -55200,7 +56836,7 @@ function ResultPanel({
           "data-ocid": "radical_quiz.next_button",
           onClick: onNext,
           className: "flex-1 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold transition-colors",
-          children: isLast ? "Lihat Hasil" : "Lanjut"
+          children: isLast ? "Lihat Hasil" : "Lanjut →"
         }
       )
     ] })
@@ -64380,7 +66016,13 @@ function App() {
             onQuizRadical: () => setActiveTab("radical-quiz")
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "kanji-quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(KanjiQuizSection, { onClose: () => setActiveTab("kanji") }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "kanji-quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          KanjiQuizSection,
+          {
+            onClose: () => setActiveTab("kanji"),
+            onViewRadical: () => setActiveTab("radicals")
+          }
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "radical-quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(RadicalGuidedQuiz, { onViewRadical: () => setActiveTab("radicals") }) })
       ] })
     ] }),

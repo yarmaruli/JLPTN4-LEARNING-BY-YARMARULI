@@ -89,28 +89,6 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface KanjiDashboardStats {
-    total: bigint;
-    intermediate: bigint;
-    strongItems: Array<WeakItem>;
-    mastered: bigint;
-    learning: bigint;
-    weakItems: Array<WeakItem>;
-    highFrequency: bigint;
-    untouched: bigint;
-}
-export interface AdaptiveQuizSessionPublic {
-    completedAt?: bigint;
-    totalQuestions: bigint;
-    correctAnswers: bigint;
-    sessionId: string;
-    ratio: AdaptiveQuizRatio;
-}
-export interface AdaptiveQuizRatio {
-    kanjiPercent: bigint;
-    vocabularyPercent: bigint;
-    radicalPercent: bigint;
-}
 export interface RadicalMasteryPublic {
     status: MasteryStatus;
     wrongCount: bigint;
@@ -132,6 +110,13 @@ export interface KanjiMasteryPublic {
     kanjiId: string;
     lastSeen: bigint;
 }
+export interface RadicalMastery {
+    wrongCount: bigint;
+    radical: string;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+}
 export interface WeakItem {
     itemId: string;
     wrongCount: bigint;
@@ -150,6 +135,52 @@ export interface VocabDashboardStats {
     highFrequency: bigint;
     untouched: bigint;
 }
+export interface RadicalDashboardStats {
+    total: bigint;
+    intermediate: bigint;
+    mastered: bigint;
+    learning: bigint;
+    weakItems: Array<WeakItem>;
+    untouched: bigint;
+}
+export interface QuizAnalytics {
+    totalCorrect: bigint;
+    totalQuizzes: bigint;
+    totalWrong: bigint;
+    accuracy: number;
+}
+export interface KanjiDashboardStats {
+    total: bigint;
+    intermediate: bigint;
+    strongItems: Array<WeakItem>;
+    mastered: bigint;
+    learning: bigint;
+    weakItems: Array<WeakItem>;
+    highFrequency: bigint;
+    untouched: bigint;
+}
+export interface AdaptiveQuizRatio {
+    kanjiPercent: bigint;
+    vocabularyPercent: bigint;
+    radicalPercent: bigint;
+}
+export interface KanjiMastery {
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    kanji: string;
+    lastSeen: bigint;
+}
+export interface AdaptiveQuizSessionPublic {
+    completedAt?: bigint;
+    totalQuestions: bigint;
+    correctAnswers: bigint;
+    sessionId: string;
+    ratio: AdaptiveQuizRatio;
+}
 export interface ScoreSummary {
     overallN4ReadinessScore: bigint;
     kanjiScore: bigint;
@@ -165,14 +196,6 @@ export interface ReadingSessionPublic {
     timestamp: bigint;
     sessionId: string;
     unknownWords: Array<string>;
-}
-export interface RadicalDashboardStats {
-    total: bigint;
-    intermediate: bigint;
-    mastered: bigint;
-    learning: bigint;
-    weakItems: Array<WeakItem>;
-    untouched: bigint;
 }
 export interface VocabMasteryPublic {
     status: MasteryStatus;
@@ -194,18 +217,27 @@ export enum MasteryStatus {
 }
 export interface backendInterface {
     completeAdaptiveSession(sessionId: string, totalQuestions: bigint, correctAnswers: bigint): Promise<void>;
+    getAllKanjiMastery(): Promise<Array<KanjiMastery>>;
+    getAllRadicalMastery(): Promise<Array<RadicalMastery>>;
+    getDokkaiPriorityKanji(dokkaiKanji: Array<string>): Promise<Array<string>>;
     getKanjiDashboard(): Promise<KanjiDashboardStats>;
     getKanjiMastery(kanjiId: string): Promise<KanjiMasteryPublic | null>;
+    getKanjiMasteryByChar(kanji: string): Promise<KanjiMastery | null>;
+    getQuizAnalytics(): Promise<QuizAnalytics>;
     getRadicalDashboard(): Promise<RadicalDashboardStats>;
     getRadicalMastery(radicalId: string): Promise<RadicalMasteryPublic | null>;
+    getRadicalMasteryByChar(radical: string): Promise<RadicalMastery | null>;
     getScoreSummary(): Promise<ScoreSummary>;
+    getUntouchedKanji(allKanji: Array<string>): Promise<Array<string>>;
     getVocabDashboard(): Promise<VocabDashboardStats>;
     getVocabMastery(vocabId: string): Promise<VocabMasteryPublic | null>;
     getWeakKanji(topN: bigint): Promise<Array<WeakItem>>;
+    getWeakKanjiByThreshold(threshold: bigint): Promise<Array<KanjiMastery>>;
     getWeakRadicals(topN: bigint): Promise<Array<WeakItem>>;
     getWeakVocab(topN: bigint): Promise<Array<WeakItem>>;
     listKanjiMastery(offset: bigint, limit: bigint): Promise<Array<KanjiMasteryPublic>>;
     listReadingSessions(limit: bigint): Promise<Array<ReadingSessionPublic>>;
+    recordQuizResult(itemId: string, itemType: string, isCorrect: boolean, quizMode: string): Promise<void>;
     saveReadingSession(sessionId: string, score: bigint, durationSeconds: bigint, wordsLookedUp: Array<string>, unknownWords: Array<string>, kanjiFailures: Array<string>): Promise<void>;
     startAdaptiveSession(sessionId: string, kanjiPercent: bigint, vocabPercent: bigint, radicalPercent: bigint): Promise<AdaptiveQuizSessionPublic>;
     trackKanjiCorrect(kanjiId: string): Promise<void>;
@@ -219,8 +251,10 @@ export interface backendInterface {
     trackVocabLookup(vocabId: string): Promise<void>;
     trackVocabSeen(vocabId: string): Promise<void>;
     trackVocabWrong(vocabId: string): Promise<void>;
+    updateKanjiMastery(kanji: string, isCorrect: boolean): Promise<KanjiMastery>;
+    updateRadicalMastery(radical: string, isCorrect: boolean): Promise<RadicalMastery>;
 }
-import type { AdaptiveQuizRatio as _AdaptiveQuizRatio, AdaptiveQuizSessionPublic as _AdaptiveQuizSessionPublic, KanjiMasteryPublic as _KanjiMasteryPublic, MasteryStatus as _MasteryStatus, RadicalMasteryPublic as _RadicalMasteryPublic, VocabMasteryPublic as _VocabMasteryPublic } from "./declarations/backend.did.d.ts";
+import type { AdaptiveQuizRatio as _AdaptiveQuizRatio, AdaptiveQuizSessionPublic as _AdaptiveQuizSessionPublic, KanjiMastery as _KanjiMastery, KanjiMasteryPublic as _KanjiMasteryPublic, MasteryStatus as _MasteryStatus, RadicalMastery as _RadicalMastery, RadicalMasteryPublic as _RadicalMasteryPublic, VocabMasteryPublic as _VocabMasteryPublic } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async completeAdaptiveSession(arg0: string, arg1: bigint, arg2: bigint): Promise<void> {
@@ -234,6 +268,48 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.completeAdaptiveSession(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async getAllKanjiMastery(): Promise<Array<KanjiMastery>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllKanjiMastery();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllKanjiMastery();
+            return result;
+        }
+    }
+    async getAllRadicalMastery(): Promise<Array<RadicalMastery>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllRadicalMastery();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllRadicalMastery();
+            return result;
+        }
+    }
+    async getDokkaiPriorityKanji(arg0: Array<string>): Promise<Array<string>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getDokkaiPriorityKanji(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getDokkaiPriorityKanji(arg0);
             return result;
         }
     }
@@ -265,6 +341,34 @@ export class Backend implements backendInterface {
             return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
         }
     }
+    async getKanjiMasteryByChar(arg0: string): Promise<KanjiMastery | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getKanjiMasteryByChar(arg0);
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getKanjiMasteryByChar(arg0);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getQuizAnalytics(): Promise<QuizAnalytics> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getQuizAnalytics();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getQuizAnalytics();
+            return result;
+        }
+    }
     async getRadicalDashboard(): Promise<RadicalDashboardStats> {
         if (this.processError) {
             try {
@@ -283,14 +387,28 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getRadicalMastery(arg0);
-                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getRadicalMastery(arg0);
-            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getRadicalMasteryByChar(arg0: string): Promise<RadicalMastery | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getRadicalMasteryByChar(arg0);
+                return from_candid_opt_n10(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getRadicalMasteryByChar(arg0);
+            return from_candid_opt_n10(this._uploadFile, this._downloadFile, result);
         }
     }
     async getScoreSummary(): Promise<ScoreSummary> {
@@ -304,6 +422,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getScoreSummary();
+            return result;
+        }
+    }
+    async getUntouchedKanji(arg0: Array<string>): Promise<Array<string>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getUntouchedKanji(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getUntouchedKanji(arg0);
             return result;
         }
     }
@@ -325,14 +457,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getVocabMastery(arg0);
-                return from_candid_opt_n9(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getVocabMastery(arg0);
-            return from_candid_opt_n9(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
         }
     }
     async getWeakKanji(arg0: bigint): Promise<Array<WeakItem>> {
@@ -346,6 +478,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getWeakKanji(arg0);
+            return result;
+        }
+    }
+    async getWeakKanjiByThreshold(arg0: bigint): Promise<Array<KanjiMastery>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWeakKanjiByThreshold(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWeakKanjiByThreshold(arg0);
             return result;
         }
     }
@@ -381,14 +527,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.listKanjiMastery(arg0, arg1);
-                return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n14(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.listKanjiMastery(arg0, arg1);
-            return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n14(this._uploadFile, this._downloadFile, result);
         }
     }
     async listReadingSessions(arg0: bigint): Promise<Array<ReadingSessionPublic>> {
@@ -402,6 +548,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.listReadingSessions(arg0);
+            return result;
+        }
+    }
+    async recordQuizResult(arg0: string, arg1: string, arg2: boolean, arg3: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.recordQuizResult(arg0, arg1, arg2, arg3);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.recordQuizResult(arg0, arg1, arg2, arg3);
             return result;
         }
     }
@@ -423,14 +583,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.startAdaptiveSession(arg0, arg1, arg2, arg3);
-                return from_candid_AdaptiveQuizSessionPublic_n13(this._uploadFile, this._downloadFile, result);
+                return from_candid_AdaptiveQuizSessionPublic_n15(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.startAdaptiveSession(arg0, arg1, arg2, arg3);
-            return from_candid_AdaptiveQuizSessionPublic_n13(this._uploadFile, this._downloadFile, result);
+            return from_candid_AdaptiveQuizSessionPublic_n15(this._uploadFile, this._downloadFile, result);
         }
     }
     async trackKanjiCorrect(arg0: string): Promise<void> {
@@ -587,9 +747,37 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async updateKanjiMastery(arg0: string, arg1: boolean): Promise<KanjiMastery> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateKanjiMastery(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateKanjiMastery(arg0, arg1);
+            return result;
+        }
+    }
+    async updateRadicalMastery(arg0: string, arg1: boolean): Promise<RadicalMastery> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateRadicalMastery(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateRadicalMastery(arg0, arg1);
+            return result;
+        }
+    }
 }
-function from_candid_AdaptiveQuizSessionPublic_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _AdaptiveQuizSessionPublic): AdaptiveQuizSessionPublic {
-    return from_candid_record_n14(_uploadFile, _downloadFile, value);
+function from_candid_AdaptiveQuizSessionPublic_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _AdaptiveQuizSessionPublic): AdaptiveQuizSessionPublic {
+    return from_candid_record_n16(_uploadFile, _downloadFile, value);
 }
 function from_candid_KanjiMasteryPublic_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _KanjiMasteryPublic): KanjiMasteryPublic {
     return from_candid_record_n3(_uploadFile, _downloadFile, value);
@@ -597,25 +785,31 @@ function from_candid_KanjiMasteryPublic_n2(_uploadFile: (file: ExternalBlob) => 
 function from_candid_MasteryStatus_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _MasteryStatus): MasteryStatus {
     return from_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
-function from_candid_RadicalMasteryPublic_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _RadicalMasteryPublic): RadicalMasteryPublic {
-    return from_candid_record_n8(_uploadFile, _downloadFile, value);
+function from_candid_RadicalMasteryPublic_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _RadicalMasteryPublic): RadicalMasteryPublic {
+    return from_candid_record_n9(_uploadFile, _downloadFile, value);
 }
-function from_candid_VocabMasteryPublic_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _VocabMasteryPublic): VocabMasteryPublic {
-    return from_candid_record_n11(_uploadFile, _downloadFile, value);
+function from_candid_VocabMasteryPublic_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _VocabMasteryPublic): VocabMasteryPublic {
+    return from_candid_record_n13(_uploadFile, _downloadFile, value);
 }
 function from_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_KanjiMasteryPublic]): KanjiMasteryPublic | null {
     return value.length === 0 ? null : from_candid_KanjiMasteryPublic_n2(_uploadFile, _downloadFile, value[0]);
 }
-function from_candid_opt_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
+function from_candid_opt_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_RadicalMastery]): RadicalMastery | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_RadicalMasteryPublic]): RadicalMasteryPublic | null {
-    return value.length === 0 ? null : from_candid_RadicalMasteryPublic_n7(_uploadFile, _downloadFile, value[0]);
+function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_VocabMasteryPublic]): VocabMasteryPublic | null {
+    return value.length === 0 ? null : from_candid_VocabMasteryPublic_n12(_uploadFile, _downloadFile, value[0]);
 }
-function from_candid_opt_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_VocabMasteryPublic]): VocabMasteryPublic | null {
-    return value.length === 0 ? null : from_candid_VocabMasteryPublic_n10(_uploadFile, _downloadFile, value[0]);
+function from_candid_opt_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
+    return value.length === 0 ? null : value[0];
 }
-function from_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_KanjiMastery]): KanjiMastery | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_RadicalMasteryPublic]): RadicalMasteryPublic | null {
+    return value.length === 0 ? null : from_candid_RadicalMasteryPublic_n8(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_record_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     status: _MasteryStatus;
     wrongCount: bigint;
     lastCorrect: bigint;
@@ -651,7 +845,7 @@ function from_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uin
         lastSeen: value.lastSeen
     };
 }
-function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     completedAt: [] | [bigint];
     totalQuestions: bigint;
     correctAnswers: bigint;
@@ -665,7 +859,7 @@ function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uin
     ratio: AdaptiveQuizRatio;
 } {
     return {
-        completedAt: record_opt_to_undefined(from_candid_opt_n15(_uploadFile, _downloadFile, value.completedAt)),
+        completedAt: record_opt_to_undefined(from_candid_opt_n17(_uploadFile, _downloadFile, value.completedAt)),
         totalQuestions: value.totalQuestions,
         correctAnswers: value.correctAnswers,
         sessionId: value.sessionId,
@@ -708,7 +902,7 @@ function from_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint
         lastSeen: value.lastSeen
     };
 }
-function from_candid_record_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     status: _MasteryStatus;
     wrongCount: bigint;
     radicalId: string;
@@ -746,7 +940,7 @@ function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uin
 }): MasteryStatus {
     return "Learning" in value ? MasteryStatus.Learning : "Untouched" in value ? MasteryStatus.Untouched : "Intermediate" in value ? MasteryStatus.Intermediate : "Mastered" in value ? MasteryStatus.Mastered : value;
 }
-function from_candid_vec_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_KanjiMasteryPublic>): Array<KanjiMasteryPublic> {
+function from_candid_vec_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_KanjiMasteryPublic>): Array<KanjiMasteryPublic> {
     return value.map((x)=>from_candid_KanjiMasteryPublic_n2(_uploadFile, _downloadFile, x));
 }
 export interface CreateActorOptions {

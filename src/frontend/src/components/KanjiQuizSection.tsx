@@ -4,6 +4,7 @@
  * 10 questions per session, 4 choices A/B/C/D, mastery tracking, answer panel.
  */
 
+import KanjiAnswerPanel from "@/components/KanjiAnswerPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { Progress } from "@/components/ui/progress";
 import { kanjiData, vocabularyData } from "@/data/kanjiData";
 import type { KanjiEntry, VocabularyEntry } from "@/data/kanjiData";
 import {
+  loadKanjiTracking,
   recordKanjiCorrect,
   recordKanjiSeen,
   recordKanjiWrong,
@@ -29,6 +31,7 @@ import { type ReactElement, useCallback, useMemo, useState } from "react";
 // ============================================================================
 
 type QuizType = "k-kana" | "kana-k" | "k-arti" | "arti-k" | "konteks";
+type KanjiFilter = "all" | "n5" | "n4" | "weak" | "unmastered" | "dokkai";
 
 interface QuizQuestion {
   type: QuizType;
@@ -49,6 +52,60 @@ const TAB_LABELS: Record<QuizType, string> = {
   "k-arti": "K→Arti",
   "arti-k": "Arti→K",
   konteks: "Konteks",
+};
+
+const DOKKAI_PRIORITY_KANJI = new Set([
+  "経",
+  "験",
+  "発",
+  "表",
+  "説",
+  "明",
+  "準",
+  "備",
+  "利",
+  "用",
+  "連",
+  "絡",
+  "約",
+  "束",
+  "必",
+  "要",
+  "相",
+  "談",
+  "卒",
+  "業",
+  "入",
+  "学",
+  "予",
+  "定",
+  "特",
+  "別",
+  "原",
+  "因",
+  "運",
+  "転",
+  "研",
+  "究",
+  "文",
+  "化",
+  "生",
+  "活",
+  "交",
+  "通",
+  "確",
+  "認",
+  "安",
+  "全",
+]);
+
+const FILTER_LABELS: Record<KanjiFilter, string> = {
+  all: "Semua Kanji",
+  n5: "N5 Saja",
+  n4: "N4 Saja",
+  weak: "Kanji Lemah",
+  unmastered: "Belum Dikuasai",
+  dokkai: "Prioritas Dokkai",
 };
 
 const CHOICE_LABELS = ["A", "B", "C", "D"];
@@ -149,17 +206,28 @@ function buildQuestion(
   }
 }
 
-function generateSession(type: QuizType, pool: KanjiEntry[]): QuizQuestion[] {
+function generateSession(
+  type: QuizType,
+  pool: KanjiEntry[],
+  _filter: KanjiFilter,
+  allKanji: KanjiEntry[],
+): QuizQuestion[] {
   if (pool.length < 4) return [];
-  // Prioritize N5 and N4
-  const n5 = pool.filter((e) => e.jlptLevel === "N5");
+  // Prioritize N4 (80%) over N5 (20%) per app goal
   const n4 = pool.filter((e) => e.jlptLevel === "N4");
+  const n5 = pool.filter((e) => e.jlptLevel === "N5");
   const rest = pool.filter((e) => e.jlptLevel !== "N5" && e.jlptLevel !== "N4");
-  const prioritized = shuffle([...n5, ...n4]);
-  const remaining = shuffle(rest);
-  const ordered = [...prioritized, ...remaining];
+  const n4Count = Math.ceil(SESSION_SIZE * 0.8);
+  const n5Count = SESSION_SIZE - n4Count;
+  const n4picks = shuffle(n4).slice(0, n4Count);
+  const n5picks = shuffle(n5).slice(0, n5Count);
+  const fills = shuffle(rest);
+  const needed = SESSION_SIZE - n4picks.length - n5picks.length;
+  const ordered = [...n4picks, ...n5picks, ...fills.slice(0, needed)];
   const picks = ordered.slice(0, SESSION_SIZE);
-  return picks.map((entry) => buildQuestion(entry, type, pool));
+  // distractor pool: always use all kanji so choices are meaningful
+  const distractorPool = allKanji.length >= 4 ? allKanji : pool;
+  return picks.map((entry) => buildQuestion(entry, type, distractorPool));
 }
 
 function findExampleVocab(
@@ -181,10 +249,15 @@ function findExampleVocab(
 
 interface Props {
   onClose?: () => void;
+  onViewRadical?: () => void;
 }
 
-export default function KanjiQuizSection({ onClose }: Props): ReactElement {
+export default function KanjiQuizSection({
+  onClose,
+  onViewRadical,
+}: Props): ReactElement {
   const [selectedType, setSelectedType] = useState<QuizType>("k-kana");
+  const [kanjiFilter, setKanjiFilter] = useState<KanjiFilter>("all");
   const [phase, setPhase] = useState<Phase>("select");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -197,6 +270,35 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
     () => (Array.isArray(kanjiData) ? kanjiData : []),
     [],
   );
+
+  const filteredKanji = useMemo((): KanjiEntry[] => {
+    if (kanjiFilter === "all") return safeKanji;
+    if (kanjiFilter === "n5")
+      return safeKanji.filter((e) => e.jlptLevel === "N5");
+    if (kanjiFilter === "n4")
+      return safeKanji.filter((e) => e.jlptLevel === "N4");
+    if (kanjiFilter === "dokkai")
+      return safeKanji.filter((e) => DOKKAI_PRIORITY_KANJI.has(e.character));
+    if (kanjiFilter === "weak" || kanjiFilter === "unmastered") {
+      const tracking = loadKanjiTracking();
+      if (kanjiFilter === "weak") {
+        const weak = safeKanji.filter((e) => {
+          const rec = tracking[e.character];
+          if (!rec) return false;
+          return rec.wrongCount > rec.correctCount || rec.masteryLevel < 2;
+        });
+        return weak.length >= 4 ? weak : safeKanji;
+      }
+      // unmastered: seen but masteryLevel < 4
+      const unmastered = safeKanji.filter((e) => {
+        const rec = tracking[e.character];
+        if (!rec) return true; // never seen = unmastered
+        return rec.masteryLevel < 4;
+      });
+      return unmastered.length >= 4 ? unmastered : safeKanji;
+    }
+    return safeKanji;
+  }, [kanjiFilter, safeKanji]);
   const safeVocab = useMemo(
     () => (Array.isArray(vocabularyData) ? vocabularyData : []),
     [],
@@ -208,10 +310,10 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
     (type: QuizType, repeatK?: KanjiEntry) => {
       let qs: QuizQuestion[];
       if (repeatK) {
-        // Repeat only this entry, same type
+        // Repeat only this entry, same type — use full pool for distractors
         qs = [buildQuestion(repeatK, type, safeKanji)];
       } else {
-        qs = generateSession(type, safeKanji);
+        qs = generateSession(type, filteredKanji, kanjiFilter, safeKanji);
       }
       if (qs.length === 0) return;
       // Record seen for first question
@@ -224,7 +326,7 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
       setRepeatEntry(null);
       setPhase("quiz");
     },
-    [safeKanji],
+    [filteredKanji, kanjiFilter, safeKanji],
   );
 
   const handleTypeSelect = useCallback(
@@ -297,9 +399,11 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
       ? ((currentIdx + (isAnswered ? 1 : 0)) / questions.length) * 100
       : 0;
 
-  const exampleVocab = currentQ
+  // example vocab kept for legacy use (unused — KanjiAnswerPanel handles it)
+  const _exampleVocab = currentQ
     ? findExampleVocab(currentQ.entry.character, safeVocab)
     : null;
+  void _exampleVocab;
 
   const promptLabel: Record<QuizType, string> = {
     "k-kana": "Bagaimana cara membaca kanji ini?",
@@ -334,6 +438,67 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
         <p className="text-gray-400 text-sm">
           Pilih jenis quiz, lalu kerjakan 10 soal pilihan ganda A/B/C/D.
         </p>
+
+        {/* ── Filter kanji ── */}
+        <div className="space-y-2" data-ocid="kanji_quiz.filter_section">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Filter Kanji
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {(Object.keys(FILTER_LABELS) as KanjiFilter[]).map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setKanjiFilter(f)}
+                data-ocid={`kanji_quiz.filter_${f}_button`}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                  kanjiFilter === f
+                    ? "border-cyan-400 bg-cyan-950/60 text-cyan-300"
+                    : "border-gray-700 bg-gray-800 text-gray-400 hover:border-cyan-600 hover:text-cyan-400"
+                }`}
+              >
+                {FILTER_LABELS[f]}
+                {f === "all" && (
+                  <span className="ml-1 text-gray-500">
+                    ({safeKanji.length})
+                  </span>
+                )}
+                {f === "n4" && (
+                  <span className="ml-1 text-gray-500">
+                    ({safeKanji.filter((e) => e.jlptLevel === "N4").length})
+                  </span>
+                )}
+                {f === "n5" && (
+                  <span className="ml-1 text-gray-500">
+                    ({safeKanji.filter((e) => e.jlptLevel === "N5").length})
+                  </span>
+                )}
+                {f === "dokkai" && (
+                  <span className="ml-1 text-gray-500">
+                    (
+                    {
+                      safeKanji.filter((e) =>
+                        DOKKAI_PRIORITY_KANJI.has(e.character),
+                      ).length
+                    }
+                    )
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+          {kanjiFilter !== "all" && (
+            <p className="text-xs text-cyan-500">
+              {filteredKanji.length} kanji tersedia untuk filter ini.
+              {filteredKanji.length < 4 && (
+                <span className="text-yellow-400 ml-1">
+                  (Terlalu sedikit — akan pakai semua kanji)
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 gap-3">
           {(Object.keys(TAB_LABELS) as QuizType[]).map((t) => (
             <button
@@ -445,13 +610,6 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
 
   const isCorrect = chosenIdx !== null && chosenIdx === currentQ.correctIndex;
 
-  // Example vocab word
-  const exampleWord = exampleVocab
-    ? ((exampleVocab as VocabularyEntry & { word?: string }).word ??
-      exampleVocab.vocabulary ??
-      "")
-    : null;
-
   const isLargePrompt =
     currentQ.type === "k-kana" ||
     currentQ.type === "k-arti" ||
@@ -536,7 +694,7 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
               const revealed = isAnswered;
 
               let cls =
-                "w-full p-3.5 text-left rounded-lg border-2 transition-all flex items-center gap-3 ";
+                "w-full p-3.5 text-left rounded-lg border-2 transition-all flex items-start gap-3 ";
               if (revealed) {
                 if (isCorrectOpt)
                   cls += "border-green-500 bg-green-950/40 text-green-300";
@@ -563,12 +721,14 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
                   <span className="w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-xs font-bold shrink-0">
                     {CHOICE_LABELS[idx]}
                   </span>
-                  <span className="font-medium text-base flex-1">{opt}</span>
+                  <span className="font-medium text-base flex-1 whitespace-normal break-words leading-snug min-w-0">
+                    {opt}
+                  </span>
                   {revealed && isCorrectOpt && (
-                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                   )}
                   {revealed && isSelected && !isCorrectOpt && (
-                    <XCircle className="w-5 h-5 text-red-400 shrink-0" />
+                    <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                   )}
                 </button>
               );
@@ -577,114 +737,18 @@ export default function KanjiQuizSection({ onClose }: Props): ReactElement {
         </CardContent>
       </Card>
 
-      {/* answer panel */}
+      {/* answer panel — rich explanation with radical, vocab examples, example sentence */}
       {isAnswered && (
-        <Card
-          className={
-            isCorrect
-              ? "border-green-600 bg-green-950/30"
-              : "border-red-600 bg-red-950/30"
+        <KanjiAnswerPanel
+          isCorrect={isCorrect}
+          entry={currentQ.entry}
+          onNext={handleNext}
+          onReviewAgain={handlePelajariLagi}
+          onViewRadical={onViewRadical}
+          nextLabel={
+            currentIdx + 1 >= questions.length ? "Lihat Skor" : "Lanjut →"
           }
-          data-ocid="kanji_quiz.answer_panel"
-        >
-          <CardContent className="pt-5 pb-4 space-y-4">
-            {/* result badge */}
-            <div className="flex items-center gap-2">
-              {isCorrect ? (
-                <>
-                  <CheckCircle2 className="w-6 h-6 text-green-400 shrink-0" />
-                  <span className="font-bold text-green-400 text-base">
-                    Benar!
-                  </span>
-                </>
-              ) : (
-                <>
-                  <XCircle className="w-6 h-6 text-red-400 shrink-0" />
-                  <span className="font-bold text-red-400 text-base">
-                    Salah
-                  </span>
-                </>
-              )}
-            </div>
-
-            {/* kanji info */}
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-gray-900/60 rounded-lg p-3 space-y-1">
-                <p className="text-gray-500 text-xs uppercase tracking-wide">
-                  Kanji
-                </p>
-                <p className="text-4xl font-bold text-white">
-                  {currentQ.entry.character}
-                </p>
-              </div>
-              <div className="bg-gray-900/60 rounded-lg p-3 space-y-1">
-                <p className="text-gray-500 text-xs uppercase tracking-wide">
-                  Bacaan
-                </p>
-                <p className="text-cyan-300 font-semibold text-base">
-                  {currentQ.entry.romaji}
-                </p>
-              </div>
-              <div className="bg-gray-900/60 rounded-lg p-3 space-y-1 col-span-2">
-                <p className="text-gray-500 text-xs uppercase tracking-wide">
-                  Arti
-                </p>
-                <p className="text-white font-medium">
-                  {currentQ.entry.meaning}
-                </p>
-              </div>
-            </div>
-
-            {/* penjelasan */}
-            {currentQ.entry.explanation && (
-              <div className="bg-gray-900/40 rounded-lg p-3 space-y-1">
-                <p className="text-gray-500 text-xs uppercase tracking-wide">
-                  Penjelasan
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {currentQ.entry.explanation}
-                </p>
-              </div>
-            )}
-
-            {/* contoh dari vocabulary */}
-            {exampleWord && exampleVocab && (
-              <div className="bg-gray-900/40 rounded-lg p-3 space-y-1">
-                <p className="text-gray-500 text-xs uppercase tracking-wide">
-                  Contoh
-                </p>
-                <p className="text-cyan-300 font-semibold">{exampleWord}</p>
-                <p className="text-gray-400 text-sm">
-                  {exampleVocab.romaji} — {exampleVocab.meaning}
-                </p>
-              </div>
-            )}
-
-            {/* action buttons */}
-            <div className="flex gap-3 pt-1">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handlePelajariLagi}
-                size="sm"
-                className="flex-1 border-yellow-700 text-yellow-300 hover:bg-yellow-950/40 hover:text-yellow-200"
-                data-ocid="kanji_quiz.review_again_button"
-              >
-                Pelajari Lagi
-              </Button>
-              <Button
-                type="button"
-                onClick={handleNext}
-                size="sm"
-                className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white"
-                data-ocid="kanji_quiz.next_button"
-              >
-                {currentIdx + 1 >= questions.length ? "Lihat Skor" : "Lanjut"}
-                <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        />
       )}
     </div>
   );
