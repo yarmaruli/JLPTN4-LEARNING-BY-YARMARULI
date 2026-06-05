@@ -31154,408 +31154,6 @@ function TabsContent({
     }
   );
 }
-const alertVariants = cva(
-  "relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
-  {
-    variants: {
-      variant: {
-        default: "bg-card text-card-foreground",
-        destructive: "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90"
-      }
-    },
-    defaultVariants: {
-      variant: "default"
-    }
-  }
-);
-function Alert({
-  className,
-  variant,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "alert",
-      role: "alert",
-      className: cn(alertVariants({ variant }), className),
-      ...props
-    }
-  );
-}
-function AlertTitle({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "alert-title",
-      className: cn(
-        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function AlertDescription({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "alert-description",
-      className: cn(
-        "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
-        className
-      ),
-      ...props
-    }
-  );
-}
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline"
-      },
-      size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default"
-    }
-  }
-);
-function Button({
-  className,
-  variant,
-  size: size2,
-  asChild = false,
-  ...props
-}) {
-  const Comp = asChild ? Slot$3 : "button";
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Comp,
-    {
-      "data-slot": "button",
-      className: cn(buttonVariants({ variant, size: size2, className })),
-      ...props
-    }
-  );
-}
-function Card({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card",
-      className: cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardHeader({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-header",
-      className: cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardTitle({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-title",
-      className: cn("leading-none font-semibold", className),
-      ...props
-    }
-  );
-}
-function CardDescription({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-description",
-      className: cn("text-muted-foreground text-sm", className),
-      ...props
-    }
-  );
-}
-function CardContent({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-content",
-      className: cn("px-6", className),
-      ...props
-    }
-  );
-}
-function createContextScope(scopeName, createContextScopeDeps = []) {
-  let defaultContexts = [];
-  function createContext3(rootComponentName, defaultContext) {
-    const BaseContext = reactExports.createContext(defaultContext);
-    BaseContext.displayName = rootComponentName + "Context";
-    const index2 = defaultContexts.length;
-    defaultContexts = [...defaultContexts, defaultContext];
-    const Provider = (props) => {
-      var _a2;
-      const { scope, children, ...context } = props;
-      const Context = ((_a2 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a2[index2]) || BaseContext;
-      const value = reactExports.useMemo(() => context, Object.values(context));
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(Context.Provider, { value, children });
-    };
-    Provider.displayName = rootComponentName + "Provider";
-    function useContext2(consumerName, scope) {
-      var _a2;
-      const Context = ((_a2 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a2[index2]) || BaseContext;
-      const context = reactExports.useContext(Context);
-      if (context) return context;
-      if (defaultContext !== void 0) return defaultContext;
-      throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
-    }
-    return [Provider, useContext2];
-  }
-  const createScope = () => {
-    const scopeContexts = defaultContexts.map((defaultContext) => {
-      return reactExports.createContext(defaultContext);
-    });
-    return function useScope(scope) {
-      const contexts = (scope == null ? void 0 : scope[scopeName]) || scopeContexts;
-      return reactExports.useMemo(
-        () => ({ [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts } }),
-        [scope, contexts]
-      );
-    };
-  };
-  createScope.scopeName = scopeName;
-  return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
-}
-function composeContextScopes(...scopes) {
-  const baseScope = scopes[0];
-  if (scopes.length === 1) return baseScope;
-  const createScope = () => {
-    const scopeHooks = scopes.map((createScope2) => ({
-      useScope: createScope2(),
-      scopeName: createScope2.scopeName
-    }));
-    return function useComposedScopes(overrideScopes) {
-      const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName }) => {
-        const scopeProps = useScope(overrideScopes);
-        const currentScope = scopeProps[`__scope${scopeName}`];
-        return { ...nextScopes2, ...currentScope };
-      }, {});
-      return reactExports.useMemo(() => ({ [`__scope${baseScope.scopeName}`]: nextScopes }), [nextScopes]);
-    };
-  };
-  createScope.scopeName = baseScope.scopeName;
-  return createScope;
-}
-var NODES = [
-  "a",
-  "button",
-  "div",
-  "form",
-  "h2",
-  "h3",
-  "img",
-  "input",
-  "label",
-  "li",
-  "nav",
-  "ol",
-  "p",
-  "select",
-  "span",
-  "svg",
-  "ul"
-];
-var Primitive = NODES.reduce((primitive, node) => {
-  const Slot2 = /* @__PURE__ */ createSlot$1(`Primitive.${node}`);
-  const Node2 = reactExports.forwardRef((props, forwardedRef) => {
-    const { asChild, ...primitiveProps } = props;
-    const Comp = asChild ? Slot2 : node;
-    if (typeof window !== "undefined") {
-      window[Symbol.for("radix-ui")] = true;
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { ...primitiveProps, ref: forwardedRef });
-  });
-  Node2.displayName = `Primitive.${node}`;
-  return { ...primitive, [node]: Node2 };
-}, {});
-var PROGRESS_NAME = "Progress";
-var DEFAULT_MAX = 100;
-var [createProgressContext] = createContextScope(PROGRESS_NAME);
-var [ProgressProvider, useProgressContext] = createProgressContext(PROGRESS_NAME);
-var Progress$1 = reactExports.forwardRef(
-  (props, forwardedRef) => {
-    const {
-      __scopeProgress,
-      value: valueProp = null,
-      max: maxProp,
-      getValueLabel = defaultGetValueLabel,
-      ...progressProps
-    } = props;
-    if ((maxProp || maxProp === 0) && !isValidMaxNumber(maxProp)) {
-      console.error(getInvalidMaxError(`${maxProp}`, "Progress"));
-    }
-    const max2 = isValidMaxNumber(maxProp) ? maxProp : DEFAULT_MAX;
-    if (valueProp !== null && !isValidValueNumber(valueProp, max2)) {
-      console.error(getInvalidValueError(`${valueProp}`, "Progress"));
-    }
-    const value = isValidValueNumber(valueProp, max2) ? valueProp : null;
-    const valueLabel = isNumber(value) ? getValueLabel(value, max2) : void 0;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressProvider, { scope: __scopeProgress, value, max: max2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.div,
-      {
-        "aria-valuemax": max2,
-        "aria-valuemin": 0,
-        "aria-valuenow": isNumber(value) ? value : void 0,
-        "aria-valuetext": valueLabel,
-        role: "progressbar",
-        "data-state": getProgressState(value, max2),
-        "data-value": value ?? void 0,
-        "data-max": max2,
-        ...progressProps,
-        ref: forwardedRef
-      }
-    ) });
-  }
-);
-Progress$1.displayName = PROGRESS_NAME;
-var INDICATOR_NAME = "ProgressIndicator";
-var ProgressIndicator = reactExports.forwardRef(
-  (props, forwardedRef) => {
-    const { __scopeProgress, ...indicatorProps } = props;
-    const context = useProgressContext(INDICATOR_NAME, __scopeProgress);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.div,
-      {
-        "data-state": getProgressState(context.value, context.max),
-        "data-value": context.value ?? void 0,
-        "data-max": context.max,
-        ...indicatorProps,
-        ref: forwardedRef
-      }
-    );
-  }
-);
-ProgressIndicator.displayName = INDICATOR_NAME;
-function defaultGetValueLabel(value, max2) {
-  return `${Math.round(value / max2 * 100)}%`;
-}
-function getProgressState(value, maxValue) {
-  return value == null ? "indeterminate" : value === maxValue ? "complete" : "loading";
-}
-function isNumber(value) {
-  return typeof value === "number";
-}
-function isValidMaxNumber(max2) {
-  return isNumber(max2) && !isNaN(max2) && max2 > 0;
-}
-function isValidValueNumber(value, max2) {
-  return isNumber(value) && !isNaN(value) && value <= max2 && value >= 0;
-}
-function getInvalidMaxError(propValue, componentName) {
-  return `Invalid prop \`max\` of value \`${propValue}\` supplied to \`${componentName}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${DEFAULT_MAX}\`.`;
-}
-function getInvalidValueError(propValue, componentName) {
-  return `Invalid prop \`value\` of value \`${propValue}\` supplied to \`${componentName}\`. The \`value\` prop must be:
-  - a positive number
-  - less than the value passed to \`max\` (or ${DEFAULT_MAX} if no \`max\` prop is set)
-  - \`null\` or \`undefined\` if the progress is indeterminate.
-
-Defaulting to \`null\`.`;
-}
-var Root$6 = Progress$1;
-var Indicator = ProgressIndicator;
-function Progress({
-  className,
-  value,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Root$6,
-    {
-      "data-slot": "progress",
-      className: cn(
-        "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Indicator,
-        {
-          "data-slot": "progress-indicator",
-          className: "bg-primary h-full w-full flex-1 transition-all",
-          style: { transform: `translateX(-${100 - (value || 0)}%)` }
-        }
-      )
-    }
-  );
-}
-var NAME$3 = "Separator";
-var DEFAULT_ORIENTATION = "horizontal";
-var ORIENTATIONS = ["horizontal", "vertical"];
-var Separator$1 = reactExports.forwardRef((props, forwardedRef) => {
-  const { decorative, orientation: orientationProp = DEFAULT_ORIENTATION, ...domProps } = props;
-  const orientation = isValidOrientation(orientationProp) ? orientationProp : DEFAULT_ORIENTATION;
-  const ariaOrientation = orientation === "vertical" ? orientation : void 0;
-  const semanticProps = decorative ? { role: "none" } : { "aria-orientation": ariaOrientation, role: "separator" };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Primitive.div,
-    {
-      "data-orientation": orientation,
-      ...semanticProps,
-      ...domProps,
-      ref: forwardedRef
-    }
-  );
-});
-Separator$1.displayName = NAME$3;
-function isValidOrientation(orientation) {
-  return ORIENTATIONS.includes(orientation);
-}
-var Root$5 = Separator$1;
-function Separator({
-  className,
-  orientation = "horizontal",
-  decorative = true,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Root$5,
-    {
-      "data-slot": "separator",
-      decorative,
-      orientation,
-      className: cn(
-        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
-        className
-      ),
-      ...props
-    }
-  );
-}
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31661,7 +31259,24 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$E = [
+const __iconNode$G = [
+  ["path", { d: "M10 2v8l3-3 3 3V2", key: "sqw3rj" }],
+  [
+    "path",
+    {
+      d: "M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20",
+      key: "k3hazp"
+    }
+  ]
+];
+const BookMarked = createLucideIcon("book-marked", __iconNode$G);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$F = [
   ["path", { d: "M12 7v14", key: "1akyts" }],
   [
     "path",
@@ -31671,14 +31286,14 @@ const __iconNode$E = [
     }
   ]
 ];
-const BookOpen = createLucideIcon("book-open", __iconNode$E);
+const BookOpen = createLucideIcon("book-open", __iconNode$F);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$D = [
+const __iconNode$E = [
   ["path", { d: "m14.5 7-5 5", key: "dy991v" }],
   [
     "path",
@@ -31689,14 +31304,14 @@ const __iconNode$D = [
   ],
   ["path", { d: "m9.5 7 5 5", key: "s45iea" }]
 ];
-const BookX = createLucideIcon("book-x", __iconNode$D);
+const BookX = createLucideIcon("book-x", __iconNode$E);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$C = [
+const __iconNode$D = [
   [
     "path",
     {
@@ -31719,7 +31334,20 @@ const __iconNode$C = [
   ["path", { d: "M6 18a4 4 0 0 1-1.967-.516", key: "2e4loj" }],
   ["path", { d: "M19.967 17.484A4 4 0 0 1 18 18", key: "159ez6" }]
 ];
-const Brain = createLucideIcon("brain", __iconNode$C);
+const Brain = createLucideIcon("brain", __iconNode$D);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$C = [
+  ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
+  ["path", { d: "M18 17V9", key: "2bz60n" }],
+  ["path", { d: "M13 17V5", key: "1frdt8" }],
+  ["path", { d: "M8 17v-3", key: "17ska0" }]
+];
+const ChartColumn = createLucideIcon("chart-column", __iconNode$C);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -31727,12 +31355,11 @@ const Brain = createLucideIcon("brain", __iconNode$C);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$B = [
-  ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
-  ["path", { d: "M18 17V9", key: "2bz60n" }],
-  ["path", { d: "M13 17V5", key: "1frdt8" }],
-  ["path", { d: "M8 17v-3", key: "17ska0" }]
+  ["line", { x1: "18", x2: "18", y1: "20", y2: "10", key: "1xfpm4" }],
+  ["line", { x1: "12", x2: "12", y1: "20", y2: "4", key: "be30l9" }],
+  ["line", { x1: "6", x2: "6", y1: "20", y2: "14", key: "1r4le6" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$B);
+const ChartNoAxesColumn = createLucideIcon("chart-no-axes-column", __iconNode$B);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -32217,6 +31844,408 @@ const __iconNode = [
   ]
 ];
 const Zap = createLucideIcon("zap", __iconNode);
+const alertVariants = cva(
+  "relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  {
+    variants: {
+      variant: {
+        default: "bg-card text-card-foreground",
+        destructive: "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+);
+function Alert({
+  className,
+  variant,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "alert",
+      role: "alert",
+      className: cn(alertVariants({ variant }), className),
+      ...props
+    }
+  );
+}
+function AlertTitle({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "alert-title",
+      className: cn(
+        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AlertDescription({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "alert-description",
+      className: cn(
+        "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+        className
+      ),
+      ...props
+    }
+  );
+}
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        destructive: "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        link: "text-primary underline-offset-4 hover:underline"
+      },
+      size: {
+        default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        icon: "size-9"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default"
+    }
+  }
+);
+function Button({
+  className,
+  variant,
+  size: size2,
+  asChild = false,
+  ...props
+}) {
+  const Comp = asChild ? Slot$3 : "button";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Comp,
+    {
+      "data-slot": "button",
+      className: cn(buttonVariants({ variant, size: size2, className })),
+      ...props
+    }
+  );
+}
+function Card({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "card",
+      className: cn(
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function CardHeader({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "card-header",
+      className: cn(
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function CardTitle({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "card-title",
+      className: cn("leading-none font-semibold", className),
+      ...props
+    }
+  );
+}
+function CardDescription({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "card-description",
+      className: cn("text-muted-foreground text-sm", className),
+      ...props
+    }
+  );
+}
+function CardContent({ className, ...props }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "card-content",
+      className: cn("px-6", className),
+      ...props
+    }
+  );
+}
+function createContextScope(scopeName, createContextScopeDeps = []) {
+  let defaultContexts = [];
+  function createContext3(rootComponentName, defaultContext) {
+    const BaseContext = reactExports.createContext(defaultContext);
+    BaseContext.displayName = rootComponentName + "Context";
+    const index2 = defaultContexts.length;
+    defaultContexts = [...defaultContexts, defaultContext];
+    const Provider = (props) => {
+      var _a2;
+      const { scope, children, ...context } = props;
+      const Context = ((_a2 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a2[index2]) || BaseContext;
+      const value = reactExports.useMemo(() => context, Object.values(context));
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(Context.Provider, { value, children });
+    };
+    Provider.displayName = rootComponentName + "Provider";
+    function useContext2(consumerName, scope) {
+      var _a2;
+      const Context = ((_a2 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a2[index2]) || BaseContext;
+      const context = reactExports.useContext(Context);
+      if (context) return context;
+      if (defaultContext !== void 0) return defaultContext;
+      throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+    }
+    return [Provider, useContext2];
+  }
+  const createScope = () => {
+    const scopeContexts = defaultContexts.map((defaultContext) => {
+      return reactExports.createContext(defaultContext);
+    });
+    return function useScope(scope) {
+      const contexts = (scope == null ? void 0 : scope[scopeName]) || scopeContexts;
+      return reactExports.useMemo(
+        () => ({ [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts } }),
+        [scope, contexts]
+      );
+    };
+  };
+  createScope.scopeName = scopeName;
+  return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
+}
+function composeContextScopes(...scopes) {
+  const baseScope = scopes[0];
+  if (scopes.length === 1) return baseScope;
+  const createScope = () => {
+    const scopeHooks = scopes.map((createScope2) => ({
+      useScope: createScope2(),
+      scopeName: createScope2.scopeName
+    }));
+    return function useComposedScopes(overrideScopes) {
+      const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName }) => {
+        const scopeProps = useScope(overrideScopes);
+        const currentScope = scopeProps[`__scope${scopeName}`];
+        return { ...nextScopes2, ...currentScope };
+      }, {});
+      return reactExports.useMemo(() => ({ [`__scope${baseScope.scopeName}`]: nextScopes }), [nextScopes]);
+    };
+  };
+  createScope.scopeName = baseScope.scopeName;
+  return createScope;
+}
+var NODES = [
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "select",
+  "span",
+  "svg",
+  "ul"
+];
+var Primitive = NODES.reduce((primitive, node) => {
+  const Slot2 = /* @__PURE__ */ createSlot$1(`Primitive.${node}`);
+  const Node2 = reactExports.forwardRef((props, forwardedRef) => {
+    const { asChild, ...primitiveProps } = props;
+    const Comp = asChild ? Slot2 : node;
+    if (typeof window !== "undefined") {
+      window[Symbol.for("radix-ui")] = true;
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { ...primitiveProps, ref: forwardedRef });
+  });
+  Node2.displayName = `Primitive.${node}`;
+  return { ...primitive, [node]: Node2 };
+}, {});
+var PROGRESS_NAME = "Progress";
+var DEFAULT_MAX = 100;
+var [createProgressContext] = createContextScope(PROGRESS_NAME);
+var [ProgressProvider, useProgressContext] = createProgressContext(PROGRESS_NAME);
+var Progress$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const {
+      __scopeProgress,
+      value: valueProp = null,
+      max: maxProp,
+      getValueLabel = defaultGetValueLabel,
+      ...progressProps
+    } = props;
+    if ((maxProp || maxProp === 0) && !isValidMaxNumber(maxProp)) {
+      console.error(getInvalidMaxError(`${maxProp}`, "Progress"));
+    }
+    const max2 = isValidMaxNumber(maxProp) ? maxProp : DEFAULT_MAX;
+    if (valueProp !== null && !isValidValueNumber(valueProp, max2)) {
+      console.error(getInvalidValueError(`${valueProp}`, "Progress"));
+    }
+    const value = isValidValueNumber(valueProp, max2) ? valueProp : null;
+    const valueLabel = isNumber(value) ? getValueLabel(value, max2) : void 0;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressProvider, { scope: __scopeProgress, value, max: max2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Primitive.div,
+      {
+        "aria-valuemax": max2,
+        "aria-valuemin": 0,
+        "aria-valuenow": isNumber(value) ? value : void 0,
+        "aria-valuetext": valueLabel,
+        role: "progressbar",
+        "data-state": getProgressState(value, max2),
+        "data-value": value ?? void 0,
+        "data-max": max2,
+        ...progressProps,
+        ref: forwardedRef
+      }
+    ) });
+  }
+);
+Progress$1.displayName = PROGRESS_NAME;
+var INDICATOR_NAME = "ProgressIndicator";
+var ProgressIndicator = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeProgress, ...indicatorProps } = props;
+    const context = useProgressContext(INDICATOR_NAME, __scopeProgress);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Primitive.div,
+      {
+        "data-state": getProgressState(context.value, context.max),
+        "data-value": context.value ?? void 0,
+        "data-max": context.max,
+        ...indicatorProps,
+        ref: forwardedRef
+      }
+    );
+  }
+);
+ProgressIndicator.displayName = INDICATOR_NAME;
+function defaultGetValueLabel(value, max2) {
+  return `${Math.round(value / max2 * 100)}%`;
+}
+function getProgressState(value, maxValue) {
+  return value == null ? "indeterminate" : value === maxValue ? "complete" : "loading";
+}
+function isNumber(value) {
+  return typeof value === "number";
+}
+function isValidMaxNumber(max2) {
+  return isNumber(max2) && !isNaN(max2) && max2 > 0;
+}
+function isValidValueNumber(value, max2) {
+  return isNumber(value) && !isNaN(value) && value <= max2 && value >= 0;
+}
+function getInvalidMaxError(propValue, componentName) {
+  return `Invalid prop \`max\` of value \`${propValue}\` supplied to \`${componentName}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${DEFAULT_MAX}\`.`;
+}
+function getInvalidValueError(propValue, componentName) {
+  return `Invalid prop \`value\` of value \`${propValue}\` supplied to \`${componentName}\`. The \`value\` prop must be:
+  - a positive number
+  - less than the value passed to \`max\` (or ${DEFAULT_MAX} if no \`max\` prop is set)
+  - \`null\` or \`undefined\` if the progress is indeterminate.
+
+Defaulting to \`null\`.`;
+}
+var Root$6 = Progress$1;
+var Indicator = ProgressIndicator;
+function Progress({
+  className,
+  value,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Root$6,
+    {
+      "data-slot": "progress",
+      className: cn(
+        "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
+        className
+      ),
+      ...props,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Indicator,
+        {
+          "data-slot": "progress-indicator",
+          className: "bg-primary h-full w-full flex-1 transition-all",
+          style: { transform: `translateX(-${100 - (value || 0)}%)` }
+        }
+      )
+    }
+  );
+}
+var NAME$3 = "Separator";
+var DEFAULT_ORIENTATION = "horizontal";
+var ORIENTATIONS = ["horizontal", "vertical"];
+var Separator$1 = reactExports.forwardRef((props, forwardedRef) => {
+  const { decorative, orientation: orientationProp = DEFAULT_ORIENTATION, ...domProps } = props;
+  const orientation = isValidOrientation(orientationProp) ? orientationProp : DEFAULT_ORIENTATION;
+  const ariaOrientation = orientation === "vertical" ? orientation : void 0;
+  const semanticProps = decorative ? { role: "none" } : { "aria-orientation": ariaOrientation, role: "separator" };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Primitive.div,
+    {
+      "data-orientation": orientation,
+      ...semanticProps,
+      ...domProps,
+      ref: forwardedRef
+    }
+  );
+});
+Separator$1.displayName = NAME$3;
+function isValidOrientation(orientation) {
+  return ORIENTATIONS.includes(orientation);
+}
+var Root$5 = Separator$1;
+function Separator({
+  className,
+  orientation = "horizontal",
+  decorative = true,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Root$5,
+    {
+      "data-slot": "separator",
+      decorative,
+      orientation,
+      className: cn(
+        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
+        className
+      ),
+      ...props
+    }
+  );
+}
 const kanjiData = [
   // ========== JLPT N5 KANJI - PERMANENTLY EMBEDDED ==========
   // Numbers
@@ -46569,6 +46598,10 @@ function getDataStatistics() {
   };
 }
 const MASTERY_KEY = "masteryData";
+const VOCAB_TRACKING_KEY = "vocabTracking";
+const READING_ANALYTICS_KEY = "readingAnalytics";
+const CONSECUTIVE_N5_KEY = "kanjikan_consecutive_n5";
+const N4_BOOST_REMAINING_KEY = "kanjikan_n4_boost_remaining";
 const DEFAULT_ANALYTICS$1 = {
   totalQuestions: 0,
   totalCorrect: 0,
@@ -46687,6 +46720,157 @@ function getWeakItems(allItems, minWrong = 1) {
     return [];
   }
 }
+const PRIORITY_N4_WORDS = /* @__PURE__ */ new Set([
+  "経験",
+  "経済",
+  "経歴",
+  "発表",
+  "説明",
+  "準備",
+  "利用",
+  "連絡",
+  "約束",
+  "確認",
+  "必要",
+  "研究",
+  "運転",
+  "受付",
+  "相談",
+  "卒業",
+  "入学",
+  "旅行",
+  "予定",
+  "特別",
+  "原因",
+  "安全",
+  "交通",
+  "予約",
+  "文化",
+  "生活",
+  "試験",
+  "選ぶ",
+  "続ける",
+  "増える"
+]);
+function loadConsecutiveN5() {
+  try {
+    const v2 = localStorage.getItem(CONSECUTIVE_N5_KEY);
+    return v2 ? Number.parseInt(v2, 10) : 0;
+  } catch {
+    return 0;
+  }
+}
+function saveConsecutiveN5(n) {
+  try {
+    localStorage.setItem(CONSECUTIVE_N5_KEY, String(n));
+  } catch {
+  }
+}
+function loadN4BoostRemaining() {
+  try {
+    const v2 = sessionStorage.getItem(N4_BOOST_REMAINING_KEY);
+    return v2 ? Number.parseInt(v2, 10) : 0;
+  } catch {
+    return 0;
+  }
+}
+function saveN4BoostRemaining(n) {
+  try {
+    sessionStorage.setItem(N4_BOOST_REMAINING_KEY, String(Math.max(0, n)));
+  } catch {
+  }
+}
+function recordQuizAnswer(jlptLevel, isCorrect) {
+  try {
+    const isN5 = jlptLevel === "N5";
+    const consecutive = loadConsecutiveN5();
+    const boost = loadN4BoostRemaining();
+    if (boost > 0) {
+      saveN4BoostRemaining(boost - 1);
+      saveConsecutiveN5(0);
+      return;
+    }
+    if (isN5 && isCorrect) {
+      const next = consecutive + 1;
+      saveConsecutiveN5(next);
+      if (next >= 3) {
+        saveN4BoostRemaining(5);
+        saveConsecutiveN5(0);
+      }
+    } else {
+      saveConsecutiveN5(0);
+    }
+  } catch {
+  }
+}
+function selectQuizItems(allKanji, allVocab, mode, count2) {
+  try {
+    let expandAndShuffle = function(weighted) {
+      const expanded = [];
+      for (const { item, weight } of weighted) {
+        for (let i = 0; i < weight; i++) expanded.push(item);
+      }
+      return shuffle$2(expanded);
+    };
+    const boostActive = loadN4BoostRemaining() > 0;
+    const effectiveMode = boostActive ? "n4focus" : mode;
+    const wKanji = allKanji.filter((k2) => {
+      if (effectiveMode === "n5only") return k2.jlptLevel === "N5";
+      if (effectiveMode === "n4focus" && boostActive)
+        return k2.jlptLevel === "N4";
+      return true;
+    }).map((k2) => {
+      let w2 = 1;
+      if (effectiveMode === "n4focus") {
+        if (k2.jlptLevel === "N4") w2 = 4;
+      }
+      return { item: k2, weight: w2 };
+    });
+    const wVocab = allVocab.filter((v2) => {
+      if (effectiveMode === "n5only") return v2.jlptLevel === "N5";
+      if (effectiveMode === "n4focus" && boostActive)
+        return v2.jlptLevel === "N4";
+      return true;
+    }).map((v2) => {
+      let w2 = 1;
+      if (effectiveMode === "n4focus") {
+        if (v2.jlptLevel === "N4") w2 = 4;
+        if (PRIORITY_N4_WORDS.has(v2.vocabulary)) w2 += 3;
+      }
+      return { item: v2, weight: w2 };
+    });
+    const expandedKanji = expandAndShuffle(wKanji);
+    const expandedVocab = expandAndShuffle(wVocab);
+    const kanjiCount = Math.round(count2 * 0.55);
+    const vocabCount = count2 - kanjiCount;
+    const seenKanji = /* @__PURE__ */ new Set();
+    const selectedKanji = [];
+    for (const k2 of expandedKanji) {
+      if (!seenKanji.has(k2.character)) {
+        seenKanji.add(k2.character);
+        selectedKanji.push(k2);
+        if (selectedKanji.length >= kanjiCount) break;
+      }
+    }
+    const seenVocab = /* @__PURE__ */ new Set();
+    const selectedVocab = [];
+    for (const v2 of expandedVocab) {
+      if (!seenVocab.has(v2.vocabulary)) {
+        seenVocab.add(v2.vocabulary);
+        selectedVocab.push(v2);
+        if (selectedVocab.length >= vocabCount) break;
+      }
+    }
+    return { kanji: selectedKanji, vocab: selectedVocab };
+  } catch (e) {
+    console.warn("[masteryEngine] selectQuizItems failed:", e);
+    const k2 = Math.round(count2 * 0.55);
+    return {
+      kanji: allKanji.slice(0, k2),
+      vocab: allVocab.slice(0, count2 - k2)
+    };
+  }
+}
 function getItemId(item) {
   if ("character" in item) return `kanji_${item.character}`;
   return `vocab_${item.vocabulary}`;
@@ -46694,17 +46878,13 @@ function getItemId(item) {
 function isKanjiEntry(item) {
   return "character" in item;
 }
-function shuffle(arr) {
+function shuffle$2(arr) {
   const a2 = [...arr];
   for (let i = a2.length - 1; i > 0; i--) {
     const j2 = Math.floor(Math.random() * (i + 1));
     [a2[i], a2[j2]] = [a2[j2], a2[i]];
   }
   return a2;
-}
-function pickRandom(arr, count2) {
-  if (arr.length <= count2) return [...arr];
-  return shuffle(arr).slice(0, count2);
 }
 function generateOptions(correct, pool, difficulty, count2 = 3) {
   try {
@@ -46717,8 +46897,8 @@ function generateOptions(correct, pool, difficulty, count2 = 3) {
     const dissimilar = available.filter((p2) => !similar.includes(p2));
     const fillFrom = (primary, secondary, needed) => {
       const picked = [];
-      const src1 = shuffle(primary);
-      const src2 = shuffle(secondary);
+      const src1 = shuffle$2(primary);
+      const src2 = shuffle$2(secondary);
       for (const s of [...src1, ...src2]) {
         if (picked.length >= needed) break;
         picked.push(s);
@@ -46764,7 +46944,7 @@ function generateKanjiQuestion(entry, allKanji, type, difficulty) {
     }
     const wrongOptions = generateOptions(correctAnswer, pool, difficulty, 3);
     if (wrongOptions.length < 1) return null;
-    const allOptions = shuffle([correctAnswer, ...wrongOptions]);
+    const allOptions = shuffle$2([correctAnswer, ...wrongOptions]);
     while (allOptions.length < 4) allOptions.push("-");
     const options = allOptions.slice(0, 4);
     const correctIndex = options.indexOf(correctAnswer);
@@ -46801,7 +46981,7 @@ function generateVocabQuestion(entry, allVocab, type, difficulty) {
     }
     const wrongOptions = generateOptions(correctAnswer, pool, difficulty, 3);
     if (wrongOptions.length < 1) return null;
-    const allOptions = shuffle([correctAnswer, ...wrongOptions]);
+    const allOptions = shuffle$2([correctAnswer, ...wrongOptions]);
     while (allOptions.length < 4) allOptions.push("-");
     const options = allOptions.slice(0, 4);
     const correctIndex = options.indexOf(correctAnswer);
@@ -46826,7 +47006,7 @@ function difficultyFromMastery(level) {
   if (level <= 3) return "normal";
   return "hard";
 }
-function generateQuizSession(mode, kanjiData2, vocabularyData2, masteryData) {
+function generateQuizSession(mode, kanjiData2, vocabularyData2, masteryData, levelMode = "n4focus") {
   var _a2, _b2;
   try {
     const safeKanji = Array.isArray(kanjiData2) ? kanjiData2 : [];
@@ -46836,8 +47016,8 @@ function generateQuizSession(mode, kanjiData2, vocabularyData2, masteryData) {
       safeMastery.map((m2) => [m2.itemId, m2])
     );
     const targetCount = mode === "quick" ? 5 : mode === "study" ? 15 : 20;
-    let kanjiPool;
-    let vocabPool;
+    let selectedKanji;
+    let selectedVocab;
     if (mode === "weakness") {
       const allItems = [
         ...safeKanji,
@@ -46845,24 +47025,29 @@ function generateQuizSession(mode, kanjiData2, vocabularyData2, masteryData) {
       ];
       const weakItems = getWeakItems(allItems, 1);
       if (weakItems.length === 0) {
-        kanjiPool = pickRandom(safeKanji, 3);
-        vocabPool = pickRandom(safeVocab, 2);
+        const selected = selectQuizItems(safeKanji, safeVocab, levelMode, 5);
+        selectedKanji = selected.kanji;
+        selectedVocab = selected.vocab;
       } else {
-        kanjiPool = weakItems.filter(isKanjiEntry);
-        vocabPool = weakItems.filter(
+        const weakKanji = weakItems.filter(isKanjiEntry);
+        const weakVocab = weakItems.filter(
           (i) => !isKanjiEntry(i)
         );
+        const kCount = Math.round(targetCount * 0.55);
+        const vCount = targetCount - kCount;
+        selectedKanji = weakKanji.slice(0, kCount);
+        selectedVocab = weakVocab.slice(0, vCount);
       }
     } else {
-      kanjiPool = shuffle(safeKanji);
-      vocabPool = shuffle(safeVocab);
+      const selected = selectQuizItems(
+        safeKanji,
+        safeVocab,
+        levelMode,
+        targetCount
+      );
+      selectedKanji = selected.kanji;
+      selectedVocab = selected.vocab;
     }
-    const kanjiCount = Math.round(targetCount * 0.55);
-    const vocabCount = targetCount - kanjiCount;
-    const actualKanjiCount = Math.min(kanjiCount, kanjiPool.length);
-    const actualVocabCount = Math.min(vocabCount, vocabPool.length);
-    const selectedKanji = kanjiPool.slice(0, actualKanjiCount);
-    const selectedVocab = vocabPool.slice(0, actualVocabCount);
     const questions = [];
     const kanjiTypes = ["kanji-meaning", "meaning-kanji", "kanji-reading"];
     for (const entry of selectedKanji) {
@@ -46887,7 +47072,7 @@ function generateQuizSession(mode, kanjiData2, vocabularyData2, masteryData) {
       const q2 = generateVocabQuestion(entry, safeVocab, type, difficulty);
       if (q2) questions.push(q2);
     }
-    return shuffle(questions);
+    return shuffle$2(questions);
   } catch (e) {
     console.warn("[masteryEngine] generateQuizSession failed:", e);
     return [];
@@ -47126,6 +47311,227 @@ function generateHumanReadableReport(studyState, analytics, masteryData, profile
   } catch (e) {
     console.warn("[masteryEngine] generateHumanReadableReport failed:", e);
     return "=== LEARNING REPORT ===\n\nTidak dapat membuat laporan saat ini.\n";
+  }
+}
+function loadVocabTracking() {
+  try {
+    const stored = localStorage.getItem(VOCAB_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed;
+  } catch (e) {
+    console.warn("[masteryEngine] loadVocabTracking failed:", e);
+    return {};
+  }
+}
+function getVocabScore(tracking) {
+  try {
+    return (tracking.correctCount * 10 + tracking.masteryLevel * 5) / (tracking.correctCount + tracking.wrongCount + 1);
+  } catch (_e2) {
+    return 0;
+  }
+}
+function getWeakVocab(allTracking) {
+  try {
+    return Object.values(allTracking).filter((r2) => r2.masteryLevel < 2 && r2.wrongCount > 3).sort((a2, b2) => b2.wrongCount - a2.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakVocab failed:", e);
+    return [];
+  }
+}
+function loadReadingAnalytics$1() {
+  try {
+    const stored = localStorage.getItem(READING_ANALYTICS_KEY);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed;
+  } catch (e) {
+    console.warn("[masteryEngine] loadReadingAnalytics failed:", e);
+    return [];
+  }
+}
+function computeReadingScore() {
+  try {
+    const sessions = loadReadingAnalytics$1();
+    if (sessions.length === 0) return 0;
+    const recent = sessions.slice(-10);
+    const avgAccuracy = recent.reduce((s, r2) => s + r2.accuracy, 0) / recent.length;
+    const avgDuration = recent.reduce((s, r2) => s + r2.durationSeconds, 0) / recent.length;
+    const avgCoverage = recent.reduce((s, r2) => s + r2.knownWords / Math.max(r2.totalWords, 1), 0) / recent.length;
+    const speedScore = Math.min(100, Math.max(0, 120 - avgDuration));
+    return Math.round(
+      avgAccuracy * 0.4 + speedScore * 0.3 + avgCoverage * 100 * 0.3
+    );
+  } catch (e) {
+    console.warn("[masteryEngine] computeReadingScore failed:", e);
+    return 0;
+  }
+}
+function computeOverallN4Readiness() {
+  try {
+    const kanjiTracking = loadKanjiTracking();
+    const vocabTracking = loadVocabTracking();
+    const radicalTracking = loadRadicalTracking();
+    const kanjiRecords = Object.values(kanjiTracking);
+    const vocabRecords = Object.values(vocabTracking);
+    const radicalRecords = Object.values(radicalTracking);
+    const kanjiScore = kanjiRecords.length > 0 ? kanjiRecords.reduce((s, r2) => s + getKanjiScore(r2), 0) / kanjiRecords.length : 0;
+    const vocabScore = vocabRecords.length > 0 ? vocabRecords.reduce((s, r2) => s + getVocabScore(r2), 0) / vocabRecords.length : 0;
+    const radicalScore = radicalRecords.length > 0 ? radicalRecords.reduce((s, r2) => s + getRadicalScore(r2), 0) / radicalRecords.length : 0;
+    const readingScore = computeReadingScore() / 10;
+    const baseScore = kanjiScore * 0.5 + vocabScore * 0.3 + radicalScore * 0.2;
+    const bonus = Math.min(10, readingScore * 0.1);
+    return Math.min(100, Math.round((baseScore + bonus) * 10));
+  } catch (e) {
+    console.warn("[masteryEngine] computeOverallN4Readiness failed:", e);
+    return 0;
+  }
+}
+const KANJI_TRACKING_KEY = "kanjiTracking";
+function loadKanjiTracking() {
+  try {
+    const stored = localStorage.getItem(KANJI_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed;
+  } catch (e) {
+    console.warn("[masteryEngine] loadKanjiTracking failed:", e);
+    return {};
+  }
+}
+function saveKanjiTracking(data) {
+  try {
+    if (typeof data !== "object" || data === null) return;
+    localStorage.setItem(KANJI_TRACKING_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("[masteryEngine] saveKanjiTracking failed:", e);
+  }
+}
+function getOrCreateKanjiRecord(kanjiId) {
+  const all = loadKanjiTracking();
+  const record = all[kanjiId] ?? {
+    kanjiId,
+    seenCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    lookupCount: 0,
+    masteryLevel: 0,
+    lastSeen: null,
+    lastCorrect: null,
+    lastWrong: null,
+    status: "Belum Tersentuh"
+  };
+  return { all, record };
+}
+function getKanjiStatus(tracking) {
+  if (tracking.seenCount === 0) return "Belum Tersentuh";
+  if (tracking.seenCount > 0 && tracking.masteryLevel < 2)
+    return "Sedang Belajar";
+  if (tracking.masteryLevel >= 2 && tracking.masteryLevel < 4)
+    return "Cukup Paham";
+  return "Dikuasai";
+}
+function recordKanjiSeen(kanjiId) {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.seenCount += 1;
+    record.lastSeen = (/* @__PURE__ */ new Date()).toISOString();
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiSeen failed:", e);
+  }
+}
+function recordKanjiCorrect(kanjiId) {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.correctCount += 1;
+    record.masteryLevel = Math.min(5, record.masteryLevel + 0.5);
+    const now2 = (/* @__PURE__ */ new Date()).toISOString();
+    record.lastCorrect = now2;
+    record.lastSeen = now2;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiCorrect failed:", e);
+  }
+}
+function recordKanjiWrong(kanjiId) {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.wrongCount += 1;
+    record.masteryLevel = Math.max(0, record.masteryLevel - 1);
+    const now2 = (/* @__PURE__ */ new Date()).toISOString();
+    record.lastWrong = now2;
+    record.lastSeen = now2;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiWrong failed:", e);
+  }
+}
+function recordKanjiLookup(kanjiId) {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.lookupCount += 1;
+    record.lastSeen = (/* @__PURE__ */ new Date()).toISOString();
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiLookup failed:", e);
+  }
+}
+function getKanjiScore(tracking) {
+  try {
+    return (tracking.correctCount * 10 + tracking.masteryLevel * 5) / (tracking.correctCount + tracking.wrongCount + 1);
+  } catch (_e2) {
+    return 0;
+  }
+}
+function getWeakKanji(allTracking) {
+  try {
+    return Object.values(allTracking).filter((r2) => r2.masteryLevel < 2 && r2.wrongCount > 3).sort((a2, b2) => b2.wrongCount - a2.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakKanji failed:", e);
+    return [];
+  }
+}
+const RADICAL_TRACKING_KEY = "radicalTracking";
+function loadRadicalTracking() {
+  try {
+    const stored = localStorage.getItem(RADICAL_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed;
+  } catch (e) {
+    console.warn("[masteryEngine] loadRadicalTracking failed:", e);
+    return {};
+  }
+}
+function getRadicalScore(tracking) {
+  try {
+    return (tracking.correctCount * 10 + tracking.masteryLevel * 5) / (tracking.correctCount + tracking.wrongCount + 1);
+  } catch (_e2) {
+    return 0;
+  }
+}
+function getWeakRadicals(allTracking) {
+  try {
+    return Object.values(allTracking).filter((r2) => r2.masteryLevel < 2 && r2.wrongCount > 2).sort((a2, b2) => b2.wrongCount - a2.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakRadicals failed:", e);
+    return [];
   }
 }
 const QUIZ_HISTORY_KEY = "kanji-n4-quiz-history";
@@ -48510,46 +48916,978 @@ Pastikan Anda terhubung ke internet dan coba lagi.`
   ] });
 }
 function Footer() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "border-t border-border/40 bg-muted/30 mt-16", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container mx-auto px-4 py-8 max-w-7xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row items-center justify-between gap-4", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-muted-foreground text-center md:text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "© 2025. Built with",
+  const year = (/* @__PURE__ */ new Date()).getFullYear();
+  const utm = `https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "kanjikan")}`;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "border-t border-border/40 bg-card mt-16", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container mx-auto px-4 py-8 max-w-7xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row items-center justify-between gap-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center md:text-left space-y-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-semibold text-primary font-display", children: "Kan-Ji-Kan" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "Dibuat oleh Kevin Year (Yar Maruli)" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-muted-foreground text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Aplikasi pembelajaran Kanji Jepang untuk JLPT N4 & N5" }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-muted-foreground text-center md:text-right", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "© ",
+      year,
+      ". Built with",
       " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Heart, { className: "inline w-4 h-4 text-red-500 fill-red-500" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Heart, { className: "inline w-3.5 h-3.5 text-red-500 fill-red-500" }),
       " ",
       "using",
       " ",
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "a",
         {
-          href: "https://caffeine.ai",
+          href: utm,
           target: "_blank",
           rel: "noopener noreferrer",
           className: "text-primary hover:underline font-medium",
           children: "caffeine.ai"
         }
       )
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-muted-foreground", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Aplikasi pembelajaran Kanji Jepang untuk JLPT N4" }) })
+    ] }) })
   ] }) }) });
 }
 function Header() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container mx-auto px-4 h-16 flex items-center justify-between max-w-7xl", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "sticky top-0 z-50 w-full border-b border-border/40 bg-card shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/95", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container mx-auto px-4 h-16 flex items-center justify-between max-w-7xl", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md", children: /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "w-6 h-6 text-primary-foreground" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-lg bg-primary flex items-center justify-center shadow-md select-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary-foreground font-bold text-lg leading-none", children: "字" }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold tracking-tight", children: "Kanji Master" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "JLPT N4" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold tracking-tight text-primary font-display", children: "Kan-Ji-Kan" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "JLPT N4 マスター" })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "img",
+      "span",
       {
-        src: "/assets/generated/brush-icon.dim_64x64.png",
-        alt: "Brush",
-        className: "w-8 h-8 opacity-70"
+        className: "text-accent font-bold text-2xl select-none",
+        "aria-hidden": true,
+        children: "書"
       }
     ) })
   ] }) });
+}
+const STATUS_CONFIGS = [
+  {
+    label: "Belum Tersentuh",
+    color: "gray",
+    badgeClass: "bg-muted text-muted-foreground",
+    textClass: "text-muted-foreground",
+    bgClass: "bg-muted/30",
+    borderClass: "border-border"
+  },
+  {
+    label: "Sedang Belajar",
+    color: "yellow",
+    badgeClass: "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400",
+    textClass: "text-yellow-700 dark:text-yellow-400",
+    bgClass: "bg-yellow-500/10",
+    borderClass: "border-yellow-400/40"
+  },
+  {
+    label: "Cukup Paham",
+    color: "blue",
+    badgeClass: "bg-blue-500/20 text-blue-700 dark:text-blue-400",
+    textClass: "text-blue-700 dark:text-blue-400",
+    bgClass: "bg-blue-500/10",
+    borderClass: "border-blue-400/40"
+  },
+  {
+    label: "Dikuasai",
+    color: "green",
+    badgeClass: "bg-green-500/20 text-green-700 dark:text-green-400",
+    textClass: "text-green-700 dark:text-green-400",
+    bgClass: "bg-green-500/10",
+    borderClass: "border-green-400/40"
+  }
+];
+const ANALYTICS_TABS = [
+  { id: "kanji-lemah", label: "Kanji Lemah" },
+  { id: "kanji-kuat", label: "Kanji Kuat" },
+  { id: "kanji-untouched", label: "Kanji Belum Tersentuh" },
+  { id: "vocab-lemah", label: "Kosakata Lemah" },
+  { id: "vocab-kuat", label: "Kosakata Kuat" },
+  { id: "vocab-untouched", label: "Kosakata Belum Tersentuh" },
+  { id: "radikal-lemah", label: "Radikal Lemah" },
+  { id: "radikal-kuat", label: "Radikal Kuat" },
+  { id: "radikal-untouched", label: "Radikal Belum Tersentuh" }
+];
+function getRadicalSymbol$1(radical) {
+  return radical.name.charAt(0);
+}
+function formatDate$1(iso) {
+  if (!iso) return "-";
+  try {
+    return new Date(iso).toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "short"
+    });
+  } catch {
+    return "-";
+  }
+}
+function normalizeScore(rawScore) {
+  return Math.min(100, Math.round(rawScore * 10));
+}
+function computeOverallScore(tracking, scorer) {
+  const records = Object.values(tracking);
+  if (records.length === 0) return 0;
+  const total = records.reduce((sum, r2) => sum + scorer(r2), 0);
+  return normalizeScore(total / records.length);
+}
+function scoreColor(score) {
+  if (score >= 80) return "text-green-600 dark:text-green-400";
+  if (score >= 60) return "text-yellow-600 dark:text-yellow-400";
+  return "text-red-600 dark:text-red-400";
+}
+function scoreBg(score) {
+  if (score >= 80) return "border-green-400 bg-green-500/10";
+  if (score >= 60) return "border-yellow-400 bg-yellow-500/10";
+  return "border-red-400 bg-red-500/10";
+}
+function masteryDots(level) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-0.5", children: [1, 2, 3, 4, 5].map((n) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: `h-2 w-2 rounded-full ${n <= Math.round(level) ? "bg-primary" : "bg-muted-foreground/25"}`
+    },
+    n
+  )) });
+}
+function StatusCard({
+  config,
+  count: count2,
+  total
+}) {
+  const pct = total > 0 ? Math.round(count2 / total * 100) : 0;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: `rounded-lg border p-4 ${config.bgClass} ${config.borderClass}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-sm font-medium ${config.textClass}`, children: config.label }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: `text-xs font-mono ${config.badgeClass}`, children: count2 })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-2xl font-bold font-mono mb-2", children: count2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-1.5 rounded-full bg-muted/40 overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: `h-full rounded-full transition-all duration-500 ${config.color === "green" ? "bg-green-500" : config.color === "blue" ? "bg-blue-500" : config.color === "yellow" ? "bg-yellow-500" : "bg-muted-foreground/50"}`,
+            style: { width: `${pct}%` }
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `text-xs mt-1 ${config.textClass} opacity-75`, children: [
+          pct,
+          "%"
+        ] })
+      ]
+    }
+  );
+}
+function ScoreBadge({ score, label }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-2", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: `w-24 h-24 rounded-full border-4 flex items-center justify-center font-bold text-2xl font-mono ${scoreBg(score)} ${scoreColor(score)} border-current`,
+        "data-ocid": "dashboard.score_badge",
+        children: score
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium text-muted-foreground text-center", children: label })
+  ] });
+}
+function KanjiWeakRow({
+  record,
+  kanji,
+  idx,
+  onQuiz
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-destructive/40 transition-colors",
+      "data-ocid": `dashboard.kanji_weak.item.${idx}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-destructive w-10 text-center shrink-0", children: record.kanjiId.replace("kanji_", "") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: (kanji == null ? void 0 : kanji.meaning) ?? "-" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+            masteryDots(record.masteryLevel),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+              record.masteryLevel.toFixed(1),
+              "/5"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0 space-y-0.5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-destructive font-medium", children: [
+            record.wrongCount,
+            "× salah"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: formatDate$1(record.lastWrong) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            size: "sm",
+            variant: "outline",
+            className: "shrink-0 text-xs",
+            onClick: () => onQuiz(record.kanjiId),
+            "data-ocid": `dashboard.kanji_weak.quiz_button.${idx}`,
+            children: "Quiz Lagi"
+          }
+        )
+      ]
+    }
+  );
+}
+function KanjiStrongRow({
+  record,
+  kanji,
+  idx
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-green-400/40 transition-colors",
+      "data-ocid": `dashboard.kanji_strong.item.${idx}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-green-600 dark:text-green-400 w-10 text-center shrink-0", children: record.kanjiId.replace("kanji_", "") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: (kanji == null ? void 0 : kanji.meaning) ?? "-" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+            masteryDots(record.masteryLevel),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+              record.masteryLevel.toFixed(1),
+              "/5"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0 space-y-0.5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-green-600 dark:text-green-400 font-medium", children: [
+            record.correctCount,
+            "× benar"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: formatDate$1(record.lastCorrect) })
+        ] })
+      ]
+    }
+  );
+}
+function RadicalWeakRow({
+  record,
+  radical,
+  idx,
+  onQuiz
+}) {
+  const symbol = radical ? getRadicalSymbol$1(radical) : record.radicalId.replace("radical_", "").charAt(0);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-destructive/40 transition-colors",
+      "data-ocid": `dashboard.radical_weak.item.${idx}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-destructive w-10 text-center shrink-0", children: symbol }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: (radical == null ? void 0 : radical.meaning) ?? "-" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+            masteryDots(record.masteryLevel),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+              record.masteryLevel.toFixed(1),
+              "/5"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-right shrink-0 space-y-0.5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-destructive font-medium", children: [
+          record.wrongCount,
+          "× salah"
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            size: "sm",
+            variant: "outline",
+            className: "shrink-0 text-xs",
+            onClick: () => onQuiz(record.radicalId),
+            "data-ocid": `dashboard.radical_weak.quiz_button.${idx}`,
+            children: "Quiz Lagi"
+          }
+        )
+      ]
+    }
+  );
+}
+function RadicalStrongRow({
+  record,
+  radical,
+  idx
+}) {
+  const symbol = radical ? getRadicalSymbol$1(radical) : record.radicalId.replace("radical_", "").charAt(0);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-green-400/40 transition-colors",
+      "data-ocid": `dashboard.radical_strong.item.${idx}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-green-600 dark:text-green-400 w-10 text-center shrink-0", children: symbol }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: (radical == null ? void 0 : radical.meaning) ?? "-" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+            masteryDots(record.masteryLevel),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+              record.masteryLevel.toFixed(1),
+              "/5"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-right shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-green-600 dark:text-green-400 font-medium", children: [
+          record.correctCount,
+          "× benar"
+        ] }) })
+      ]
+    }
+  );
+}
+function KanjiDashboard({
+  onQuizKanji,
+  onQuizRadical
+}) {
+  const [kanjiTracking, setKanjiTracking] = reactExports.useState({});
+  const [vocabTracking, setVocabTracking] = reactExports.useState({});
+  const [radicalTracking, setRadicalTracking] = reactExports.useState({});
+  const [readingSessions, setReadingSessions] = reactExports.useState([]);
+  const [activeTab, setActiveTab] = reactExports.useState("kanji-lemah");
+  const refresh = () => {
+    setKanjiTracking(loadKanjiTracking());
+    setVocabTracking(loadVocabTracking());
+    setRadicalTracking(loadRadicalTracking());
+    setReadingSessions(loadReadingAnalytics$1());
+  };
+  reactExports.useEffect(() => {
+    setKanjiTracking(loadKanjiTracking());
+    setVocabTracking(loadVocabTracking());
+    setRadicalTracking(loadRadicalTracking());
+    setReadingSessions(loadReadingAnalytics$1());
+  }, []);
+  const kanjiStats = reactExports.useMemo(() => {
+    const total = kanjiData.length;
+    const tracked = kanjiTracking;
+    const counts = {
+      "Belum Tersentuh": 0,
+      "Sedang Belajar": 0,
+      "Cukup Paham": 0,
+      Dikuasai: 0
+    };
+    counts["Belum Tersentuh"] = total;
+    for (const record of Object.values(tracked)) {
+      const status = record.status ?? "Belum Tersentuh";
+      counts[status] = (counts[status] ?? 0) + 1;
+      if (record.seenCount > 0) counts["Belum Tersentuh"] -= 1;
+    }
+    counts["Belum Tersentuh"] = Math.max(0, counts["Belum Tersentuh"]);
+    return { total, counts };
+  }, [kanjiTracking]);
+  const vocabStats = reactExports.useMemo(() => {
+    const total = vocabularyData.length;
+    const tracked = vocabTracking;
+    const counts = {
+      "Belum Tersentuh": 0,
+      "Sedang Belajar": 0,
+      "Cukup Paham": 0,
+      Dikuasai: 0
+    };
+    counts["Belum Tersentuh"] = total;
+    for (const record of Object.values(tracked)) {
+      const status = record.status ?? "Belum Tersentuh";
+      counts[status] = (counts[status] ?? 0) + 1;
+      if (record.seenCount > 0) counts["Belum Tersentuh"] -= 1;
+    }
+    counts["Belum Tersentuh"] = Math.max(0, counts["Belum Tersentuh"]);
+    return { total, counts };
+  }, [vocabTracking]);
+  const radicalStats = reactExports.useMemo(() => {
+    const total = radicalData.length;
+    const tracked = radicalTracking;
+    const counts = {
+      "Belum Tersentuh": 0,
+      "Sedang Belajar": 0,
+      "Cukup Paham": 0,
+      Dikuasai: 0
+    };
+    counts["Belum Tersentuh"] = total;
+    for (const record of Object.values(tracked)) {
+      const status = record.status ?? "Belum Tersentuh";
+      counts[status] = (counts[status] ?? 0) + 1;
+      if (record.seenCount > 0) counts["Belum Tersentuh"] -= 1;
+    }
+    counts["Belum Tersentuh"] = Math.max(0, counts["Belum Tersentuh"]);
+    return { total, counts };
+  }, [radicalTracking]);
+  const kanjiOverallScore = reactExports.useMemo(
+    () => computeOverallScore(
+      kanjiTracking,
+      (r2) => getKanjiScore(r2)
+    ),
+    [kanjiTracking]
+  );
+  const vocabOverallScore = reactExports.useMemo(
+    () => computeOverallScore(
+      vocabTracking,
+      (r2) => getVocabScore(r2)
+    ),
+    [vocabTracking]
+  );
+  const readingScore = reactExports.useMemo(() => computeReadingScore(), []);
+  const overallN4Readiness = reactExports.useMemo(() => computeOverallN4Readiness(), []);
+  const radicalOverallScore = reactExports.useMemo(
+    () => computeOverallScore(
+      radicalTracking,
+      (r2) => getRadicalScore(r2)
+    ),
+    [radicalTracking]
+  );
+  const kanjiMap = reactExports.useMemo(
+    () => new Map(kanjiData.map((k2) => [k2.character, k2])),
+    []
+  );
+  const vocabMap = reactExports.useMemo(
+    () => new Map(vocabularyData.map((v2) => [v2.vocabulary, v2])),
+    []
+  );
+  const radicalMap = reactExports.useMemo(
+    () => new Map(radicalData.map((r2) => [r2.name, r2])),
+    []
+  );
+  const weakKanjiList = reactExports.useMemo(
+    () => getWeakKanji(kanjiTracking),
+    [kanjiTracking]
+  );
+  const strongKanjiList = reactExports.useMemo(
+    () => Object.values(kanjiTracking).filter((r2) => r2.masteryLevel >= 4).sort((a2, b2) => b2.correctCount - a2.correctCount),
+    [kanjiTracking]
+  );
+  const untouchedKanji = reactExports.useMemo(
+    () => kanjiData.filter(
+      (k2) => !kanjiTracking[`kanji_${k2.character}`] || kanjiTracking[`kanji_${k2.character}`].seenCount === 0
+    ),
+    [kanjiTracking]
+  );
+  const weakVocabList = reactExports.useMemo(
+    () => getWeakVocab(vocabTracking),
+    [vocabTracking]
+  );
+  const strongVocabList = reactExports.useMemo(
+    () => Object.values(vocabTracking).filter((r2) => r2.masteryLevel >= 4).sort((a2, b2) => b2.correctCount - a2.correctCount),
+    [vocabTracking]
+  );
+  const untouchedVocab = reactExports.useMemo(
+    () => vocabularyData.filter(
+      (v2) => !vocabTracking[`vocab_${v2.vocabulary}`] || vocabTracking[`vocab_${v2.vocabulary}`].seenCount === 0
+    ),
+    [vocabTracking]
+  );
+  const weakRadicalList = reactExports.useMemo(
+    () => getWeakRadicals(radicalTracking),
+    [radicalTracking]
+  );
+  const strongRadicalList = reactExports.useMemo(
+    () => Object.values(radicalTracking).filter((r2) => r2.masteryLevel >= 4).sort((a2, b2) => b2.correctCount - a2.correctCount),
+    [radicalTracking]
+  );
+  const untouchedRadicals = reactExports.useMemo(
+    () => radicalData.filter(
+      (r2) => !radicalTracking[`radical_${r2.name}`] || radicalTracking[`radical_${r2.name}`].seenCount === 0
+    ),
+    [radicalTracking]
+  );
+  reactExports.useMemo(() => {
+    return [...readingSessions].reverse().slice(0, 5);
+  }, [readingSessions]);
+  const handleKanjiQuiz = (_kanjiId) => {
+    onQuizKanji == null ? void 0 : onQuizKanji();
+  };
+  const handleRadicalQuiz = (_radicalId) => {
+    onQuizRadical == null ? void 0 : onQuizRadical();
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-8", "data-ocid": "dashboard.page", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-2xl font-bold flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Brain, { className: "h-6 w-6 text-primary" }),
+          "Dashboard Progress"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Pantau perkembangan belajar Kanji & Radikal JLPT N4/N5" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Button,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: refresh,
+          className: "flex items-center gap-2",
+          "data-ocid": "dashboard.refresh_button",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { className: "h-3.5 w-3.5" }),
+            "Refresh"
+          ]
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "border-border", "data-ocid": "dashboard.kanji.section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "pb-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "h-5 w-5 text-primary" }),
+              "Kanji"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Badge,
+              {
+                variant: "secondary",
+                className: "text-base font-bold font-mono px-3",
+                children: kanjiStats.total
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground", children: [
+            "Total ",
+            kanjiStats.total,
+            " kanji JLPT N4/N5"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "space-y-3", children: STATUS_CONFIGS.map((cfg) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          StatusCard,
+          {
+            config: cfg,
+            count: kanjiStats.counts[cfg.label],
+            total: kanjiStats.total
+          },
+          cfg.label
+        )) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "border-border", "data-ocid": "dashboard.vocab.section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "pb-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(BookMarked, { className: "h-5 w-5 text-primary" }),
+              "Kosakata"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Badge,
+              {
+                variant: "secondary",
+                className: "text-base font-bold font-mono px-3",
+                children: vocabStats.total
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground", children: [
+            "Total ",
+            vocabStats.total,
+            " kosakata JLPT N4/N5"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "space-y-3", children: STATUS_CONFIGS.map((cfg) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          StatusCard,
+          {
+            config: cfg,
+            count: vocabStats.counts[cfg.label],
+            total: vocabStats.total
+          },
+          cfg.label
+        )) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "border-border", "data-ocid": "dashboard.radical.section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "pb-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { className: "h-5 w-5 text-primary" }),
+              "Radikal"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Badge,
+              {
+                variant: "secondary",
+                className: "text-base font-bold font-mono px-3",
+                children: radicalStats.total
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground", children: [
+            "Total ",
+            radicalStats.total,
+            " radikal penting N4/N5"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "space-y-3", children: STATUS_CONFIGS.map((cfg) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          StatusCard,
+          {
+            config: cfg,
+            count: radicalStats.counts[cfg.label],
+            total: radicalStats.total
+          },
+          cfg.label
+        )) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { "data-ocid": "dashboard.scoring.section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Target, { className: "h-5 w-5 text-primary" }),
+          "Skor Penguasaan"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "Dihitung dari akurasi quiz dan tingkat mastery (0–100)" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-center gap-8 py-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreBadge, { score: kanjiOverallScore, label: "Kanji Score" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreBadge, { score: vocabOverallScore, label: "Vocabulary Score" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreBadge, { score: readingScore, label: "Reading Score" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreBadge, { score: radicalOverallScore, label: "Radical Score" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ScoreBadge, { score: overallN4Readiness, label: "N4 Readiness" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 lg:grid-cols-5 gap-4 mt-6 pt-4 border-t border-border", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `text-3xl font-bold font-mono ${scoreColor(kanjiOverallScore)}`,
+                children: [
+                  kanjiOverallScore,
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-normal text-muted-foreground", children: "/100" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground mt-1", children: [
+              Object.values(kanjiTracking).length,
+              " kanji dilacak"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `text-3xl font-bold font-mono ${scoreColor(vocabOverallScore)}`,
+                children: [
+                  vocabOverallScore,
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-normal text-muted-foreground", children: "/100" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground mt-1", children: [
+              Object.values(vocabTracking).length,
+              " kosakata dilacak"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `text-3xl font-bold font-mono ${scoreColor(readingScore)}`,
+                children: [
+                  readingScore,
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-normal text-muted-foreground", children: "/100" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground mt-1", children: [
+              readingSessions.length,
+              " sesi membaca"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `text-3xl font-bold font-mono ${scoreColor(radicalOverallScore)}`,
+                children: [
+                  radicalOverallScore,
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-normal text-muted-foreground", children: "/100" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground mt-1", children: [
+              Object.values(radicalTracking).length,
+              " radikal dilacak"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `text-3xl font-bold font-mono ${scoreColor(overallN4Readiness)}`,
+                children: [
+                  overallN4Readiness,
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-normal text-muted-foreground", children: "/100" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground mt-1", children: "Keseluruhan N4" })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-ocid": "dashboard.analytics.section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { className: "h-5 w-5 text-primary" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-bold", children: "Analitik Detail" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: "flex flex-wrap gap-2 mb-6",
+          role: "tablist",
+          "data-ocid": "dashboard.analytics.tabs",
+          children: ANALYTICS_TABS.map((tab) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              role: "tab",
+              "aria-selected": activeTab === tab.id,
+              onClick: () => setActiveTab(tab.id),
+              className: `px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${activeTab === tab.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"}`,
+              "data-ocid": `dashboard.analytics.tab.${tab.id}`,
+              children: tab.label
+            },
+            tab.id
+          ))
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-ocid": `dashboard.analytics.panel.${activeTab}`, children: [
+        activeTab === "kanji-lemah" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: weakKanjiList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.kanji_weak.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada kanji yang lemah. Mulai quiz untuk melihat data!"
+            ]
+          }
+        ) : weakKanjiList.map((r2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          KanjiWeakRow,
+          {
+            record: r2,
+            kanji: kanjiMap.get(r2.kanjiId.replace("kanji_", "")),
+            idx: i + 1,
+            onQuiz: handleKanjiQuiz
+          },
+          r2.kanjiId
+        )) }),
+        activeTab === "kanji-kuat" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: strongKanjiList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.kanji_strong.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada kanji yang dikuasai. Terus berlatih!"
+            ]
+          }
+        ) : strongKanjiList.map((r2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          KanjiStrongRow,
+          {
+            record: r2,
+            kanji: kanjiMap.get(r2.kanjiId.replace("kanji_", "")),
+            idx: i + 1
+          },
+          r2.kanjiId
+        )) }),
+        activeTab === "kanji-untouched" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: untouchedKanji.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.kanji_untouched.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Semua kanji sudah pernah dipelajari!"
+            ]
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3", children: untouchedKanji.map((k2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "flex flex-col items-center gap-1 p-3 rounded-lg bg-muted/30 border border-border hover:border-primary/40 transition-colors",
+            "data-ocid": `dashboard.kanji_untouched.item.${i + 1}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl font-bold text-muted-foreground", children: k2.character }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground text-center line-clamp-2 leading-tight", children: k2.meaning })
+            ]
+          },
+          k2.character
+        )) }) }),
+        activeTab === "radikal-lemah" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: weakRadicalList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.radical_weak.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada radikal yang lemah. Mulai quiz radikal!"
+            ]
+          }
+        ) : weakRadicalList.map((r2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RadicalWeakRow,
+          {
+            record: r2,
+            radical: radicalMap.get(
+              r2.radicalId.replace("radical_", "")
+            ),
+            idx: i + 1,
+            onQuiz: handleRadicalQuiz
+          },
+          r2.radicalId
+        )) }),
+        activeTab === "radikal-kuat" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: strongRadicalList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.radical_strong.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada radikal yang dikuasai. Terus berlatih!"
+            ]
+          }
+        ) : strongRadicalList.map((r2, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RadicalStrongRow,
+          {
+            record: r2,
+            radical: radicalMap.get(
+              r2.radicalId.replace("radical_", "")
+            ),
+            idx: i + 1
+          },
+          r2.radicalId
+        )) }),
+        activeTab === "radikal-untouched" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: untouchedRadicals.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.radical_untouched.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Semua radikal sudah pernah dipelajari!"
+            ]
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3", children: untouchedRadicals.map((r2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "flex flex-col items-center gap-1 p-3 rounded-lg bg-muted/30 border border-border hover:border-primary/40 transition-colors",
+            "data-ocid": `dashboard.radical_untouched.item.${i + 1}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl font-bold text-muted-foreground", children: getRadicalSymbol$1(r2) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground text-center line-clamp-2 leading-tight", children: r2.meaning })
+            ]
+          },
+          r2.name
+        )) }) }),
+        activeTab === "vocab-lemah" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: weakVocabList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.vocab_weak.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada kosakata yang lemah. Mulai quiz untuk melihat data!"
+            ]
+          }
+        ) : weakVocabList.map((r2, i) => {
+          var _a2;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-destructive/40 transition-colors",
+              "data-ocid": `dashboard.vocab_weak.item.${i + 1}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xl font-bold text-destructive w-24 text-center shrink-0 truncate", children: r2.vocabId.replace("vocab_", "") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: ((_a2 = vocabMap.get(r2.vocabId.replace("vocab_", ""))) == null ? void 0 : _a2.meaning) ?? "-" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+                    masteryDots(r2.masteryLevel),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+                      r2.masteryLevel.toFixed(1),
+                      "/5"
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0 space-y-0.5", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-destructive font-medium", children: [
+                    r2.wrongCount,
+                    "× salah"
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: formatDate$1(r2.lastWrong) })
+                ] })
+              ]
+            },
+            r2.vocabId
+          );
+        }) }),
+        activeTab === "vocab-kuat" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: strongVocabList.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.vocab_strong.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Belum ada kosakata yang dikuasai. Terus berlatih!"
+            ]
+          }
+        ) : strongVocabList.map((r2, i) => {
+          var _a2;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex items-center gap-3 py-3 px-4 rounded-lg bg-card border border-border hover:border-green-400/40 transition-colors",
+              "data-ocid": `dashboard.vocab_strong.item.${i + 1}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xl font-bold text-green-600 dark:text-green-400 w-24 text-center shrink-0 truncate", children: r2.vocabId.replace("vocab_", "") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium truncate", children: ((_a2 = vocabMap.get(r2.vocabId.replace("vocab_", ""))) == null ? void 0 : _a2.meaning) ?? "-" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+                    masteryDots(r2.masteryLevel),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+                      r2.masteryLevel.toFixed(1),
+                      "/5"
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0 space-y-0.5", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-green-600 dark:text-green-400 font-medium", children: [
+                    r2.correctCount,
+                    "× benar"
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: formatDate$1(r2.lastCorrect) })
+                ] })
+              ]
+            },
+            r2.vocabId
+          );
+        }) }),
+        activeTab === "vocab-untouched" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: untouchedVocab.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "text-center py-12 text-muted-foreground text-sm",
+            "data-ocid": "dashboard.vocab_untouched.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-8 w-8 mx-auto mb-3 opacity-30" }),
+              "Semua kosakata sudah pernah dipelajari!"
+            ]
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3", children: untouchedVocab.slice(0, 64).map((v2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "flex flex-col items-center gap-1 p-3 rounded-lg bg-muted/30 border border-border hover:border-primary/40 transition-colors",
+            "data-ocid": `dashboard.vocab_untouched.item.${i + 1}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-lg font-bold text-muted-foreground truncate w-full text-center", children: v2.vocabulary }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground text-center line-clamp-2 leading-tight", children: v2.meaning })
+            ]
+          },
+          v2.vocabulary
+        )) }) })
+      ] })
+    ] })
+  ] });
 }
 function normalizeText(text) {
   if (!text) return "";
@@ -50413,6 +51751,509 @@ function KanjiList({
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: kanjiList.map((kanji) => /* @__PURE__ */ jsxRuntimeExports.jsx(KanjiCard, { kanji }, kanji.character)) })
   ] });
 }
+const TAB_LABELS = {
+  "k-kana": "K→かな",
+  "kana-k": "かな→K",
+  "k-arti": "K→Arti",
+  "arti-k": "Arti→K",
+  konteks: "Konteks"
+};
+const CHOICE_LABELS = ["A", "B", "C", "D"];
+const SESSION_SIZE = 10;
+function shuffle$1(arr) {
+  const a2 = [...arr];
+  for (let i = a2.length - 1; i > 0; i--) {
+    const j2 = Math.floor(Math.random() * (i + 1));
+    [a2[i], a2[j2]] = [a2[j2], a2[i]];
+  }
+  return a2;
+}
+function pickDistractors(pool, exclude, count2) {
+  const candidates = pool.filter((e) => e.character !== exclude.character);
+  return shuffle$1(candidates).slice(0, count2);
+}
+function buildQuestion$1(entry, type, pool) {
+  const distractors = pickDistractors(pool, entry, 3);
+  switch (type) {
+    case "k-kana": {
+      const correct = entry.romaji;
+      const opts = shuffle$1([correct, ...distractors.map((d2) => d2.romaji)]);
+      return {
+        type,
+        entry,
+        prompt: entry.character,
+        options: opts,
+        correctIndex: opts.indexOf(correct)
+      };
+    }
+    case "kana-k": {
+      const correct = entry.character;
+      const opts = shuffle$1([correct, ...distractors.map((d2) => d2.character)]);
+      return {
+        type,
+        entry,
+        prompt: entry.romaji,
+        options: opts,
+        correctIndex: opts.indexOf(correct)
+      };
+    }
+    case "k-arti": {
+      const correct = entry.meaning;
+      const opts = shuffle$1([correct, ...distractors.map((d2) => d2.meaning)]);
+      return {
+        type,
+        entry,
+        prompt: entry.character,
+        options: opts,
+        correctIndex: opts.indexOf(correct)
+      };
+    }
+    case "arti-k": {
+      const correct = entry.character;
+      const opts = shuffle$1([correct, ...distractors.map((d2) => d2.character)]);
+      return {
+        type,
+        entry,
+        prompt: entry.meaning,
+        options: opts,
+        correctIndex: opts.indexOf(correct)
+      };
+    }
+    case "konteks": {
+      const blank = "___";
+      const sentence = `この${blank}は「${entry.meaning}」です。`;
+      const correct = entry.character;
+      const opts = shuffle$1([correct, ...distractors.map((d2) => d2.character)]);
+      return {
+        type,
+        entry,
+        prompt: sentence,
+        options: opts,
+        correctIndex: opts.indexOf(correct)
+      };
+    }
+  }
+}
+function generateSession(type, pool) {
+  if (pool.length < 4) return [];
+  const n5 = pool.filter((e) => e.jlptLevel === "N5");
+  const n4 = pool.filter((e) => e.jlptLevel === "N4");
+  const rest = pool.filter((e) => e.jlptLevel !== "N5" && e.jlptLevel !== "N4");
+  const prioritized = shuffle$1([...n5, ...n4]);
+  const remaining = shuffle$1(rest);
+  const ordered = [...prioritized, ...remaining];
+  const picks = ordered.slice(0, SESSION_SIZE);
+  return picks.map((entry) => buildQuestion$1(entry, type, pool));
+}
+function findExampleVocab$1(kanji, vocab) {
+  return vocab.find((v2) => {
+    const w2 = v2.word ?? v2.vocabulary ?? "";
+    return w2.includes(kanji);
+  }) ?? null;
+}
+function KanjiQuizSection({ onClose }) {
+  const [selectedType, setSelectedType] = reactExports.useState("k-kana");
+  const [phase, setPhase] = reactExports.useState("select");
+  const [questions, setQuestions] = reactExports.useState([]);
+  const [currentIdx, setCurrentIdx] = reactExports.useState(0);
+  const [chosenIdx, setChosenIdx] = reactExports.useState(null);
+  const [isAnswered, setIsAnswered] = reactExports.useState(false);
+  const [score, setScore] = reactExports.useState(0);
+  const [repeatEntry, setRepeatEntry] = reactExports.useState(null);
+  const safeKanji = reactExports.useMemo(
+    () => Array.isArray(kanjiData) ? kanjiData : [],
+    []
+  );
+  const safeVocab = reactExports.useMemo(
+    () => Array.isArray(vocabularyData) ? vocabularyData : [],
+    []
+  );
+  const startSession = reactExports.useCallback(
+    (type, repeatK) => {
+      let qs;
+      if (repeatK) {
+        qs = [buildQuestion$1(repeatK, type, safeKanji)];
+      } else {
+        qs = generateSession(type, safeKanji);
+      }
+      if (qs.length === 0) return;
+      recordKanjiSeen(qs[0].entry.character);
+      setQuestions(qs);
+      setCurrentIdx(0);
+      setChosenIdx(null);
+      setIsAnswered(false);
+      setScore(0);
+      setRepeatEntry(null);
+      setPhase("quiz");
+    },
+    [safeKanji]
+  );
+  const handleTypeSelect = reactExports.useCallback(
+    (t) => {
+      setSelectedType(t);
+      startSession(t);
+    },
+    [startSession]
+  );
+  const currentQ = questions[currentIdx] ?? null;
+  const handleAnswer = reactExports.useCallback(
+    (idx) => {
+      if (isAnswered || !currentQ) return;
+      setChosenIdx(idx);
+      setIsAnswered(true);
+      const correct = idx === currentQ.correctIndex;
+      if (correct) {
+        recordKanjiCorrect(currentQ.entry.character);
+        setScore((prev) => prev + 1);
+      } else {
+        recordKanjiWrong(currentQ.entry.character);
+      }
+    },
+    [isAnswered, currentQ]
+  );
+  const handleNext = reactExports.useCallback(() => {
+    if (!currentQ) return;
+    const nextIdx = currentIdx + 1;
+    if (nextIdx >= questions.length) {
+      setPhase("result");
+      return;
+    }
+    recordKanjiSeen(questions[nextIdx].entry.character);
+    setCurrentIdx(nextIdx);
+    setChosenIdx(null);
+    setIsAnswered(false);
+  }, [currentIdx, currentQ, questions]);
+  const handlePelajariLagi = reactExports.useCallback(() => {
+    if (!currentQ) return;
+    setRepeatEntry(currentQ.entry);
+    startSession(selectedType, currentQ.entry);
+  }, [currentQ, selectedType, startSession]);
+  const handleRestart = reactExports.useCallback(() => {
+    startSession(selectedType);
+  }, [selectedType, startSession]);
+  const handleBackToSelect = reactExports.useCallback(() => {
+    setPhase("select");
+    setQuestions([]);
+    setCurrentIdx(0);
+    setChosenIdx(null);
+    setIsAnswered(false);
+    setScore(0);
+    setRepeatEntry(null);
+  }, []);
+  const progressPct = questions.length > 0 ? (currentIdx + (isAnswered ? 1 : 0)) / questions.length * 100 : 0;
+  const exampleVocab = currentQ ? findExampleVocab$1(currentQ.entry.character, safeVocab) : null;
+  const promptLabel = {
+    "k-kana": "Bagaimana cara membaca kanji ini?",
+    "kana-k": "Pilih kanji yang sesuai dengan bacaan:",
+    "k-arti": "Apa arti kanji ini?",
+    "arti-k": "Pilih kanji yang artinya:",
+    konteks: "Kanji apa yang cocok?"
+  };
+  if (phase === "select") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "max-w-2xl mx-auto space-y-6",
+        "data-ocid": "kanji_quiz.select_screen",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-cyan-400", children: "Quiz Kanji" }),
+            onClose && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: onClose,
+                className: "text-gray-400 hover:text-white",
+                "data-ocid": "kanji_quiz.close_button",
+                "aria-label": "Tutup",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-sm", children: "Pilih jenis quiz, lalu kerjakan 10 soal pilihan ganda A/B/C/D." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 gap-3", children: Object.keys(TAB_LABELS).map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => handleTypeSelect(t),
+              "data-ocid": `kanji_quiz.type_${t.replace("-", "_")}_button`,
+              className: "w-full text-left p-5 rounded-xl border-2 border-gray-700 bg-gray-800 hover:border-cyan-400 hover:bg-gray-700 transition-all group",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-lg font-bold text-cyan-400 group-hover:text-cyan-300", children: TAB_LABELS[t] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-400 mt-0.5", children: [
+                    t === "k-kana" && "Lihat kanji → pilih bacaan (romaji)",
+                    t === "kana-k" && "Lihat bacaan → pilih kanji yang benar",
+                    t === "k-arti" && "Lihat kanji → pilih arti Indonesia",
+                    t === "arti-k" && "Lihat arti → pilih kanji yang tepat",
+                    t === "konteks" && "Kalimat dengan kanji kosong → pilih kanji yang cocok"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "w-5 h-5 text-gray-500 group-hover:text-cyan-400 shrink-0" })
+              ] })
+            },
+            t
+          )) })
+        ]
+      }
+    );
+  }
+  if (phase === "result") {
+    const total = questions.length;
+    const pct = total > 0 ? Math.round(score / total * 100) : 0;
+    const emoji = pct === 100 ? "🎉" : pct >= 70 ? "👏" : "💪";
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "max-w-2xl mx-auto space-y-6",
+        "data-ocid": "kanji_quiz.result_screen",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-cyan-400", children: "Hasil Quiz Kanji" }),
+            onClose && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: onClose,
+                className: "text-gray-400 hover:text-white",
+                "data-ocid": "kanji_quiz.result_close_button",
+                "aria-label": "Tutup",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "bg-gray-800 border-gray-700", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "py-10 text-center space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-6xl", children: emoji }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-5xl font-bold text-cyan-400", children: [
+              pct,
+              "%"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-300", children: [
+              score,
+              " / ",
+              total,
+              " jawaban benar"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-sm", children: pct >= 80 ? "Hebat! Terus pertahankan!" : pct >= 50 ? "Bagus, tapi masih bisa lebih baik." : "Jangan menyerah, latih lagi!" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col sm:flex-row gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              Button,
+              {
+                type: "button",
+                onClick: handleRestart,
+                className: "flex-1 bg-cyan-600 hover:bg-cyan-500 text-white",
+                size: "lg",
+                "data-ocid": "kanji_quiz.restart_button",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(RotateCcw, { className: "w-4 h-4 mr-2" }),
+                  "Ulangi Quiz"
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                type: "button",
+                variant: "outline",
+                onClick: handleBackToSelect,
+                className: "flex-1 border-gray-600 text-gray-300 hover:bg-gray-700",
+                size: "lg",
+                "data-ocid": "kanji_quiz.back_button",
+                children: "Pilih Jenis Lain"
+              }
+            )
+          ] })
+        ]
+      }
+    );
+  }
+  if (!currentQ) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center min-h-[300px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400", children: "Memuat soal..." }) });
+  }
+  const isCorrect = chosenIdx !== null && chosenIdx === currentQ.correctIndex;
+  const exampleWord = exampleVocab ? exampleVocab.word ?? exampleVocab.vocabulary ?? "" : null;
+  const isLargePrompt = currentQ.type === "k-kana" || currentQ.type === "k-arti" || currentQ.type === "konteks";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "max-w-2xl mx-auto space-y-4",
+      "data-ocid": "kanji_quiz.quiz_screen",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-cyan-400 font-bold", children: TAB_LABELS[currentQ.type] }),
+            repeatEntry && /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: "bg-yellow-900/50 text-yellow-300 border-yellow-700 text-xs", children: "Pelajari Lagi" })
+          ] }),
+          onClose && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              onClick: onClose,
+              className: "text-gray-400 hover:text-white",
+              "data-ocid": "kanji_quiz.quiz_close_button",
+              "aria-label": "Tutup",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", "data-ocid": "kanji_quiz.progress", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-xs text-gray-400", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+              "Soal ",
+              currentIdx + 1,
+              " / ",
+              questions.length
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-cyan-400 font-semibold", children: [
+              score,
+              " benar"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Progress,
+            {
+              value: progressPct,
+              className: "h-2 bg-gray-700 [&>div]:bg-cyan-500",
+              "data-ocid": "kanji_quiz.progress_bar"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Card,
+          {
+            className: "bg-gray-800 border-gray-700 shadow-lg",
+            "data-ocid": "kanji_quiz.question_card",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "pt-6 pb-4 space-y-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center space-y-2", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-sm", children: promptLabel[currentQ.type] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: isLargePrompt ? "text-7xl font-bold text-white py-3 leading-none" : "text-3xl font-semibold text-cyan-300 py-2",
+                    "data-ocid": "kanji_quiz.prompt_text",
+                    children: currentQ.prompt
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "grid grid-cols-1 gap-2",
+                  "data-ocid": "kanji_quiz.options",
+                  children: currentQ.options.map((opt, idx) => {
+                    const isSelected = chosenIdx === idx;
+                    const isCorrectOpt = idx === currentQ.correctIndex;
+                    const revealed = isAnswered;
+                    let cls = "w-full p-3.5 text-left rounded-lg border-2 transition-all flex items-center gap-3 ";
+                    if (revealed) {
+                      if (isCorrectOpt)
+                        cls += "border-green-500 bg-green-950/40 text-green-300";
+                      else if (isSelected)
+                        cls += "border-red-500 bg-red-950/40 text-red-300";
+                      else
+                        cls += "border-gray-700 bg-gray-900/30 text-gray-500 opacity-60";
+                    } else {
+                      cls += isSelected ? "border-cyan-400 bg-cyan-950/40 text-cyan-200" : "border-gray-700 bg-gray-900 text-gray-200 hover:border-cyan-500 hover:bg-gray-700";
+                    }
+                    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleAnswer(idx),
+                        disabled: isAnswered,
+                        className: cls,
+                        "data-ocid": `kanji_quiz.option.${idx + 1}`,
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-7 h-7 rounded-full border-2 border-current flex items-center justify-center text-xs font-bold shrink-0", children: CHOICE_LABELS[idx] }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-base flex-1", children: opt }),
+                          revealed && isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-5 h-5 text-green-400 shrink-0" }),
+                          revealed && isSelected && !isCorrectOpt && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5 text-red-400 shrink-0" })
+                        ]
+                      },
+                      opt
+                    );
+                  })
+                }
+              )
+            ] })
+          }
+        ),
+        isAnswered && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Card,
+          {
+            className: isCorrect ? "border-green-600 bg-green-950/30" : "border-red-600 bg-red-950/30",
+            "data-ocid": "kanji_quiz.answer_panel",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "pt-5 pb-4 space-y-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: isCorrect ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-6 h-6 text-green-400 shrink-0" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-green-400 text-base", children: "Benar!" })
+              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-6 h-6 text-red-400 shrink-0" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-red-400 text-base", children: "Salah" })
+              ] }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2 text-sm", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Kanji" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-4xl font-bold text-white", children: currentQ.entry.character })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Bacaan" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-300 font-semibold text-base", children: currentQ.entry.romaji })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/60 rounded-lg p-3 space-y-1 col-span-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Arti" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-white font-medium", children: currentQ.entry.meaning })
+                ] })
+              ] }),
+              currentQ.entry.explanation && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/40 rounded-lg p-3 space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Penjelasan" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 text-sm leading-relaxed", children: currentQ.entry.explanation })
+              ] }),
+              exampleWord && exampleVocab && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/40 rounded-lg p-3 space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 text-xs uppercase tracking-wide", children: "Contoh" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-cyan-300 font-semibold", children: exampleWord }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-400 text-sm", children: [
+                  exampleVocab.romaji,
+                  " — ",
+                  exampleVocab.meaning
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3 pt-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Button,
+                  {
+                    type: "button",
+                    variant: "outline",
+                    onClick: handlePelajariLagi,
+                    size: "sm",
+                    className: "flex-1 border-yellow-700 text-yellow-300 hover:bg-yellow-950/40 hover:text-yellow-200",
+                    "data-ocid": "kanji_quiz.review_again_button",
+                    children: "Pelajari Lagi"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  Button,
+                  {
+                    type: "button",
+                    onClick: handleNext,
+                    size: "sm",
+                    className: "flex-1 bg-cyan-600 hover:bg-cyan-500 text-white",
+                    "data-ocid": "kanji_quiz.next_button",
+                    children: [
+                      currentIdx + 1 >= questions.length ? "Lihat Skor" : "Lanjut",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "w-4 h-4 ml-1" })
+                    ]
+                  }
+                )
+              ] })
+            ] })
+          }
+        )
+      ]
+    }
+  );
+}
 var COLLAPSIBLE_NAME = "Collapsible";
 var [createCollapsibleContext] = createContextScope$1(COLLAPSIBLE_NAME);
 var [CollapsibleProvider, useCollapsibleContext] = createCollapsibleContext(COLLAPSIBLE_NAME);
@@ -50607,7 +52448,15 @@ function extractKanjiFromWord(word) {
 }
 function KanjiWeaknessAnalyzer() {
   const [isOpen, setIsOpen] = reactExports.useState(true);
-  const { topLookups, weakKanji, hasData } = reactExports.useMemo(() => {
+  const [activeAnalyzerTab, setActiveAnalyzerTab] = reactExports.useState("kanji");
+  const {
+    topLookups,
+    weakKanji,
+    hasData,
+    weakRadicals,
+    strongRadicals,
+    radicalTracking
+  } = reactExports.useMemo(() => {
     const stats = loadKanjiStats();
     const mastery = loadMasteryData();
     const lookupEntries = Object.entries(stats).map(([character, stat]) => {
@@ -50681,7 +52530,19 @@ function KanjiWeaknessAnalyzer() {
       (a2, b2) => b2.wrongCount - a2.wrongCount || b2.lookupCount - a2.lookupCount
     );
     const hasData2 = lookupEntries.length > 0 || weakList.length > 0;
-    return { topLookups: lookupEntries, weakKanji: weakList, hasData: hasData2 };
+    const radicalTracking2 = loadRadicalTracking();
+    const weakRadicals2 = getWeakRadicals(radicalTracking2);
+    const strongRadicals2 = Object.values(radicalTracking2).filter(
+      (r2) => r2.masteryLevel >= 4
+    );
+    return {
+      topLookups: lookupEntries,
+      weakKanji: weakList,
+      hasData: hasData2,
+      weakRadicals: weakRadicals2,
+      strongRadicals: strongRadicals2,
+      radicalTracking: radicalTracking2
+    };
   }, []);
   const handlePractice = (character) => {
     const related = vocabularyData.filter(
@@ -50695,7 +52556,7 @@ function KanjiWeaknessAnalyzer() {
       alert(`Tidak ada kosakata terkait untuk 「${character}」.`);
     }
   };
-  if (!hasData) {
+  if (!hasData && Object.keys(radicalTracking).length === 0) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       Alert,
       {
@@ -50724,7 +52585,7 @@ function KanjiWeaknessAnalyzer() {
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { className: "h-4 w-4 text-primary" }),
-                "Analisis Kanji Lemah"
+                "Analisis Kelemahan"
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ChevronDown,
@@ -50736,7 +52597,31 @@ function KanjiWeaknessAnalyzer() {
           }
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(CollapsibleContent, { className: "space-y-8", children: [
-          topLookups.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.top_lookups.section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2 max-w-3xl mx-auto", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                type: "button",
+                size: "sm",
+                variant: activeAnalyzerTab === "kanji" ? "default" : "outline",
+                onClick: () => setActiveAnalyzerTab("kanji"),
+                "data-ocid": "kanji.weakness.tab.kanji",
+                children: "Kanji"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                type: "button",
+                size: "sm",
+                variant: activeAnalyzerTab === "radikal" ? "default" : "outline",
+                onClick: () => setActiveAnalyzerTab("radikal"),
+                "data-ocid": "kanji.weakness.tab.radikal",
+                children: "Radikal"
+              }
+            )
+          ] }),
+          activeAnalyzerTab === "kanji" && topLookups.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.top_lookups.section", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { className: "h-5 w-5 text-primary" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Kanji Sering Dibuka" }),
@@ -50778,7 +52663,7 @@ function KanjiWeaknessAnalyzer() {
               k2.character
             )) })
           ] }),
-          weakKanji.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.weak_kanji.section", children: [
+          activeAnalyzerTab === "kanji" && weakKanji.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.weak_kanji.section", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Dumbbell, { className: "h-5 w-5 text-destructive" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Kanji Perlu Latihan" }),
@@ -50845,7 +52730,158 @@ function KanjiWeaknessAnalyzer() {
               },
               k2.character
             )) })
-          ] })
+          ] }),
+          activeAnalyzerTab === "radikal" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-8", "data-ocid": "kanji.weakness.radikal.section", children: weakRadicals.length === 0 && strongRadicals.length === 0 && Object.keys(radicalTracking).length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Alert, { "data-ocid": "kanji.weakness.radikal.empty_state", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "h-5 w-5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDescription, { className: "ml-2", children: "Belum ada data radikal. Kerjakan quiz radikal untuk melihat analisis di sini." })
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            weakRadicals.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.radikal.weak.section", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Dumbbell, { className: "h-5 w-5 text-destructive" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Radikal Lemah" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "secondary", children: weakRadicals.length })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4", children: weakRadicals.map(
+                (r2, idx) => {
+                  var _a2;
+                  const info = radicalData.find(
+                    (rd) => rd.name === r2.radicalId
+                  );
+                  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    Card,
+                    {
+                      className: "hover:shadow-md transition-shadow border-destructive/30",
+                      "data-ocid": `kanji.weakness.radikal.weak.item.${idx + 1}`,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-4xl font-bold text-destructive", children: ((_a2 = info == null ? void 0 : info.name) == null ? void 0 : _a2.split(" ")[0]) ?? r2.radicalId }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            Badge,
+                            {
+                              variant: "destructive",
+                              className: "text-xs",
+                              children: r2.status
+                            }
+                          )
+                        ] }) }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-2", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium", children: (info == null ? void 0 : info.meaning) ?? "-" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 text-sm text-muted-foreground", children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-destructive font-medium", children: [
+                              r2.wrongCount,
+                              " salah"
+                            ] }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-green-600 font-medium", children: [
+                              r2.correctCount,
+                              " benar"
+                            ] })
+                          ] }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-muted-foreground", children: [
+                            "Mastery ",
+                            r2.masteryLevel,
+                            "/5"
+                          ] })
+                        ] })
+                      ]
+                    },
+                    r2.radicalId
+                  );
+                }
+              ) })
+            ] }),
+            strongRadicals.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.radikal.strong.section", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { className: "h-5 w-5 text-primary" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Radikal Dikuasai" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "secondary", children: strongRadicals.length })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4", children: strongRadicals.map(
+                (r2, idx) => {
+                  var _a2;
+                  const info = radicalData.find(
+                    (rd) => rd.name === r2.radicalId
+                  );
+                  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    Card,
+                    {
+                      className: "hover:shadow-md transition-shadow border-primary/30",
+                      "data-ocid": `kanji.weakness.radikal.strong.item.${idx + 1}`,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-4xl font-bold text-primary", children: ((_a2 = info == null ? void 0 : info.name) == null ? void 0 : _a2.split(" ")[0]) ?? r2.radicalId }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: "text-xs", children: r2.status })
+                        ] }) }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-2", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium", children: (info == null ? void 0 : info.meaning) ?? "-" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 text-sm text-muted-foreground", children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-green-600 font-medium", children: [
+                              r2.correctCount,
+                              " benar"
+                            ] }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                              "Mastery ",
+                              r2.masteryLevel,
+                              "/5"
+                            ] })
+                          ] })
+                        ] })
+                      ]
+                    },
+                    r2.radicalId
+                  );
+                }
+              ) })
+            ] }),
+            weakRadicals.length === 0 && strongRadicals.length === 0 && Object.keys(radicalTracking).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "kanji.weakness.radikal.all.section", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { className: "h-5 w-5 text-muted-foreground" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Semua Radikal" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "secondary", children: Object.keys(radicalTracking).length })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4", children: Object.values(radicalTracking).map(
+                (r2, idx) => {
+                  var _a2;
+                  const info = radicalData.find(
+                    (rd) => rd.name === r2.radicalId
+                  );
+                  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    Card,
+                    {
+                      className: "hover:shadow-md transition-shadow",
+                      "data-ocid": `kanji.weakness.radikal.all.item.${idx + 1}`,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-4xl font-bold text-foreground", children: ((_a2 = info == null ? void 0 : info.name) == null ? void 0 : _a2.split(" ")[0]) ?? r2.radicalId }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            Badge,
+                            {
+                              variant: "outline",
+                              className: "text-xs",
+                              children: r2.status
+                            }
+                          )
+                        ] }) }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-2", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium", children: (info == null ? void 0 : info.meaning) ?? "-" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-4 text-sm text-muted-foreground", children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                              r2.correctCount,
+                              " benar"
+                            ] }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                              r2.wrongCount,
+                              " salah"
+                            ] })
+                          ] })
+                        ] })
+                      ]
+                    },
+                    r2.radicalId
+                  );
+                }
+              ) })
+            ] })
+          ] }) })
         ] })
       ]
     }
@@ -50910,6 +52946,7 @@ function QuizSection() {
   const [phase, setPhase] = reactExports.useState("select");
   const [selectedMode, setSelectedMode] = reactExports.useState(null);
   const [selectedJlptLevel, setSelectedJlptLevel] = reactExports.useState("N4");
+  const jlptLevelMode = selectedJlptLevel === "N4" ? "n4focus" : selectedJlptLevel === "N5" ? "n5only" : "all";
   const [questions, setQuestions] = reactExports.useState([]);
   const [remaining, setRemaining] = reactExports.useState([]);
   const [currentIndex, setCurrentIndex] = reactExports.useState(0);
@@ -50952,7 +52989,8 @@ function QuizSection() {
         mode,
         filteredKanji,
         filteredVocab,
-        mastery
+        mastery,
+        jlptLevelMode
       );
       if (generated.length === 0) {
         setDataError(true);
@@ -50969,16 +53007,23 @@ function QuizSection() {
       setAnswers([]);
       setPhase("quiz");
     },
-    [hasData, filteredKanji, filteredVocab]
+    [hasData, filteredKanji, filteredVocab, jlptLevelMode]
   );
   const currentQuestion = questions[currentIndex] ?? null;
   const handleAnswerSelect = reactExports.useCallback(
     (optionIdx) => {
+      var _a2, _b2;
       if (isAnswered || !currentQuestion) return;
       const isCorrect = optionIdx === currentQuestion.correctIndex;
       const masteryBefore = getMasteryItem(currentQuestion.itemId).masteryLevel;
       updateMasteryItem(currentQuestion.itemId, isCorrect);
       const masteryAfter = getMasteryItem(currentQuestion.itemId).masteryLevel;
+      const itemJlptLevel = currentQuestion.category === "kanji" ? ((_a2 = filteredKanji.find(
+        (k2) => `kanji_${k2.character}` === currentQuestion.itemId
+      )) == null ? void 0 : _a2.jlptLevel) ?? "N4" : ((_b2 = filteredVocab.find(
+        (v2) => `vocab_${v2.vocabulary}` === currentQuestion.itemId
+      )) == null ? void 0 : _b2.jlptLevel) ?? "N4";
+      recordQuizAnswer(itemJlptLevel, isCorrect);
       setSelectedAnswerIdx(optionIdx);
       setIsAnswered(true);
       if (isCorrect) setScore((prev) => prev + 1);
@@ -51003,7 +53048,7 @@ function QuizSection() {
         );
       }
     },
-    [isAnswered, currentQuestion, currentIndex]
+    [isAnswered, currentQuestion, currentIndex, filteredKanji, filteredVocab]
   );
   const handleNext = reactExports.useCallback(() => {
     if (remaining.length === 0) {
@@ -51046,6 +53091,39 @@ function QuizSection() {
     setDataError(false);
     reviewedItems.current = /* @__PURE__ */ new Set();
   }, []);
+  const getExplanationData = reactExports.useCallback(
+    (question) => {
+      if (question.category === "kanji") {
+        const entry2 = filteredKanji.find(
+          (k2) => `kanji_${k2.character}` === question.itemId
+        );
+        return entry2 ? {
+          correctAnswer: question.options[question.correctIndex] ?? "",
+          hiragana: null,
+          romaji: entry2.romaji || null,
+          meaning: entry2.meaning || null,
+          explanation: entry2.explanation || null,
+          exampleSentence: null,
+          grammarNote: null,
+          radical: entry2.radical || null
+        } : null;
+      }
+      const entry = filteredVocab.find(
+        (v2) => `vocab_${v2.vocabulary}` === question.itemId
+      );
+      return entry ? {
+        correctAnswer: question.options[question.correctIndex] ?? "",
+        hiragana: null,
+        romaji: entry.romaji || null,
+        meaning: entry.meaning || null,
+        explanation: entry.explanation || null,
+        exampleSentence: null,
+        grammarNote: null,
+        radical: entry.radical || null
+      } : null;
+    },
+    [filteredKanji, filteredVocab]
+  );
   const progressPct = currentIndex + 1 + remaining.length > 0 ? (currentIndex + 1) / (currentIndex + 1 + remaining.length) * 100 : 0;
   if (phase === "select") {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -51427,6 +53505,53 @@ function QuizSection() {
             ] }) })
           }
         ),
+        isAnswered && currentQuestion && (() => {
+          const expl = getExplanationData(currentQuestion);
+          if (!expl) return null;
+          const isCorrectAnswer = selectedAnswerIdx === currentQuestion.correctIndex;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: `rounded-xl border-l-4 bg-card shadow-md p-5 space-y-3 ${isCorrectAnswer ? "border-l-green-500" : "border-l-red-500"}`,
+              "data-ocid": "quiz.explanation_panel",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1", children: "📖 Penjelasan" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Jawaban Benar" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xl font-bold text-primary", children: expl.correctAnswer })
+                ] }),
+                expl.hiragana && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Hiragana" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base font-medium", children: expl.hiragana })
+                ] }),
+                expl.romaji && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Romaji" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base italic text-foreground/80", children: expl.romaji })
+                ] }),
+                expl.meaning && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Arti Indonesia" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-base font-semibold text-foreground", children: expl.meaning })
+                ] }),
+                expl.explanation && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Penjelasan" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-muted-foreground flex-1", children: expl.explanation })
+                ] }),
+                expl.exampleSentence && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Contoh Kalimat" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm italic text-foreground/80 flex-1", children: expl.exampleSentence })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Grammar terkait" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-foreground/70", children: expl.grammarNote ?? "-" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-x-3 gap-y-1 items-baseline", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground w-28 shrink-0", children: "Radikal terkait" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium", children: expl.radical ?? "-" })
+                ] })
+              ]
+            }
+          );
+        })(),
         isAnswered && /* @__PURE__ */ jsxRuntimeExports.jsxs(
           Button,
           {
@@ -51436,7 +53561,7 @@ function QuizSection() {
             size: "lg",
             "data-ocid": "quiz.next_button",
             children: [
-              remaining.length === 0 ? "Lihat Hasil" : "Pertanyaan Berikutnya",
+              remaining.length === 0 ? "Lihat Hasil" : "Lanjut ›",
               /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "w-4 h-4 ml-2" })
             ]
           }
@@ -51444,6 +53569,1941 @@ function QuizSection() {
       ] })
     ] })
   ] });
+}
+const READING_PASSAGES = [
+  // ──────────────────────────── OFFICE ────────────────────────────
+  {
+    id: "office-L1-1",
+    mode: "learning",
+    theme: "office",
+    level: 1,
+    title: "朝の会社",
+    sentences: ["田中さんは毎朝9時に会社へ行きます。"],
+    questions: [
+      {
+        question: "田中さんは何時に会社へ行きますか？",
+        options: ["8時", "9時", "10時", "11時"],
+        answer: 1
+      },
+      {
+        question: "田中さんはどこへ行きますか？",
+        options: ["学校", "病院", "会社", "駅"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["会社", "仕事"]
+  },
+  {
+    id: "office-L2-1",
+    mode: "learning",
+    theme: "office",
+    level: 2,
+    title: "会議の準備",
+    sentences: [
+      "今日の午後、大切な会議があります。",
+      "田中さんは朝から資料を準備しています。",
+      "会議の前に課長に報告しなければなりません。"
+    ],
+    questions: [
+      {
+        question: "田中さんは何を準備していますか？",
+        options: ["食べ物", "資料", "荷物", "プレゼント"],
+        answer: 1
+      },
+      {
+        question: "会議はいつありますか？",
+        options: ["今日の朝", "明日", "今日の午後", "来週"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["会社", "仕事", "働きます"]
+  },
+  {
+    id: "office-L3-1",
+    mode: "learning",
+    theme: "office",
+    level: 3,
+    title: "新しい仕事",
+    sentences: [
+      "田中さんは新しい会社に入りました。",
+      "最初は仕事が難しかったですが、今は仕事に慣れました。",
+      "毎日残業することもありますが、仕事がとても好きです。"
+    ],
+    questions: [
+      {
+        question: "最初、田中さんはどう思いましたか？",
+        options: [
+          "仕事が簡単だった",
+          "仕事が難しかった",
+          "仕事が楽しかった",
+          "仕事が嫌だった"
+        ],
+        answer: 1
+      },
+      {
+        question: "今の田中さんの状態はどうですか？",
+        options: ["まだ難しい", "会社を辞めた", "仕事に慣れた", "仕事が嫌いだ"],
+        answer: 2
+      },
+      {
+        question: "田中さんは毎日何をすることがありますか？",
+        options: ["旅行", "残業", "欠席", "休暇"],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["会社", "仕事", "仕事に慣れます", "働きます"]
+  },
+  {
+    id: "office-L4-1",
+    mode: "learning",
+    theme: "office",
+    level: 4,
+    title: "出張報告",
+    sentences: [
+      "山田部長は先週、大阪に出張しました。",
+      "出張では取引先の会社と重要な打ち合わせをしました。",
+      "帰ってきてから、チームに詳しい報告をしました。",
+      "この仕事のおかげで、会社の売上が増える見込みです。"
+    ],
+    questions: [
+      {
+        question: "山田部長はどこへ出張しましたか？",
+        options: ["東京", "大阪", "名古屋", "福岡"],
+        answer: 1
+      },
+      {
+        question: "出張で何をしましたか？",
+        options: [
+          "観光した",
+          "研修を受けた",
+          "打ち合わせをした",
+          "買い物をした"
+        ],
+        answer: 2
+      },
+      {
+        question: "帰ってきてから何をしましたか？",
+        options: ["休んだ", "チームに報告した", "また出張した", "会議を開いた"],
+        answer: 1
+      },
+      {
+        question: "この仕事の結果として何が期待されますか？",
+        options: ["費用が減る", "社員が増える", "売上が増える", "残業が増える"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["会社", "仕事", "働きます", "給料"]
+  },
+  // ──────────────────────────── SCHOOL ────────────────────────────
+  {
+    id: "school-L1-1",
+    mode: "learning",
+    theme: "school",
+    level: 1,
+    title: "学校へ行きます",
+    sentences: ["山田さんは毎朝8時に学校へ行きます。"],
+    questions: [
+      {
+        question: "山田さんは何時に学校へ行きますか？",
+        options: ["7時", "8時", "9時", "10時"],
+        answer: 1
+      },
+      {
+        question: "山田さんはどこへ行きますか？",
+        options: ["会社", "図書館", "学校", "病院"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["学校", "先生"]
+  },
+  {
+    id: "school-L2-1",
+    mode: "learning",
+    theme: "school",
+    level: 2,
+    title: "試験の日",
+    sentences: [
+      "今日は学校で試験がありました。",
+      "山田さんはよく勉強していたので、高い点数を取りました。",
+      "先生はみんなをほめました。"
+    ],
+    questions: [
+      {
+        question: "なぜ山田さんは高い点数を取りましたか？",
+        options: [
+          "運が良かったから",
+          "よく勉強していたから",
+          "試験が簡単だったから",
+          "先生に教えてもらったから"
+        ],
+        answer: 1
+      },
+      {
+        question: "先生はどうしましたか？",
+        options: ["怒った", "泣いた", "みんなをほめた", "笑った"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["学校", "先生", "勉強します"]
+  },
+  {
+    id: "school-L3-1",
+    mode: "learning",
+    theme: "school",
+    level: 3,
+    title: "図書館での勉強",
+    sentences: [
+      "鈴木さんは毎日放課後に図書館で勉強します。",
+      "静かな図書館はとても勉強しやすい環境です。",
+      "来月、大学の入学試験があるので、今は特に一生懸命勉強しています。"
+    ],
+    questions: [
+      {
+        question: "鈴木さんはいつ図書館へ行きますか？",
+        options: ["授業の前", "放課後", "昼休み", "週末"],
+        answer: 1
+      },
+      {
+        question: "なぜ鈴木さんは特に一生懸命勉強していますか？",
+        options: [
+          "先生に言われたから",
+          "友達と約束したから",
+          "来月入学試験があるから",
+          "成績が悪いから"
+        ],
+        answer: 2
+      },
+      {
+        question: "図書館はどんな場所ですか？",
+        options: ["うるさい", "暗い", "静か", "広い"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["学校", "先生", "勉強します", "一生懸命"]
+  },
+  {
+    id: "school-L4-1",
+    mode: "learning",
+    theme: "school",
+    level: 4,
+    title: "卒業式",
+    sentences: [
+      "今日は田中大学の卒業式です。",
+      "4年間、たくさん勉強して、多くの友達もできました。",
+      "졸업 후에는 大きい会社に就職する予定です。",
+      "先生から「いつでも連絡してください」と言われて、とても感謝しています。"
+    ],
+    questions: [
+      {
+        question: "この文章は何の日について書かれていますか？",
+        options: ["入学式", "卒業式", "誕生日", "試験の日"],
+        answer: 1
+      },
+      {
+        question: "卒業後の予定は何ですか？",
+        options: ["大学院に行く", "海外留学する", "会社に就職する", "旅行する"],
+        answer: 2
+      },
+      {
+        question: "先生は何と言いましたか？",
+        options: [
+          "頑張ってください",
+          "いつでも連絡してください",
+          "また来てください",
+          "元気でいてください"
+        ],
+        answer: 1
+      },
+      {
+        question: "何年間学校に通いましたか？",
+        options: ["2年間", "3年間", "4年間", "5年間"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["学校", "先生", "勉強します", "感謝します"]
+  },
+  // ──────────────────────────── FAMILY ────────────────────────────
+  {
+    id: "family-L1-1",
+    mode: "learning",
+    theme: "family",
+    level: 1,
+    title: "家族の夕食",
+    sentences: ["鈴木さんの家族は毎晩一緒に夕食を食べます。"],
+    questions: [
+      {
+        question: "鈴木さんの家族はいつ一緒に食事しますか？",
+        options: ["朝", "昼", "夜", "週末だけ"],
+        answer: 2
+      },
+      {
+        question: "家族は何をしますか？",
+        options: ["散歩する", "テレビを見る", "夕食を食べる", "買い物する"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["家族", "食べます"]
+  },
+  {
+    id: "family-L2-1",
+    mode: "learning",
+    theme: "family",
+    level: 2,
+    title: "両親への電話",
+    sentences: [
+      "山田さんは東京で一人暮らしをしています。",
+      "毎週日曜日に田舎の両親に電話します。",
+      "両親の声を聞くと、安心します。"
+    ],
+    questions: [
+      {
+        question: "山田さんはどこに住んでいますか？",
+        options: ["田舎", "大阪", "東京", "名古屋"],
+        answer: 2
+      },
+      {
+        question: "両親の声を聞くとどうなりますか？",
+        options: ["悲しくなる", "寂しくなる", "安心する", "怒る"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["家族", "息子", "娘"]
+  },
+  {
+    id: "family-L3-1",
+    mode: "learning",
+    theme: "family",
+    level: 3,
+    title: "子供の成長",
+    sentences: [
+      "田中さんには5歳の息子がいます。",
+      "息子は最近ひらがなを勉強し始めました。",
+      "田中さんは毎晩息子の勉強を手伝っています。"
+    ],
+    questions: [
+      {
+        question: "田中さんの息子は何歳ですか？",
+        options: ["3歳", "4歳", "5歳", "6歳"],
+        answer: 2
+      },
+      {
+        question: "息子は最近何を勉強し始めましたか？",
+        options: ["英語", "数学", "ひらがな", "漢字"],
+        answer: 2
+      },
+      {
+        question: "田中さんは毎晩何をしていますか？",
+        options: [
+          "テレビを見る",
+          "息子の勉強を手伝う",
+          "料理をする",
+          "本を読む"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["家族", "息子", "子供たち", "世話をします"]
+  },
+  {
+    id: "family-L4-1",
+    mode: "learning",
+    theme: "family",
+    level: 4,
+    title: "結婚式の準備",
+    sentences: [
+      "来月、鈴木さんの姉が結婚式を挙げる予定です。",
+      "家族全員で準備を手伝っています。",
+      "お母さんは料理の担当で、お父さんは招待状を送る担当です。",
+      "鈴木さんは姉のためにスピーチを準備しています。"
+    ],
+    questions: [
+      {
+        question: "誰が結婚しますか？",
+        options: [
+          "鈴木さん本人",
+          "鈴木さんの弟",
+          "鈴木さんの姉",
+          "鈴木さんの母"
+        ],
+        answer: 2
+      },
+      {
+        question: "お母さんの担当は何ですか？",
+        options: ["招待状", "スピーチ", "花の準備", "料理"],
+        answer: 3
+      },
+      {
+        question: "鈴木さんは何を準備していますか？",
+        options: ["ドレス", "スピーチ", "ケーキ", "写真"],
+        answer: 1
+      },
+      {
+        question: "いつ結婚式がありますか？",
+        options: ["今週", "来週", "来月", "来年"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["家族", "婚約します", "用意します"]
+  },
+  // ──────────────────────────── SHOPPING ────────────────────────────
+  {
+    id: "shopping-L1-1",
+    mode: "learning",
+    theme: "shopping",
+    level: 1,
+    title: "スーパーで買い物",
+    sentences: ["山田さんは今日スーパーで野菜と果物を買いました。"],
+    questions: [
+      {
+        question: "山田さんはどこで買い物しましたか？",
+        options: ["コンビニ", "デパート", "スーパー", "市場"],
+        answer: 2
+      },
+      {
+        question: "何を買いましたか？",
+        options: ["肉と魚", "お菓子とジュース", "野菜と果物", "パンと牛乳"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["品物", "値段"]
+  },
+  {
+    id: "shopping-L2-1",
+    mode: "learning",
+    theme: "shopping",
+    level: 2,
+    title: "セールの日",
+    sentences: [
+      "今日はデパートで大きなセールがあります。",
+      "鈴木さんは朝早くから並んで、割引の服を買いました。",
+      "30%引きだったので、とても安く買えました。"
+    ],
+    questions: [
+      {
+        question: "鈴木さんはいつから並びましたか？",
+        options: ["夜", "昼", "朝早く", "午後"],
+        answer: 2
+      },
+      {
+        question: "何パーセント引きでしたか？",
+        options: ["10%", "20%", "30%", "50%"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["値段", "品物", "割引", "無料"]
+  },
+  {
+    id: "shopping-L3-1",
+    mode: "learning",
+    theme: "shopping",
+    level: 3,
+    title: "保証書の確認",
+    sentences: [
+      "田中さんは新しい家電を買った後、保証書を確認しました。",
+      "保証期間は1年間で、その間は無料で修理してもらえます。",
+      "購入の証明として領収書も大切に保管しています。"
+    ],
+    questions: [
+      {
+        question: "保証期間は何年ですか？",
+        options: ["半年", "1年", "2年", "3年"],
+        answer: 1
+      },
+      {
+        question: "保証期間中の修理はどうなりますか？",
+        options: [
+          "高い料金がかかる",
+          "無料でしてもらえる",
+          "できない",
+          "半額になる"
+        ],
+        answer: 1
+      },
+      {
+        question: "田中さんはなぜ領収書を保管していますか？",
+        options: [
+          "税金のため",
+          "購入の証明のため",
+          "次回割引のため",
+          "保証延長のため"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["値段", "品物", "割引", "無料", "保証書", "領収書"]
+  },
+  {
+    id: "shopping-L4-1",
+    mode: "learning",
+    theme: "shopping",
+    level: 4,
+    title: "オンラインショッピング",
+    sentences: [
+      "最近、オンラインで買い物をする人が増えています。",
+      "便利な宅配便サービスを利用すれば、家にいながら品物が届きます。",
+      "ただし、実際に見ないで買うので、品物が想像と違うこともあります。",
+      "キャンセルや返品の方法を事前に確認することが大切です。"
+    ],
+    questions: [
+      {
+        question: "オンラインショッピングの便利な点は何ですか？",
+        options: [
+          "安い",
+          "品物が多い",
+          "家にいながら買い物できる",
+          "割引が多い"
+        ],
+        answer: 2
+      },
+      {
+        question: "オンラインショッピングのデメリットは何ですか？",
+        options: [
+          "送料が高い",
+          "品物が想像と違うことがある",
+          "時間がかかる",
+          "品物が少ない"
+        ],
+        answer: 1
+      },
+      {
+        question: "事前に確認すべきことは何ですか？",
+        options: ["値段", "色と大きさ", "キャンセルと返品の方法", "店員の名前"],
+        answer: 2
+      },
+      {
+        question: "品物を届けるサービスは何ですか？",
+        options: ["タクシー", "宅配便", "バス", "電車"],
+        answer: 1
+      }
+    ],
+    targetVocabulary: [
+      "値段",
+      "品物",
+      "宅配便",
+      "キャンセルします",
+      "届きます",
+      "利用します"
+    ]
+  },
+  // ──────────────────────────── TRAVEL ────────────────────────────
+  {
+    id: "travel-L1-1",
+    mode: "learning",
+    theme: "travel",
+    level: 1,
+    title: "旅行の計画",
+    sentences: ["山田さんは来月、京都へ旅行する予定です。"],
+    questions: [
+      {
+        question: "山田さんはどこへ旅行しますか？",
+        options: ["大阪", "東京", "京都", "北海道"],
+        answer: 2
+      },
+      {
+        question: "旅行はいつですか？",
+        options: ["来週", "来月", "来年", "今週"],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["旅館", "バス停"]
+  },
+  {
+    id: "travel-L2-1",
+    mode: "learning",
+    theme: "travel",
+    level: 2,
+    title: "新幹線の旅",
+    sentences: [
+      "田中さんは新幹線で大阪から東京へ行きます。",
+      "新幹線は速いので、約2時間半で着きます。",
+      "車内では弁当を食べながら景色を楽しみました。"
+    ],
+    questions: [
+      {
+        question: "田中さんはどの交通手段を使いますか？",
+        options: ["飛行機", "バス", "新幹線", "電車"],
+        answer: 2
+      },
+      {
+        question: "何時間くらいかかりますか？",
+        options: ["約1時間", "約2時間", "約2時間半", "約3時間"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["旅館", "バス停", "運びます"]
+  },
+  {
+    id: "travel-L3-1",
+    mode: "learning",
+    theme: "travel",
+    level: 3,
+    title: "旅館での一夜",
+    sentences: [
+      "鈴木さんは温泉地の旅館に一泊しました。",
+      "旅館では浴衣を着て温泉に入ることができます。",
+      "夕食には地元の新鮮な魚料理が出て、とても美味しかったです。"
+    ],
+    questions: [
+      {
+        question: "鈴木さんはどこに泊まりましたか？",
+        options: ["ホテル", "旅館", "友達の家", "テント"],
+        answer: 1
+      },
+      {
+        question: "旅館で何を着ましたか？",
+        options: ["スーツ", "普段着", "浴衣", "ユニフォーム"],
+        answer: 2
+      },
+      {
+        question: "夕食は何でしたか？",
+        options: ["肉料理", "野菜料理", "魚料理", "洋食"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["旅館", "泊まります"]
+  },
+  {
+    id: "travel-L4-1",
+    mode: "learning",
+    theme: "travel",
+    level: 4,
+    title: "海外旅行の準備",
+    sentences: [
+      "田中さんは来月初めて海外旅行に行く予定です。",
+      "パスポートを取得し、旅行保険にも加入しました。",
+      "現地の言葉は少ししか話せないので、翻訳アプリをスマホにインストールしました。",
+      "旅行中はスケジュールを決めすぎずに、自由に観光したいと思っています。"
+    ],
+    questions: [
+      {
+        question: "田中さんは何を取得しましたか？",
+        options: ["ビザ", "パスポート", "免許証", "学生証"],
+        answer: 1
+      },
+      {
+        question: "なぜ翻訳アプリをインストールしましたか？",
+        options: [
+          "ゲームをするため",
+          "写真を撮るため",
+          "現地の言葉が少ししか話せないから",
+          "地図を見るため"
+        ],
+        answer: 2
+      },
+      {
+        question: "旅行中のスケジュールについてどう思っていますか？",
+        options: [
+          "全部決めたい",
+          "決めすぎずに自由にしたい",
+          "ガイドに任せたい",
+          "決めないでいい"
+        ],
+        answer: 1
+      },
+      {
+        question: "田中さんは海外旅行の経験がありますか？",
+        options: ["何度もある", "2回ある", "初めて", "わからない"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["旅館", "バス停", "スケジュール", "自由に"]
+  },
+  // ──────────────────────────── RESTAURANT ────────────────────────────
+  {
+    id: "restaurant-L1-1",
+    mode: "learning",
+    theme: "restaurant",
+    level: 1,
+    title: "レストランで",
+    sentences: ["鈴木さんは友達とレストランで夕食を食べました。"],
+    questions: [
+      {
+        question: "鈴木さんは誰と食べましたか？",
+        options: ["家族", "同僚", "一人", "友達"],
+        answer: 3
+      },
+      {
+        question: "どこで食べましたか？",
+        options: ["家", "学校", "レストラン", "公園"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["食べます", "飲みます"]
+  },
+  {
+    id: "restaurant-L2-1",
+    mode: "learning",
+    theme: "restaurant",
+    level: 2,
+    title: "注文の仕方",
+    sentences: [
+      "山田さんはイタリアンレストランに入りました。",
+      "ウェイターがメニューを持ってきて、注文を聞きました。",
+      "山田さんはパスタとサラダを注文しました。"
+    ],
+    questions: [
+      {
+        question: "山田さんはどこに入りましたか？",
+        options: [
+          "和食レストラン",
+          "中華レストラン",
+          "イタリアンレストラン",
+          "ファストフード"
+        ],
+        answer: 2
+      },
+      {
+        question: "山田さんは何を注文しましたか？",
+        options: [
+          "ピザとスープ",
+          "パスタとサラダ",
+          "ステーキとパン",
+          "ラーメンと餃子"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["食べます", "飲みます", "飲み放題"]
+  },
+  {
+    id: "restaurant-L3-1",
+    mode: "learning",
+    theme: "restaurant",
+    level: 3,
+    title: "料理教室",
+    sentences: [
+      "田中さんは週に一度、料理教室に通っています。",
+      "先生は丁寧に材料の切り方と調理の手順を教えてくれます。",
+      "今日は鶏肉を使った日本料理を作りました。"
+    ],
+    questions: [
+      {
+        question: "田中さんはどのくらいの頻度で料理教室に行きますか？",
+        options: ["毎日", "週に一度", "月に一度", "年に一度"],
+        answer: 1
+      },
+      {
+        question: "先生は何を教えますか？",
+        options: [
+          "料理の歴史",
+          "材料の切り方と調理の手順",
+          "食材の選び方",
+          "盛り付けの方法"
+        ],
+        answer: 1
+      },
+      {
+        question: "今日は何を作りましたか？",
+        options: ["魚料理", "野菜料理", "鶏肉の日本料理", "デザート"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["食べます", "飲みます", "材料"]
+  },
+  {
+    id: "restaurant-L4-1",
+    mode: "learning",
+    theme: "restaurant",
+    level: 4,
+    title: "食レポ",
+    sentences: [
+      "鈴木さんはグルメブログを書いていて、毎週新しいレストランを訪問しています。",
+      "先週訪れた和食レストランは、料理の見た目も味もとても素晴らしかったです。",
+      "特に刺身の鮮度が高く、味がします、とても評判が良いそうです。",
+      "次回は友人を連れて、また来たいと思っています。"
+    ],
+    questions: [
+      {
+        question: "鈴木さんは何を書いていますか？",
+        options: ["小説", "料理レシピ", "グルメブログ", "旅行記"],
+        answer: 2
+      },
+      {
+        question: "和食レストランの評価はどうでしたか？",
+        options: ["普通だった", "素晴らしかった", "少し失望した", "高すぎた"],
+        answer: 1
+      },
+      {
+        question: "特に何が良かったですか？",
+        options: ["サービス", "雰囲気", "刺身の鮮度", "値段"],
+        answer: 2
+      },
+      {
+        question: "次回はどうしたいですか？",
+        options: [
+          "一人で行く",
+          "友人を連れて行く",
+          "家族と行く",
+          "もう行かない"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["食べます", "飲みます", "味がします"]
+  },
+  // ──────────────────────────── HEALTH ────────────────────────────
+  {
+    id: "health-L1-1",
+    mode: "learning",
+    theme: "health",
+    level: 1,
+    title: "病院へ行きます",
+    sentences: ["田中さんは風邪を引いたので、病院へ行きました。"],
+    questions: [
+      {
+        question: "田中さんはなぜ病院へ行きましたか？",
+        options: [
+          "骨折したから",
+          "検査のため",
+          "風邪を引いたから",
+          "薬をもらうため"
+        ],
+        answer: 2
+      },
+      {
+        question: "田中さんはどこへ行きましたか？",
+        options: ["学校", "薬局", "病院", "会社"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["健康", "救急車"]
+  },
+  {
+    id: "health-L2-1",
+    mode: "learning",
+    theme: "health",
+    level: 2,
+    title: "熱が出ました",
+    sentences: [
+      "山田さんは昨日から熱が出ています。",
+      "今朝、体温を測ったら38度でした。",
+      "会社を休んで、薬を飲みながら休んでいます。"
+    ],
+    questions: [
+      {
+        question: "山田さんの体温は何度でしたか？",
+        options: ["36度", "37度", "38度", "39度"],
+        answer: 2
+      },
+      {
+        question: "山田さんはどうしましたか？",
+        options: [
+          "病院へ行った",
+          "会社を休んだ",
+          "学校へ行った",
+          "薬局へ行った"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["健康", "救急車", "熱が出ます"]
+  },
+  {
+    id: "health-L3-1",
+    mode: "learning",
+    theme: "health",
+    level: 3,
+    title: "健康診断",
+    sentences: [
+      "鈴木さんは毎年会社の健康診断を受けています。",
+      "今年は血圧が少し高かったので、医者に塩分を控えるよう言われました。",
+      "最近運動不足なので、毎朝散歩を始めることにしました。"
+    ],
+    questions: [
+      {
+        question: "鈴木さんはいつ健康診断を受けますか？",
+        options: ["半年ごと", "毎月", "毎年", "2年ごと"],
+        answer: 2
+      },
+      {
+        question: "医者から何と言われましたか？",
+        options: [
+          "もっと食べるよう",
+          "塩分を控えるよう",
+          "薬を飲むよう",
+          "入院するよう"
+        ],
+        answer: 1
+      },
+      {
+        question: "鈴木さんは何を始めることにしましたか？",
+        options: ["ジョギング", "水泳", "毎朝散歩", "ヨガ"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["健康", "熱が出ます", "長生きします"]
+  },
+  {
+    id: "health-L4-1",
+    mode: "learning",
+    theme: "health",
+    level: 4,
+    title: "緊急事態",
+    sentences: [
+      "田中さんが突然倒れたので、同僚がすぐに119番に電話しました。",
+      "救急車が5分後に到着して、田中さんは病院に運ばれました。",
+      "検査の結果、重大な病気ではなく、疲労と脱水が原因だとわかりました。",
+      "医者からは十分な休養と水分補給を指示されました。"
+    ],
+    questions: [
+      {
+        question: "同僚はまず何をしましたか？",
+        options: [
+          "水を持ってきた",
+          "医者を呼んだ",
+          "119番に電話した",
+          "会社に報告した"
+        ],
+        answer: 2
+      },
+      {
+        question: "救急車は何分後に来ましたか？",
+        options: ["2分後", "5分後", "10分後", "15分後"],
+        answer: 1
+      },
+      {
+        question: "倒れた原因は何でしたか？",
+        options: ["心臓病", "骨折", "疲労と脱水", "食中毒"],
+        answer: 2
+      },
+      {
+        question: "医者の指示は何でしたか？",
+        options: ["すぐ手術", "入院", "休養と水分補給", "薬を飲む"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["健康", "救急車", "119番", "原因"]
+  },
+  // ──────────────────────────── DAILY LIFE ────────────────────────────
+  {
+    id: "daily_life-L1-1",
+    mode: "learning",
+    theme: "daily_life",
+    level: 1,
+    title: "朝の日課",
+    sentences: ["私は毎朝6時に起きて、シャワーを浴びます。"],
+    questions: [
+      {
+        question: "毎朝何時に起きますか？",
+        options: ["5時", "6時", "7時", "8時"],
+        answer: 1
+      },
+      {
+        question: "起きてから何をしますか？",
+        options: ["朝食を食べる", "散歩する", "シャワーを浴びる", "新聞を読む"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["目が覚めます", "目覚まし時計"]
+  },
+  {
+    id: "daily_life-L2-1",
+    mode: "learning",
+    theme: "daily_life",
+    level: 2,
+    title: "雨の日の過ごし方",
+    sentences: [
+      "昨日は雨でした。",
+      "だから家にいました。",
+      "テレビを見たり、本を読んだりして過ごしました。"
+    ],
+    questions: [
+      {
+        question: "昨日の天気はどうでしたか？",
+        options: ["晴れ", "雪", "雨", "曇り"],
+        answer: 2
+      },
+      {
+        question: "なぜ家にいましたか？",
+        options: [
+          "疲れていたから",
+          "病気だったから",
+          "雨だったから",
+          "仕事があったから"
+        ],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["目が覚めます", "過ごします", "番組"]
+  },
+  {
+    id: "daily_life-L3-1",
+    mode: "learning",
+    theme: "daily_life",
+    level: 3,
+    title: "通勤の日常",
+    sentences: [
+      "私は毎朝6時に起きます。",
+      "朝ご飯を食べてから会社へ行きます。",
+      "会社まで電車で30分かかります。"
+    ],
+    questions: [
+      {
+        question: "毎朝何時に起きますか？",
+        options: ["5時", "6時", "7時", "8時"],
+        answer: 1
+      },
+      {
+        question: "会社まで何で行きますか？",
+        options: ["バス", "自転車", "電車", "徒歩"],
+        answer: 2
+      },
+      {
+        question: "会社まで何分かかりますか？",
+        options: ["10分", "20分", "30分", "40分"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: [
+      "目が覚めます",
+      "目覚まし時計",
+      "鳴ります",
+      "過ごします"
+    ]
+  },
+  {
+    id: "daily_life-L4-1",
+    mode: "learning",
+    theme: "daily_life",
+    level: 4,
+    title: "ライフスタイルの変化",
+    sentences: [
+      "山田さんは以前、毎日終電近くまで残業していました。",
+      "しかし、健康に悪いと感じて、生活習慣を変えることにしました。",
+      "今は定時に退社して、ジムで運動してから帰るようにしています。",
+      "生活が規則正しくなってから、体の具合もよくなりました。"
+    ],
+    questions: [
+      {
+        question: "山田さんは以前どうしていましたか？",
+        options: [
+          "早く帰宅していた",
+          "終電近くまで残業していた",
+          "週休3日だった",
+          "在宅勤務していた"
+        ],
+        answer: 1
+      },
+      {
+        question: "なぜ生活を変えましたか？",
+        options: [
+          "給料が上がったから",
+          "上司に言われたから",
+          "健康に悪いと感じたから",
+          "家族に頼まれたから"
+        ],
+        answer: 2
+      },
+      {
+        question: "今は何をしてから帰りますか？",
+        options: ["食事", "買い物", "ジムで運動", "友達と会う"],
+        answer: 2
+      },
+      {
+        question: "生活を変えてからどうなりましたか？",
+        options: [
+          "仕事が楽しくなった",
+          "体の具合がよくなった",
+          "友達が増えた",
+          "給料が増えた"
+        ],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["具合", "過ごします", "目が覚めます", "鳴ります"]
+  },
+  // ──────────────────────────── TECHNOLOGY ────────────────────────────
+  {
+    id: "technology-L1-1",
+    mode: "learning",
+    theme: "technology",
+    level: 1,
+    title: "スマートフォン",
+    sentences: ["田中さんは毎日スマートフォンでメールをチェックします。"],
+    questions: [
+      {
+        question: "田中さんは何で何をしますか？",
+        options: [
+          "パソコンで映画を見る",
+          "スマートフォンでメールをチェック",
+          "テレビでニュースを見る",
+          "ラジオで音楽を聴く"
+        ],
+        answer: 1
+      },
+      {
+        question: "どのくらいの頻度でしますか？",
+        options: ["週に一度", "時々", "毎日", "月に一度"],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["メールアドレス", "スケジュール"]
+  },
+  {
+    id: "technology-L2-1",
+    mode: "learning",
+    theme: "technology",
+    level: 2,
+    title: "パソコンの問題",
+    sentences: [
+      "鈴木さんのパソコンが突然壊れました。",
+      "大切なファイルが消えてしまって、とても困りました。",
+      "次からは定期的にデータをバックアップすることにしました。"
+    ],
+    questions: [
+      {
+        question: "何が起きましたか？",
+        options: [
+          "インターネットが遅くなった",
+          "パソコンが壊れた",
+          "スマホが盗まれた",
+          "ソフトがなくなった"
+        ],
+        answer: 1
+      },
+      {
+        question: "鈴木さんはどうすることにしましたか？",
+        options: [
+          "新しいパソコンを買う",
+          "修理に出す",
+          "データをバックアップする",
+          "パソコンを使わない"
+        ],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["メールアドレス", "ファイル", "データ", "録音します"]
+  },
+  {
+    id: "technology-L3-1",
+    mode: "learning",
+    theme: "technology",
+    level: 3,
+    title: "新しいアプリ",
+    sentences: [
+      "山田さんは最近、学習アプリを使って日本語の勉強をしています。",
+      "このアプリには単語テストや文法解説など、多くの機能があります。",
+      "毎日30分スケジュールを決めて勉強することで、着実に上達しています。"
+    ],
+    questions: [
+      {
+        question: "山田さんは何に使っていますか？",
+        options: ["ゲーム", "SNS", "日本語の勉強", "仕事"],
+        answer: 2
+      },
+      {
+        question: "このアプリには何がありますか？",
+        options: [
+          "ゲームとアニメ",
+          "単語テストと文法解説",
+          "音楽と動画",
+          "ニュースと天気"
+        ],
+        answer: 1
+      },
+      {
+        question: "どのくらいの時間勉強していますか？",
+        options: ["毎日1時間", "毎日30分", "週末だけ", "たまに"],
+        answer: 1
+      }
+    ],
+    targetVocabulary: ["メールアドレス", "スケジュール", "ファイル", "データ"]
+  },
+  {
+    id: "technology-L4-1",
+    mode: "learning",
+    theme: "technology",
+    level: 4,
+    title: "AIの活用",
+    sentences: [
+      "最近、人工知能（AI）を使ったサービスが増えています。",
+      "田中さんの会社では、AIを使って顧客データを分析するシステムを開発しています。",
+      "このシステムを利用することで、より効率的に仕事を進めることができます。",
+      "しかし、AIが発展することで、なくなってしまう仕事もあると言われています。"
+    ],
+    questions: [
+      {
+        question: "田中さんの会社では何を開発していますか？",
+        options: [
+          "新しいスマホ",
+          "ゲームアプリ",
+          "顧客データ分析システム",
+          "翻訳ソフト"
+        ],
+        answer: 2
+      },
+      {
+        question: "このシステムのメリットは何ですか？",
+        options: [
+          "コストが下がる",
+          "社員が増える",
+          "より効率的に仕事できる",
+          "残業が増える"
+        ],
+        answer: 2
+      },
+      {
+        question: "AIが発展することのデメリットとして何が言われていますか？",
+        options: [
+          "電力消費が増える",
+          "仕事がなくなる可能性がある",
+          "個人情報が危険になる",
+          "機械が壊れやすくなる"
+        ],
+        answer: 1
+      },
+      {
+        question: "AIはどんな目的で使われていますか？",
+        options: [
+          "エンタメのため",
+          "コミュニケーションのため",
+          "データ分析のため",
+          "教育のため"
+        ],
+        answer: 2
+      }
+    ],
+    targetVocabulary: ["データ", "利用します", "開発します", "スケジュール"]
+  }
+];
+function getRadicalSymbol(radical) {
+  return radical.name.charAt(0);
+}
+function shuffle(arr) {
+  const a2 = [...arr];
+  for (let i = a2.length - 1; i > 0; i--) {
+    const j2 = Math.floor(Math.random() * (i + 1));
+    [a2[i], a2[j2]] = [a2[j2], a2[i]];
+  }
+  return a2;
+}
+function recordRadicalSeen(radicalId) {
+  try {
+    updateMasteryItem == null ? void 0 : updateMasteryItem(`radical:${radicalId}`, true);
+  } catch (_2) {
+  }
+}
+function recordRadicalCorrect(radicalId) {
+  try {
+    updateMasteryItem == null ? void 0 : updateMasteryItem(`radical:${radicalId}`, true);
+  } catch (_2) {
+  }
+}
+function recordRadicalWrong(radicalId) {
+  try {
+    updateMasteryItem == null ? void 0 : updateMasteryItem(`radical:${radicalId}`, false);
+  } catch (_2) {
+  }
+}
+function findKanjiEntry(char) {
+  return kanjiData.find((k2) => k2.character === char);
+}
+function findExampleVocab(kanjiChar) {
+  return vocabularyData.find((v2) => v2.vocabulary.includes(kanjiChar)) ?? null;
+}
+function buildQuestion(radical, allRadicals, level) {
+  const symbol = getRadicalSymbol(radical);
+  switch (level) {
+    case 1: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length === 0) return null;
+      const correctChar = ownCandidates[Math.floor(Math.random() * ownCandidates.length)];
+      const correctEntry = findKanjiEntry(correctChar);
+      const wrongPool = allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol).flatMap((r2) => r2.kanjiList).filter((k2) => k2 !== correctChar && findKanjiEntry(k2));
+      const wrongChars = shuffle(wrongPool).slice(0, 3);
+      if (wrongChars.length < 3) return null;
+      const choices = shuffle([
+        { char: correctChar, isCorrect: true, entry: correctEntry },
+        ...wrongChars.map((c2) => ({
+          char: c2,
+          isCorrect: false,
+          entry: findKanjiEntry(c2)
+        }))
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 1,
+        type: "single",
+        correctChar,
+        correctEntry,
+        choices,
+        instruction: "Pilih kanji yang menggunakan radikal di atas:"
+      };
+    }
+    case 2: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length === 0) return null;
+      const correctChar = ownCandidates[Math.floor(Math.random() * ownCandidates.length)];
+      const correctEntry = findKanjiEntry(correctChar);
+      const wrongRadicals = shuffle(
+        allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol)
+      ).slice(0, 3);
+      if (wrongRadicals.length < 3) return null;
+      const choices = shuffle([
+        { char: symbol, isCorrect: true, entry: correctEntry },
+        ...wrongRadicals.map((r2) => ({
+          char: getRadicalSymbol(r2),
+          isCorrect: false,
+          entry: findKanjiEntry(r2.kanjiList[0]) ?? correctEntry
+        }))
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 2,
+        type: "single",
+        correctChar: symbol,
+        correctEntry,
+        choices,
+        instruction: `Kanji "${correctChar}" (${correctEntry.meaning}) menggunakan radikal mana?`
+      };
+    }
+    case 3: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length === 0) return null;
+      const correctChar = ownCandidates[Math.floor(Math.random() * ownCandidates.length)];
+      const correctEntry = findKanjiEntry(correctChar);
+      const example = findExampleVocab(correctChar);
+      if (!example) return null;
+      const wrongPool = allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol).flatMap((r2) => r2.kanjiList).filter((k2) => k2 !== correctChar && findKanjiEntry(k2));
+      const wrongChars = shuffle(wrongPool).slice(0, 3);
+      if (wrongChars.length < 3) return null;
+      const choices = shuffle([
+        { char: example.vocabulary, isCorrect: true, entry: correctEntry },
+        ...wrongChars.map((c2) => {
+          const ex = findExampleVocab(c2);
+          return {
+            char: (ex == null ? void 0 : ex.vocabulary) ?? c2,
+            isCorrect: false,
+            entry: findKanjiEntry(c2)
+          };
+        })
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 3,
+        type: "single",
+        correctChar: example.vocabulary,
+        correctEntry,
+        choices,
+        instruction: `Radikal ${symbol} (${radical.meaning}) — pilih kosakata yang paling terkait:`
+      };
+    }
+    case 4: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length < 3) return null;
+      const shuffledOwn = shuffle(ownCandidates);
+      const sameRadicalChars = shuffledOwn.slice(0, 3);
+      const correctChar = sameRadicalChars[0];
+      const correctEntry = findKanjiEntry(correctChar);
+      const wrongRadicals = allRadicals.filter(
+        (r2) => getRadicalSymbol(r2) !== symbol
+      );
+      if (wrongRadicals.length === 0) return null;
+      const wrongRadical = wrongRadicals[Math.floor(Math.random() * wrongRadicals.length)];
+      const wrongCandidates = wrongRadical.kanjiList.filter(
+        (k2) => findKanjiEntry(k2)
+      );
+      if (wrongCandidates.length === 0) return null;
+      const wrongChar = wrongCandidates[Math.floor(Math.random() * wrongCandidates.length)];
+      const wrongEntry = findKanjiEntry(wrongChar);
+      const choices = shuffle([
+        { char: correctChar, isCorrect: true, entry: correctEntry },
+        ...sameRadicalChars.slice(1).map((c2) => ({
+          char: c2,
+          isCorrect: false,
+          entry: findKanjiEntry(c2)
+        })),
+        { char: wrongChar, isCorrect: false, entry: wrongEntry }
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 4,
+        type: "single",
+        correctChar,
+        correctEntry,
+        choices,
+        instruction: `Cari kanji yang BERBEDA — tidak menggunakan radikal ${symbol} (${radical.meaning}):`
+      };
+    }
+    case 5: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length < 4) return null;
+      const shuffledOwn = shuffle(ownCandidates).slice(0, 4);
+      const correctChars = shuffledOwn.map((c2) => {
+        const ex = findExampleVocab(c2);
+        return (ex == null ? void 0 : ex.vocabulary) ?? c2;
+      });
+      const wrongPool = allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol).flatMap((r2) => r2.kanjiList).filter((k2) => findKanjiEntry(k2));
+      const wrongChars = shuffle(wrongPool).slice(0, 4);
+      if (wrongChars.length < 4) return null;
+      const allOptions = shuffle([
+        ...shuffledOwn.map((c2) => {
+          const ex = findExampleVocab(c2);
+          return {
+            char: (ex == null ? void 0 : ex.vocabulary) ?? c2,
+            isCorrect: true,
+            entry: findKanjiEntry(c2)
+          };
+        }),
+        ...wrongChars.map((c2) => {
+          const ex = findExampleVocab(c2);
+          return {
+            char: (ex == null ? void 0 : ex.vocabulary) ?? c2,
+            isCorrect: false,
+            entry: findKanjiEntry(c2)
+          };
+        })
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 5,
+        type: "multi",
+        correctChars,
+        allOptions,
+        instruction: `Pilih 3 kosakata yang memiliki radikal ${symbol} (${radical.meaning}):`
+      };
+    }
+    case 6: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length === 0) return null;
+      const correctChar = ownCandidates[Math.floor(Math.random() * ownCandidates.length)];
+      const correctEntry = findKanjiEntry(correctChar);
+      const example = findExampleVocab(correctChar);
+      if (!example) return null;
+      const sentence = `${example.vocabulary}があります。`;
+      const wrongPool = allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol).flatMap((r2) => r2.kanjiList).filter((k2) => k2 !== correctChar && findKanjiEntry(k2));
+      const wrongChars = shuffle(wrongPool).slice(0, 3);
+      if (wrongChars.length < 3) return null;
+      const choices = shuffle([
+        { char: example.vocabulary, isCorrect: true, entry: correctEntry },
+        ...wrongChars.map((c2) => {
+          const ex = findExampleVocab(c2);
+          return {
+            char: (ex == null ? void 0 : ex.vocabulary) ?? c2,
+            isCorrect: false,
+            entry: findKanjiEntry(c2)
+          };
+        })
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 6,
+        type: "sentence",
+        correctChar: example.vocabulary,
+        correctEntry,
+        choices,
+        sentence,
+        instruction: `Kalimat berikut mengandung radikal ${symbol} (${radical.meaning}). Kata mana yang menggunakan radikal tersebut?`
+      };
+    }
+    case 7: {
+      const ownCandidates = radical.kanjiList.filter((k2) => findKanjiEntry(k2));
+      if (ownCandidates.length === 0) return null;
+      const correctChar = ownCandidates[Math.floor(Math.random() * ownCandidates.length)];
+      const correctEntry = findKanjiEntry(correctChar);
+      const example = findExampleVocab(correctChar);
+      if (!example) return null;
+      const passage = READING_PASSAGES.length > 0 ? READING_PASSAGES[Math.floor(Math.random() * READING_PASSAGES.length)].sentences.join(" ") : `${example.vocabulary}はとても大切です。`;
+      const wrongPool = allRadicals.filter((r2) => getRadicalSymbol(r2) !== symbol).flatMap((r2) => r2.kanjiList).filter((k2) => k2 !== correctChar && findKanjiEntry(k2));
+      const wrongChars = shuffle(wrongPool).slice(0, 3);
+      if (wrongChars.length < 3) return null;
+      const choices = shuffle([
+        { char: example.vocabulary, isCorrect: true, entry: correctEntry },
+        ...wrongChars.map((c2) => {
+          const ex = findExampleVocab(c2);
+          return {
+            char: (ex == null ? void 0 : ex.vocabulary) ?? c2,
+            isCorrect: false,
+            entry: findKanjiEntry(c2)
+          };
+        })
+      ]);
+      return {
+        radical,
+        symbol,
+        level: 7,
+        type: "sentence",
+        correctChar: example.vocabulary,
+        correctEntry,
+        choices,
+        sentence: passage,
+        instruction: `Baca paragraf berikut. Kata mana yang mengandung radikal ${symbol} (${radical.meaning})?`
+      };
+    }
+    default:
+      return null;
+  }
+}
+function ChoiceButton({
+  label,
+  char,
+  state,
+  onClick,
+  disabled,
+  index: index2
+}) {
+  const letters = ["A", "B", "C", "D"];
+  let bg = "bg-gray-800 hover:bg-gray-700 border-gray-600";
+  if (state === "correct") bg = "bg-emerald-800 border-emerald-500";
+  if (state === "wrong") bg = "bg-red-900 border-red-500";
+  if (state === "reveal") bg = "bg-emerald-900/60 border-emerald-600";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "button",
+    {
+      type: "button",
+      onClick,
+      disabled,
+      "data-ocid": `radical_quiz.choice.${index2 + 1}`,
+      className: `flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0", children: letters[index2] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-3xl font-bold text-white leading-none", children: char }),
+        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300", children: label })
+      ]
+    }
+  );
+}
+function MultiChoiceButton({
+  label,
+  char,
+  state,
+  onClick,
+  disabled,
+  index: index2,
+  selected
+}) {
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let bg = "bg-gray-800 hover:bg-gray-700 border-gray-600";
+  if (state === "correct") bg = "bg-emerald-800 border-emerald-500";
+  if (state === "wrong") bg = "bg-red-900 border-red-500";
+  if (state === "reveal") bg = "bg-emerald-900/60 border-emerald-600";
+  if (selected && state === "idle") bg = "bg-cyan-900/40 border-cyan-500";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "button",
+    {
+      type: "button",
+      onClick,
+      disabled,
+      "data-ocid": `radical_quiz.multi_choice.${index2 + 1}`,
+      className: `flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-left transition-all duration-200 ${bg} ${disabled ? "cursor-default" : "cursor-pointer"}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300 shrink-0", children: letters[index2] ?? index2 + 1 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl font-bold text-white leading-none", children: char }),
+        state !== "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-sm text-gray-300", children: label }),
+        selected && state === "idle" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-xs text-cyan-400", children: "✓ Dipilih" })
+      ]
+    }
+  );
+}
+function ResultPanel({
+  question,
+  wasCorrect,
+  onViewRadical,
+  onNext,
+  isLast
+}) {
+  var _a2;
+  const { radical, symbol } = question;
+  const correctChar = question.type === "multi" ? question.correctChars[0] : question.correctChar;
+  const correctEntry = question.type === "multi" ? ((_a2 = question.allOptions.find((o) => o.isCorrect)) == null ? void 0 : _a2.entry) ?? question.allOptions[0].entry : question.correctEntry;
+  const example = findExampleVocab(correctChar);
+  const reading = correctEntry.romaji ?? "";
+  const kanjiMeaning = correctEntry.meaning;
+  const radicalMeaning = radical.meaning;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4 animate-in fade-in duration-300", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: `flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg ${wasCorrect ? "bg-emerald-900/60 text-emerald-300" : "bg-red-900/60 text-red-300"}`,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: wasCorrect ? "✅ Benar!" : "❌ Kurang tepat" })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-xl p-5 text-center space-y-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-6xl font-bold text-white leading-none mb-2", children: correctChar }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-cyan-400 text-lg font-medium", children: reading }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-gray-300 text-base", children: kanjiMeaning })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800/80 rounded-xl p-4 space-y-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400", children: "Penjelasan Radikal" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-4xl leading-none text-cyan-300 mt-1", children: symbol }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-200", children: [
+            "Radikal ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-cyan-300", children: symbol }),
+            " ",
+            "berarti",
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: radicalMeaning }),
+            "."
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-200", children: [
+            "Kanji ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: correctChar }),
+            " ",
+            "berarti",
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-white", children: kanjiMeaning }),
+            "."
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-300", children: [
+            "Karena ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: kanjiMeaning }),
+            " berhubungan dengan",
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "italic", children: radicalMeaning.toLowerCase() }),
+            ", kanji ini menggunakan radikal",
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-cyan-300", children: symbol }),
+            "."
+          ] })
+        ] })
+      ] })
+    ] }),
+    example && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800/60 rounded-xl p-4 space-y-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold uppercase tracking-wide text-gray-400", children: "Contoh Penggunaan" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-white", children: example.vocabulary.split("").map((ch, i) => {
+        const k2 = `char-${i}`;
+        return ch === correctChar ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "mark",
+          {
+            className: "bg-cyan-500/30 text-cyan-200 px-0.5 rounded not-italic",
+            children: ch
+          },
+          k2
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: ch }, k2);
+      }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: example.romaji }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-300", children: example.meaning })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          "data-ocid": "radical_quiz.view_radical_button",
+          onClick: () => onViewRadical(radical.name),
+          className: "flex-1 px-4 py-2.5 rounded-xl border border-cyan-600 text-cyan-300 text-sm font-medium hover:bg-cyan-900/40 transition-colors",
+          children: "Lihat Radikal"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          "data-ocid": "radical_quiz.next_button",
+          onClick: onNext,
+          className: "flex-1 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold transition-colors",
+          children: isLast ? "Lihat Hasil" : "Lanjut"
+        }
+      )
+    ] })
+  ] });
+}
+function QuizQuestion({
+  question,
+  questionIndex,
+  totalQuestions,
+  onAnswer,
+  onViewRadical,
+  onNext,
+  isLast
+}) {
+  const [answered, setAnswered] = reactExports.useState(null);
+  const [selectedIndex, setSelectedIndex] = reactExports.useState(null);
+  const [selectedMulti, setSelectedMulti] = reactExports.useState(/* @__PURE__ */ new Set());
+  const handleChoice = reactExports.useCallback(
+    (idx, isCorrect) => {
+      if (answered !== null) return;
+      setSelectedIndex(idx);
+      setAnswered(isCorrect);
+      onAnswer(isCorrect);
+      if (isCorrect) {
+        recordRadicalCorrect(question.radical.name);
+      } else {
+        recordRadicalWrong(question.radical.name);
+      }
+    },
+    [answered, onAnswer, question.radical.name]
+  );
+  const handleMultiToggle = reactExports.useCallback((idx) => {
+    setSelectedMulti((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
+      return next;
+    });
+  }, []);
+  const handleMultiSubmit = reactExports.useCallback(() => {
+    if (answered !== null) return;
+    if (question.type !== "multi") return;
+    const correctIndices = new Set(
+      question.allOptions.map((opt, idx) => opt.isCorrect ? idx : -1).filter((i) => i !== -1)
+    );
+    const isCorrect = selectedMulti.size === correctIndices.size && [...selectedMulti].every((i) => correctIndices.has(i));
+    setAnswered(isCorrect);
+    onAnswer(isCorrect);
+    if (isCorrect) {
+      recordRadicalCorrect(question.radical.name);
+    } else {
+      recordRadicalWrong(question.radical.name);
+    }
+  }, [answered, onAnswer, question, selectedMulti]);
+  const getChoiceState = (idx, isCorrect) => {
+    if (answered === null) return "idle";
+    if (question.type === "multi") {
+      if (isCorrect) return "reveal";
+      if (selectedMulti.has(idx)) return "wrong";
+      return "idle";
+    }
+    if (idx === selectedIndex) return isCorrect ? "correct" : "wrong";
+    if (isCorrect) return "reveal";
+    return "idle";
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-5", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-sm text-gray-400", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { "data-ocid": "radical_quiz.progress", children: [
+        "Soal ",
+        questionIndex + 1,
+        " / ",
+        totalQuestions
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs bg-gray-800 px-2 py-1 rounded-full", children: [
+        "Level ",
+        question.level
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-2xl p-8 text-center space-y-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 uppercase tracking-widest", children: "Radikal" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          "data-ocid": "radical_quiz.radical_symbol",
+          className: "text-8xl font-bold text-cyan-300 leading-none",
+          children: question.symbol
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 text-base mt-2", children: question.radical.meaning }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mt-1", children: question.radical.name })
+    ] }),
+    question.type === "sentence" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800/60 rounded-xl p-4 text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-white leading-relaxed", children: question.sentence }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 text-center", children: question.instruction }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", "data-ocid": "radical_quiz.choices", children: question.type === "multi" ? question.allOptions.map((option, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MultiChoiceButton,
+      {
+        label: option.entry.meaning,
+        char: option.char,
+        state: getChoiceState(idx, option.isCorrect),
+        onClick: () => handleMultiToggle(idx),
+        disabled: answered !== null,
+        index: idx,
+        selected: selectedMulti.has(idx)
+      },
+      `${option.char}-${option.entry.meaning}`
+    )) : question.choices.map((choice, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ChoiceButton,
+      {
+        label: choice.entry.meaning,
+        char: choice.char,
+        state: getChoiceState(idx, choice.isCorrect),
+        onClick: () => handleChoice(idx, choice.isCorrect),
+        disabled: answered !== null,
+        index: idx
+      },
+      `${choice.char}-${choice.entry.meaning}`
+    )) }),
+    question.type === "multi" && answered === null && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        type: "button",
+        "data-ocid": "radical_quiz.submit_button",
+        onClick: handleMultiSubmit,
+        disabled: selectedMulti.size === 0,
+        className: "w-full px-4 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 disabled:bg-gray-700 disabled:text-gray-500 text-white font-semibold transition-colors",
+        children: [
+          "Kirim Jawaban (",
+          selectedMulti.size,
+          " dipilih)"
+        ]
+      }
+    ),
+    answered !== null && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ResultPanel,
+      {
+        question,
+        wasCorrect: answered,
+        onViewRadical,
+        onNext,
+        isLast
+      }
+    )
+  ] });
+}
+function ScoreScreen({ score, total, onRestart }) {
+  const pct = Math.round(score / total * 100);
+  const emoji = pct >= 80 ? "🎉" : pct >= 60 ? "👍" : "📚";
+  const label = pct >= 80 ? "Luar Biasa!" : pct >= 60 ? "Bagus! Terus berlatih." : "Perlu lebih banyak latihan.";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "text-center space-y-6 py-6",
+      "data-ocid": "radical_quiz.score_screen",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-6xl", children: emoji }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-4xl font-bold text-white", children: [
+            score,
+            " / ",
+            total
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-lg text-cyan-400 mt-1", children: [
+            pct,
+            "% Benar"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 mt-2", children: label })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "radical_quiz.restart_button",
+            onClick: onRestart,
+            className: "px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold transition-colors",
+            children: "Main Lagi"
+          }
+        )
+      ]
+    }
+  );
+}
+const LEVEL_LABELS = {
+  1: "Radikal → Kanji",
+  2: "Kanji → Radikal",
+  3: "Radikal → Kosakata",
+  4: "Cari yang Berbeda",
+  5: "Kosakata Sama Radikal",
+  6: "Konteks Kalimat",
+  7: "Bacaan Dokkai"
+};
+function RadicalGuidedQuiz({
+  onViewRadical,
+  sessionLength = 5
+}) {
+  const [currentLevel, setCurrentLevel] = reactExports.useState(1);
+  const buildSession = reactExports.useCallback(
+    (level) => {
+      const usableRadicals = radicalData.filter((r2) => r2.kanjiList.length > 0);
+      const shuffled = shuffle(usableRadicals).slice(0, sessionLength);
+      return shuffled.map((r2) => buildQuestion(r2, radicalData, level)).filter((q2) => q2 !== null).slice(0, sessionLength);
+    },
+    [sessionLength]
+  );
+  const [questions, setQuestions] = reactExports.useState(() => buildSession(1));
+  const [currentIdx, setCurrentIdx] = reactExports.useState(0);
+  const [score, setScore] = reactExports.useState(0);
+  const [finished, setFinished] = reactExports.useState(false);
+  reactExports.useMemo(() => {
+    if (questions[currentIdx]) {
+      recordRadicalSeen(questions[currentIdx].radical.name);
+    }
+  }, [currentIdx, questions]);
+  const handleAnswer = reactExports.useCallback((correct) => {
+    if (correct) setScore((s) => s + 1);
+  }, []);
+  const handleNext = reactExports.useCallback(() => {
+    if (currentIdx + 1 >= questions.length) {
+      setFinished(true);
+    } else {
+      setCurrentIdx((i) => i + 1);
+    }
+  }, [currentIdx, questions.length]);
+  const handleRestart = reactExports.useCallback(() => {
+    setQuestions(buildSession(currentLevel));
+    setCurrentIdx(0);
+    setScore(0);
+    setFinished(false);
+  }, [buildSession, currentLevel]);
+  const handleLevelChange = reactExports.useCallback(
+    (level) => {
+      setCurrentLevel(level);
+      setQuestions(buildSession(level));
+      setCurrentIdx(0);
+      setScore(0);
+      setFinished(false);
+    },
+    [buildSession]
+  );
+  if (questions.length === 0) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "text-center py-12 text-gray-400",
+        "data-ocid": "radical_quiz.empty_state",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg", children: "Data radikal belum tersedia." })
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "bg-gray-900 rounded-2xl p-5 max-w-md mx-auto space-y-4",
+      "data-ocid": "radical_quiz.panel",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-bold text-white", children: LEVEL_LABELS[currentLevel] }),
+          !finished && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-cyan-400 font-medium", children: [
+            "Skor: ",
+            score,
+            "/",
+            currentIdx
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-7 gap-1", children: [1, 2, 3, 4, 5, 6, 7].map((level) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            "data-ocid": `radical_quiz.level_${level}_button`,
+            onClick: () => handleLevelChange(level),
+            className: `px-2 py-1.5 rounded-lg text-xs font-medium transition-colors ${currentLevel === level ? "bg-cyan-600 text-white" : "bg-gray-800 text-gray-400 hover:bg-gray-700"}`,
+            title: LEVEL_LABELS[level],
+            children: [
+              "L",
+              level
+            ]
+          },
+          level
+        )) }),
+        finished ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ScoreScreen,
+          {
+            score,
+            total: questions.length,
+            onRestart: handleRestart
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+          QuizQuestion,
+          {
+            question: questions[currentIdx],
+            questionIndex: currentIdx,
+            totalQuestions: questions.length,
+            onAnswer: handleAnswer,
+            onViewRadical,
+            onNext: handleNext,
+            isLast: currentIdx + 1 >= questions.length
+          }
+        )
+      ]
+    }
+  );
 }
 function clamp$1(value, [min2, max2]) {
   return Math.min(max2, Math.max(min2, value));
@@ -57025,6 +61085,13 @@ function VocabPopover({ word, children }) {
     clickCountRef.current += 1;
     updateWordLookup(word);
     if (entry) updateKanjiAnalytics(word);
+    const kanjiChars = word.match(/[\u4e00-\u9fff]/g) ?? [];
+    for (const ch of kanjiChars) {
+      try {
+        recordKanjiLookup(ch);
+      } catch (_e2) {
+      }
+    }
     if (clickCountRef.current === 1) {
       setPopoverOpen(true);
     } else {
@@ -57712,8 +61779,14 @@ function BacaanAdaptif() {
     setLoading(true);
     const weakEntries = getWeakReadingVocabulary(3);
     const weakWords = weakEntries.map((e) => e.vocabulary);
-    setWeakWordCount(weakWords.length);
-    const p2 = getAdaptivePassage(weakWords, seenIds);
+    const kanjiTracking = loadKanjiTracking();
+    const weakKanjiList = getWeakKanji(kanjiTracking).map((r2) => r2.kanjiId);
+    const kanjiWeakVocab = vocabularyData.filter(
+      (v2) => weakKanjiList.some((k2) => (v2.vocabulary ?? "").includes(k2))
+    ).map((v2) => v2.vocabulary ?? "");
+    const mergedWeak = [.../* @__PURE__ */ new Set([...weakWords, ...kanjiWeakVocab])];
+    setWeakWordCount(mergedWeak.length);
+    const p2 = getAdaptivePassage(mergedWeak, seenIds);
     if (p2) {
       setPassage(p2);
       setSessionStartTime(/* @__PURE__ */ new Date());
@@ -57741,7 +61814,13 @@ function BacaanAdaptif() {
   const handleNext = () => {
     const weakEntries = getWeakReadingVocabulary(3);
     const weakWords = weakEntries.map((e) => e.vocabulary);
-    const p2 = getAdaptivePassage(weakWords, seenIds);
+    const kanjiTracking = loadKanjiTracking();
+    const weakKanjiList = getWeakKanji(kanjiTracking).map((r2) => r2.kanjiId);
+    const kanjiWeakVocab = vocabularyData.filter(
+      (v2) => weakKanjiList.some((k2) => (v2.vocabulary ?? "").includes(k2))
+    ).map((v2) => v2.vocabulary ?? "");
+    const mergedWeak = [.../* @__PURE__ */ new Set([...weakWords, ...kanjiWeakVocab])];
+    const p2 = getAdaptivePassage(mergedWeak, seenIds);
     if (p2) {
       setPassage(p2);
       setSessionStartTime(/* @__PURE__ */ new Date());
@@ -60159,6 +64238,7 @@ function VocabularyList({
   ] });
 }
 function App() {
+  const [activeTab, setActiveTab] = reactExports.useState("kanji");
   const [searchTerm, setSearchTerm] = reactExports.useState("");
   const [selectedJlptLevel, setSelectedJlptLevel] = reactExports.useState(
     null
@@ -60174,28 +64254,18 @@ function App() {
   };
   const handleRadicalSelect = (radical) => {
     setSelectedRadical(radical);
-    const kanjiTab = document.querySelector(
-      '[value="kanji"]'
-    );
-    if (kanjiTab) {
-      kanjiTab.click();
-    }
+    setActiveTab("kanji");
   };
   const handleRadicalSelectForVocab = (radical) => {
     setSelectedRadical(radical);
-    const vocabTab = document.querySelector(
-      '[value="vocabulary"]'
-    );
-    if (vocabTab) {
-      vocabTab.click();
-    }
+    setActiveTab("vocabulary");
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen flex flex-col bg-background", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Header, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "flex-1 container mx-auto px-4 py-8 max-w-7xl", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-8", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-4xl md:text-5xl font-bold text-center mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent", children: "Belajar Kanji JLPT N4 & N5" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-center text-muted-foreground text-lg mb-4", children: "Pelajari kanji dan kosakata Jepang dengan mudah dan menyenangkan - Mode Offline Penuh" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-4xl md:text-5xl font-bold text-center mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent font-display", children: "Kan-Ji-Kan" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-center text-muted-foreground text-lg mb-4", children: "Kuasai Kanji & Kosakata JLPT N4 — Mode Offline Penuh" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-2 flex-wrap", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Badge, { variant: "outline", className: "text-sm", children: [
             stats.totalKanji,
@@ -60220,14 +64290,27 @@ function App() {
           ] }, level))
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Tabs, { defaultValue: "kanji", className: "w-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsList, { className: "grid w-full max-w-4xl mx-auto grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 h-auto p-2 mb-8", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Tabs, { value: activeTab, onValueChange: setActiveTab, className: "w-full", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsList, { className: "grid w-full max-w-4xl mx-auto grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-2 h-auto p-2 mb-8", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "kanji-quiz", className: "text-base py-3 px-4", children: "Kanji Quiz" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "radical-quiz", className: "text-base py-3 px-4", children: "Radical Quiz" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "kanji", className: "text-base py-3 px-4", children: "Daftar Kanji" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "vocabulary", className: "text-base py-3 px-4", children: "Daftar Kosakata" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "radicals", className: "text-base py-3 px-4", children: "Info Radikal" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "reading", className: "text-base py-3 px-4", children: "Membaca" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "quiz", className: "text-base py-3 px-4", children: "Quiz" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "backup", className: "text-base py-3 px-4", children: "Backup Data" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "backup", className: "text-base py-3 px-4", children: "Backup Data" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            TabsTrigger,
+            {
+              value: "dashboard",
+              className: "text-base py-3 px-4 flex items-center gap-1.5",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ChartNoAxesColumn, { className: "h-4 w-4" }),
+                "Dashboard"
+              ]
+            }
+          )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "kanji", className: "space-y-6", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -60289,7 +64372,16 @@ function App() {
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "reading", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ReadingSection, {}) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(QuizSection, {}) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "backup", children: /* @__PURE__ */ jsxRuntimeExports.jsx(BackupManager, {}) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "backup", children: /* @__PURE__ */ jsxRuntimeExports.jsx(BackupManager, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "dashboard", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          KanjiDashboard,
+          {
+            onQuizKanji: () => setActiveTab("kanji-quiz"),
+            onQuizRadical: () => setActiveTab("radical-quiz")
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "kanji-quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(KanjiQuizSection, { onClose: () => setActiveTab("kanji") }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "radical-quiz", children: /* @__PURE__ */ jsxRuntimeExports.jsx(RadicalGuidedQuiz, { onViewRadical: () => setActiveTab("radicals") }) })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {})

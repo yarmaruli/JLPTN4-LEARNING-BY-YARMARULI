@@ -10,7 +10,141 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE {}
+export interface AdaptiveQuizRatio {
+  'kanjiPercent' : bigint,
+  'vocabularyPercent' : bigint,
+  'radicalPercent' : bigint,
+}
+export interface AdaptiveQuizSessionPublic {
+  'completedAt' : [] | [bigint],
+  'totalQuestions' : bigint,
+  'correctAnswers' : bigint,
+  'sessionId' : string,
+  'ratio' : AdaptiveQuizRatio,
+}
+export interface KanjiDashboardStats {
+  'total' : bigint,
+  'intermediate' : bigint,
+  'strongItems' : Array<WeakItem>,
+  'mastered' : bigint,
+  'learning' : bigint,
+  'weakItems' : Array<WeakItem>,
+  'highFrequency' : bigint,
+  'untouched' : bigint,
+}
+export interface KanjiMasteryPublic {
+  'status' : MasteryStatus,
+  'wrongCount' : bigint,
+  'lastCorrect' : bigint,
+  'lastWrong' : bigint,
+  'masteryLevel' : bigint,
+  'seenCount' : bigint,
+  'correctCount' : bigint,
+  'lookupCount' : bigint,
+  'kanjiId' : string,
+  'lastSeen' : bigint,
+}
+export type MasteryStatus = { 'Learning' : null } |
+  { 'Untouched' : null } |
+  { 'Intermediate' : null } |
+  { 'Mastered' : null };
+export interface RadicalDashboardStats {
+  'total' : bigint,
+  'intermediate' : bigint,
+  'mastered' : bigint,
+  'learning' : bigint,
+  'weakItems' : Array<WeakItem>,
+  'untouched' : bigint,
+}
+export interface RadicalMasteryPublic {
+  'status' : MasteryStatus,
+  'wrongCount' : bigint,
+  'radicalId' : string,
+  'masteryLevel' : bigint,
+  'seenCount' : bigint,
+  'correctCount' : bigint,
+  'lastSeen' : bigint,
+}
+export interface ReadingSessionPublic {
+  'kanjiFailures' : Array<string>,
+  'wordsLookedUp' : Array<string>,
+  'score' : bigint,
+  'durationSeconds' : bigint,
+  'timestamp' : bigint,
+  'sessionId' : string,
+  'unknownWords' : Array<string>,
+}
+export interface ScoreSummary {
+  'overallN4ReadinessScore' : bigint,
+  'kanjiScore' : bigint,
+  'vocabularyScore' : bigint,
+  'radicalScore' : bigint,
+  'readingScore' : bigint,
+}
+export interface VocabDashboardStats {
+  'total' : bigint,
+  'intermediate' : bigint,
+  'strongItems' : Array<WeakItem>,
+  'mastered' : bigint,
+  'learning' : bigint,
+  'weakItems' : Array<WeakItem>,
+  'highFrequency' : bigint,
+  'untouched' : bigint,
+}
+export interface VocabMasteryPublic {
+  'status' : MasteryStatus,
+  'wrongCount' : bigint,
+  'lastCorrect' : bigint,
+  'lastWrong' : bigint,
+  'masteryLevel' : bigint,
+  'seenCount' : bigint,
+  'correctCount' : bigint,
+  'lookupCount' : bigint,
+  'vocabId' : string,
+  'lastSeen' : bigint,
+}
+export interface WeakItem {
+  'itemId' : string,
+  'wrongCount' : bigint,
+  'masteryLevel' : bigint,
+  'itemType' : string,
+  'correctCount' : bigint,
+  'accuracy' : bigint,
+}
+export interface _SERVICE {
+  'completeAdaptiveSession' : ActorMethod<[string, bigint, bigint], undefined>,
+  'getKanjiDashboard' : ActorMethod<[], KanjiDashboardStats>,
+  'getKanjiMastery' : ActorMethod<[string], [] | [KanjiMasteryPublic]>,
+  'getRadicalDashboard' : ActorMethod<[], RadicalDashboardStats>,
+  'getRadicalMastery' : ActorMethod<[string], [] | [RadicalMasteryPublic]>,
+  'getScoreSummary' : ActorMethod<[], ScoreSummary>,
+  'getVocabDashboard' : ActorMethod<[], VocabDashboardStats>,
+  'getVocabMastery' : ActorMethod<[string], [] | [VocabMasteryPublic]>,
+  'getWeakKanji' : ActorMethod<[bigint], Array<WeakItem>>,
+  'getWeakRadicals' : ActorMethod<[bigint], Array<WeakItem>>,
+  'getWeakVocab' : ActorMethod<[bigint], Array<WeakItem>>,
+  'listKanjiMastery' : ActorMethod<[bigint, bigint], Array<KanjiMasteryPublic>>,
+  'listReadingSessions' : ActorMethod<[bigint], Array<ReadingSessionPublic>>,
+  'saveReadingSession' : ActorMethod<
+    [string, bigint, bigint, Array<string>, Array<string>, Array<string>],
+    undefined
+  >,
+  'startAdaptiveSession' : ActorMethod<
+    [string, bigint, bigint, bigint],
+    AdaptiveQuizSessionPublic
+  >,
+  'trackKanjiCorrect' : ActorMethod<[string], undefined>,
+  'trackKanjiLookup' : ActorMethod<[string], undefined>,
+  'trackKanjiSeen' : ActorMethod<[string], undefined>,
+  'trackKanjiWrong' : ActorMethod<[string], undefined>,
+  'trackRadicalCorrect' : ActorMethod<[string], undefined>,
+  'trackRadicalSeen' : ActorMethod<[string], undefined>,
+  'trackRadicalWrong' : ActorMethod<[string], undefined>,
+  'trackVocabCorrect' : ActorMethod<[string], undefined>,
+  'trackVocabLookup' : ActorMethod<[string], undefined>,
+  'trackVocabSeen' : ActorMethod<[string], undefined>,
+  'trackVocabWrong' : ActorMethod<[string], undefined>,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { vocabularyData } from "@/data/kanjiData";
+import { getWeakKanji, loadKanjiTracking } from "@/lib/masteryEngine";
 import {
   calculateCoverage,
   getAdaptivePassage,
@@ -552,8 +553,16 @@ function BacaanAdaptif() {
     setLoading(true);
     const weakEntries = getWeakReadingVocabulary(3);
     const weakWords = weakEntries.map((e) => e.vocabulary);
-    setWeakWordCount(weakWords.length);
-    const p = getAdaptivePassage(weakWords, seenIds);
+    const kanjiTracking = loadKanjiTracking();
+    const weakKanjiList = getWeakKanji(kanjiTracking).map((r) => r.kanjiId);
+    const kanjiWeakVocab = vocabularyData
+      .filter((v) =>
+        weakKanjiList.some((k) => (v.vocabulary ?? "").includes(k)),
+      )
+      .map((v) => v.vocabulary ?? "");
+    const mergedWeak = [...new Set([...weakWords, ...kanjiWeakVocab])];
+    setWeakWordCount(mergedWeak.length);
+    const p = getAdaptivePassage(mergedWeak, seenIds);
     if (p) {
       setPassage(p);
       setSessionStartTime(new Date());
@@ -583,7 +592,15 @@ function BacaanAdaptif() {
   const handleNext = () => {
     const weakEntries = getWeakReadingVocabulary(3);
     const weakWords = weakEntries.map((e) => e.vocabulary);
-    const p = getAdaptivePassage(weakWords, seenIds);
+    const kanjiTracking = loadKanjiTracking();
+    const weakKanjiList = getWeakKanji(kanjiTracking).map((r) => r.kanjiId);
+    const kanjiWeakVocab = vocabularyData
+      .filter((v) =>
+        weakKanjiList.some((k) => (v.vocabulary ?? "").includes(k)),
+      )
+      .map((v) => v.vocabulary ?? "");
+    const mergedWeak = [...new Set([...weakWords, ...kanjiWeakVocab])];
+    const p = getAdaptivePassage(mergedWeak, seenIds);
     if (p) {
       setPassage(p);
       setSessionStartTime(new Date());
@@ -594,6 +611,7 @@ function BacaanAdaptif() {
       setSeenIds([]);
       handleStart();
     }
+    // (mergedWeak used via handleStart fallback path)
   };
 
   const handleReset = () => {

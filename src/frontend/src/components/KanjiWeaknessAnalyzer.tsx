@@ -7,8 +7,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { kanjiData, vocabularyData } from "@/data/kanjiData";
+import { kanjiData, radicalData, vocabularyData } from "@/data/kanjiData";
 import type { KanjiEntry, VocabularyEntry } from "@/data/kanjiData";
+import {
+  type RadicalMasteryRecord,
+  getWeakRadicals,
+  loadRadicalTracking,
+} from "@/lib/masteryEngine";
 import type { MasteryData } from "@/lib/masteryEngine";
 import type { KanjiStatEntry } from "@/lib/readingEngine";
 import { BookOpen, ChevronDown, Dumbbell, Eye, TrendingUp } from "lucide-react";
@@ -74,8 +79,18 @@ function extractKanjiFromWord(word: string): string[] {
 
 export function KanjiWeaknessAnalyzer() {
   const [isOpen, setIsOpen] = useState(true);
+  const [activeAnalyzerTab, setActiveAnalyzerTab] = useState<
+    "kanji" | "radikal"
+  >("kanji");
 
-  const { topLookups, weakKanji, hasData } = useMemo(() => {
+  const {
+    topLookups,
+    weakKanji,
+    hasData,
+    weakRadicals,
+    strongRadicals,
+    radicalTracking,
+  } = useMemo(() => {
     const stats = loadKanjiStats();
     const mastery = loadMasteryData();
 
@@ -167,7 +182,21 @@ export function KanjiWeaknessAnalyzer() {
 
     const hasData = lookupEntries.length > 0 || weakList.length > 0;
 
-    return { topLookups: lookupEntries, weakKanji: weakList, hasData };
+    // Radical tracking
+    const radicalTracking = loadRadicalTracking();
+    const weakRadicals = getWeakRadicals(radicalTracking);
+    const strongRadicals = Object.values(radicalTracking).filter(
+      (r) => r.masteryLevel >= 4,
+    );
+
+    return {
+      topLookups: lookupEntries,
+      weakKanji: weakList,
+      hasData,
+      weakRadicals,
+      strongRadicals,
+      radicalTracking,
+    };
   }, []);
 
   const handlePractice = (character: string) => {
@@ -184,7 +213,7 @@ export function KanjiWeaknessAnalyzer() {
     }
   };
 
-  if (!hasData) {
+  if (!hasData && Object.keys(radicalTracking).length === 0) {
     return (
       <Alert
         className="max-w-3xl mx-auto mt-8"
@@ -214,7 +243,7 @@ export function KanjiWeaknessAnalyzer() {
         >
           <span className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-primary" />
-            Analisis Kanji Lemah
+            Analisis Kelemahan
           </span>
           <ChevronDown
             className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -223,8 +252,29 @@ export function KanjiWeaknessAnalyzer() {
       </CollapsibleTrigger>
 
       <CollapsibleContent className="space-y-8">
-        {/* Top Lookups */}
-        {topLookups.length > 0 && (
+        {/* Tab toggle: Kanji / Radikal */}
+        <div className="flex gap-2 max-w-3xl mx-auto">
+          <Button
+            type="button"
+            size="sm"
+            variant={activeAnalyzerTab === "kanji" ? "default" : "outline"}
+            onClick={() => setActiveAnalyzerTab("kanji")}
+            data-ocid="kanji.weakness.tab.kanji"
+          >
+            Kanji
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant={activeAnalyzerTab === "radikal" ? "default" : "outline"}
+            onClick={() => setActiveAnalyzerTab("radikal")}
+            data-ocid="kanji.weakness.tab.radikal"
+          >
+            Radikal
+          </Button>
+        </div>
+        {/* ===== KANJI TAB ===== */}
+        {activeAnalyzerTab === "kanji" && topLookups.length > 0 && (
           <section data-ocid="kanji.weakness.top_lookups.section">
             <div className="flex items-center gap-2 mb-4">
               <Eye className="h-5 w-5 text-primary" />
@@ -278,7 +328,7 @@ export function KanjiWeaknessAnalyzer() {
         )}
 
         {/* Weak Kanji */}
-        {weakKanji.length > 0 && (
+        {activeAnalyzerTab === "kanji" && weakKanji.length > 0 && (
           <section data-ocid="kanji.weakness.weak_kanji.section">
             <div className="flex items-center gap-2 mb-4">
               <Dumbbell className="h-5 w-5 text-destructive" />
@@ -353,6 +403,181 @@ export function KanjiWeaknessAnalyzer() {
               ))}
             </div>
           </section>
+        )}
+        {/* ===== RADIKAL TAB ===== */}
+        {activeAnalyzerTab === "radikal" && (
+          <div className="space-y-8" data-ocid="kanji.weakness.radikal.section">
+            {/* Weak radicals */}
+            {weakRadicals.length === 0 &&
+            strongRadicals.length === 0 &&
+            Object.keys(radicalTracking).length === 0 ? (
+              <Alert data-ocid="kanji.weakness.radikal.empty_state">
+                <BookOpen className="h-5 w-5" />
+                <AlertDescription className="ml-2">
+                  Belum ada data radikal. Kerjakan quiz radikal untuk melihat
+                  analisis di sini.
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <>
+                {weakRadicals.length > 0 && (
+                  <section data-ocid="kanji.weakness.radikal.weak.section">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Dumbbell className="h-5 w-5 text-destructive" />
+                      <h2 className="text-xl font-bold">Radikal Lemah</h2>
+                      <Badge variant="secondary">{weakRadicals.length}</Badge>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {weakRadicals.map(
+                        (r: RadicalMasteryRecord, idx: number) => {
+                          const info = radicalData.find(
+                            (rd) => rd.name === r.radicalId,
+                          );
+                          return (
+                            <Card
+                              key={r.radicalId}
+                              className="hover:shadow-md transition-shadow border-destructive/30"
+                              data-ocid={`kanji.weakness.radikal.weak.item.${idx + 1}`}
+                            >
+                              <CardHeader className="pb-3">
+                                <div className="flex items-center justify-between">
+                                  <CardTitle className="text-4xl font-bold text-destructive">
+                                    {info?.name?.split(" ")[0] ?? r.radicalId}
+                                  </CardTitle>
+                                  <Badge
+                                    variant="destructive"
+                                    className="text-xs"
+                                  >
+                                    {r.status}
+                                  </Badge>
+                                </div>
+                              </CardHeader>
+                              <CardContent className="space-y-2">
+                                <p className="text-sm font-medium">
+                                  {info?.meaning ?? "-"}
+                                </p>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                  <span className="text-destructive font-medium">
+                                    {r.wrongCount} salah
+                                  </span>
+                                  <span className="text-green-600 font-medium">
+                                    {r.correctCount} benar
+                                  </span>
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  Mastery {r.masteryLevel}/5
+                                </div>
+                              </CardContent>
+                            </Card>
+                          );
+                        },
+                      )}
+                    </div>
+                  </section>
+                )}
+
+                {strongRadicals.length > 0 && (
+                  <section data-ocid="kanji.weakness.radikal.strong.section">
+                    <div className="flex items-center gap-2 mb-4">
+                      <TrendingUp className="h-5 w-5 text-primary" />
+                      <h2 className="text-xl font-bold">Radikal Dikuasai</h2>
+                      <Badge variant="secondary">{strongRadicals.length}</Badge>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {strongRadicals.map(
+                        (r: RadicalMasteryRecord, idx: number) => {
+                          const info = radicalData.find(
+                            (rd) => rd.name === r.radicalId,
+                          );
+                          return (
+                            <Card
+                              key={r.radicalId}
+                              className="hover:shadow-md transition-shadow border-primary/30"
+                              data-ocid={`kanji.weakness.radikal.strong.item.${idx + 1}`}
+                            >
+                              <CardHeader className="pb-3">
+                                <div className="flex items-center justify-between">
+                                  <CardTitle className="text-4xl font-bold text-primary">
+                                    {info?.name?.split(" ")[0] ?? r.radicalId}
+                                  </CardTitle>
+                                  <Badge className="text-xs">{r.status}</Badge>
+                                </div>
+                              </CardHeader>
+                              <CardContent className="space-y-2">
+                                <p className="text-sm font-medium">
+                                  {info?.meaning ?? "-"}
+                                </p>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                  <span className="text-green-600 font-medium">
+                                    {r.correctCount} benar
+                                  </span>
+                                  <span>Mastery {r.masteryLevel}/5</span>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          );
+                        },
+                      )}
+                    </div>
+                  </section>
+                )}
+
+                {/* All tracked radicals if no weak/strong yet */}
+                {weakRadicals.length === 0 &&
+                  strongRadicals.length === 0 &&
+                  Object.keys(radicalTracking).length > 0 && (
+                    <section data-ocid="kanji.weakness.radikal.all.section">
+                      <div className="flex items-center gap-2 mb-4">
+                        <Eye className="h-5 w-5 text-muted-foreground" />
+                        <h2 className="text-xl font-bold">Semua Radikal</h2>
+                        <Badge variant="secondary">
+                          {Object.keys(radicalTracking).length}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {Object.values(radicalTracking).map(
+                          (r: RadicalMasteryRecord, idx: number) => {
+                            const info = radicalData.find(
+                              (rd) => rd.name === r.radicalId,
+                            );
+                            return (
+                              <Card
+                                key={r.radicalId}
+                                className="hover:shadow-md transition-shadow"
+                                data-ocid={`kanji.weakness.radikal.all.item.${idx + 1}`}
+                              >
+                                <CardHeader className="pb-3">
+                                  <div className="flex items-center justify-between">
+                                    <CardTitle className="text-4xl font-bold text-foreground">
+                                      {info?.name?.split(" ")[0] ?? r.radicalId}
+                                    </CardTitle>
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
+                                      {r.status}
+                                    </Badge>
+                                  </div>
+                                </CardHeader>
+                                <CardContent className="space-y-2">
+                                  <p className="text-sm font-medium">
+                                    {info?.meaning ?? "-"}
+                                  </p>
+                                  <div className="flex gap-4 text-sm text-muted-foreground">
+                                    <span>{r.correctCount} benar</span>
+                                    <span>{r.wrongCount} salah</span>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          },
+                        )}
+                      </div>
+                    </section>
+                  )}
+              </>
+            )}
+          </div>
         )}
       </CollapsibleContent>
     </Collapsible>

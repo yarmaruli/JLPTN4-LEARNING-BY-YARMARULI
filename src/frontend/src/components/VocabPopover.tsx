@@ -21,6 +21,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { type VocabularyEntry, vocabularyData } from "@/data/kanjiData";
 import { findExampleSentences } from "@/lib/exampleSentences";
+import { recordKanjiLookup } from "@/lib/masteryEngine";
 import { deInflect } from "@/lib/morphology";
 import { updateKanjiAnalytics, updateWordLookup } from "@/lib/readingEngine";
 import { BookOpen, Flag, HelpCircle, X } from "lucide-react";
@@ -276,6 +277,12 @@ export function VocabPopover({ word, children }: VocabPopoverProps) {
     clickCountRef.current += 1;
     updateWordLookup(word);
     if (entry) updateKanjiAnalytics(word);
+    const kanjiChars = word.match(/[\u4e00-\u9fff]/g) ?? [];
+    for (const ch of kanjiChars) {
+      try {
+        recordKanjiLookup(ch);
+      } catch (_e) {}
+    }
     if (clickCountRef.current === 1) {
       setPopoverOpen(true);
     } else {

@@ -1,24 +1,23 @@
 {
-  "overview": "Offline-first Japanese JLPT N4/N5 learning app with kanji, vocabulary, adaptive quiz, and now Reading practice with smart vocabulary linking.",
+  "overview": "Kan-Ji-Kan is an offline-first Japanese JLPT N4 learning app with adaptive kanji/vocabulary quiz, reading comprehension, and mastery tracking — designed to help Indonesian speakers pass JLPT N4 quickly.",
   "features": [
-    "Learning Reading with 4 progressive levels",
-    "JLPT-format reading practice (posters, schedules, emails, announcements)",
-    "Adaptive Weakness Reading targeting user's weak vocabulary",
-    "Smart Vocabulary Link — click any word for instant definition from 658-entry database",
-    "Reading Analytics tracking score, time, and word lookups",
-    "Integration with adaptive quiz, mastery system, and study plan",
-    "Offline-first — all content generated client-side with no network dependency"
+    "80% N4 / 20% N5 adaptive quiz distribution",
+    "Full quiz explanations with hiragana, romaji, meaning, examples, grammar, and radicals",
+    "Kanji and radical mastery tracking",
+    "Reading comprehension with smart vocabulary linking",
+    "PWA-ready for offline use",
+    "Progress dashboard and weakness analytics"
   ],
   "category": "education",
   "tags": [
     "japanese",
     "jlpt",
     "n4",
-    "n5",
-    "reading",
-    "vocabulary",
     "kanji",
-    "offline"
+    "vocabulary",
+    "pwa",
+    "offline-first",
+    "learning"
   ],
-  "last_updated": "2026-06-04T07:09:06.052Z"
+  "last_updated": "2026-06-05T02:27:21.212Z"
 }

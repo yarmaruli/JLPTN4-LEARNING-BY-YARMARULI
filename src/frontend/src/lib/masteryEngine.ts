@@ -43,6 +43,7 @@ export interface StudyState {
 
 export type QuizMode = "quick" | "study" | "weakness";
 export type DifficultyLevel = "easy" | "normal" | "hard";
+export type JlptLevelMode = "n4focus" | "n5only" | "all";
 
 export interface AdaptiveQuestion {
   id: string;
@@ -65,7 +66,11 @@ export interface AdaptiveQuestion {
 // ============================================================================
 
 const MASTERY_KEY = "masteryData";
+const VOCAB_TRACKING_KEY = "vocabTracking";
+const READING_ANALYTICS_KEY = "readingAnalytics";
 const ANALYTICS_KEY = "learningAnalytics";
+const CONSECUTIVE_N5_KEY = "kanjikan_consecutive_n5";
+const N4_BOOST_REMAINING_KEY = "kanjikan_n4_boost_remaining";
 
 // ============================================================================
 // DEFAULT VALUES
@@ -222,6 +227,216 @@ export function getWeakItems(
 // HELPERS
 // ============================================================================
 
+// ============================================================================
+// WEIGHTED ITEM SELECTION (N4 Priority)
+// ============================================================================
+
+/** 30 high-priority N4 vocabulary words — get 3x extra weight */
+const PRIORITY_N4_WORDS = new Set([
+  "経験",
+  "経済",
+  "経歴",
+  "発表",
+  "説明",
+  "準備",
+  "利用",
+  "連絡",
+  "約束",
+  "確認",
+  "必要",
+  "研究",
+  "運転",
+  "受付",
+  "相談",
+  "卒業",
+  "入学",
+  "旅行",
+  "予定",
+  "特別",
+  "原因",
+  "安全",
+  "交通",
+  "予約",
+  "文化",
+  "生活",
+  "試験",
+  "選ぶ",
+  "続ける",
+  "増える",
+]);
+
+function loadConsecutiveN5(): number {
+  try {
+    const v = localStorage.getItem(CONSECUTIVE_N5_KEY);
+    return v ? Number.parseInt(v, 10) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function saveConsecutiveN5(n: number): void {
+  try {
+    localStorage.setItem(CONSECUTIVE_N5_KEY, String(n));
+  } catch {
+    /* noop */
+  }
+}
+
+function loadN4BoostRemaining(): number {
+  try {
+    const v = sessionStorage.getItem(N4_BOOST_REMAINING_KEY);
+    return v ? Number.parseInt(v, 10) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function saveN4BoostRemaining(n: number): void {
+  try {
+    sessionStorage.setItem(N4_BOOST_REMAINING_KEY, String(Math.max(0, n)));
+  } catch {
+    /* noop */
+  }
+}
+
+/**
+ * Call after each answer to update the consecutive N5 streak and N4 boost.
+ * Returns the updated consecutiveN5 count.
+ */
+export function recordQuizAnswer(jlptLevel: string, isCorrect: boolean): void {
+  try {
+    const isN5 = jlptLevel === "N5";
+    const consecutive = loadConsecutiveN5();
+    const boost = loadN4BoostRemaining();
+
+    if (boost > 0) {
+      // We're in boost mode — decrement on each answer
+      saveN4BoostRemaining(boost - 1);
+      // Reset consecutive counter while boosting
+      saveConsecutiveN5(0);
+      return;
+    }
+
+    if (isN5 && isCorrect) {
+      const next = consecutive + 1;
+      saveConsecutiveN5(next);
+      if (next >= 3) {
+        // Activate boost: next 5 questions all N4
+        saveN4BoostRemaining(5);
+        saveConsecutiveN5(0);
+      }
+    } else {
+      saveConsecutiveN5(0);
+    }
+  } catch {
+    /* noop */
+  }
+}
+
+/**
+ * Weighted selection of quiz items based on JLPT level mode.
+ *
+ * Weights:
+ * - n4focus: N4 items = 4x, N5 items = 1x, priority N4 vocab = additional 3x (total 7x vs 1x)
+ * - n5only:  only N5 items
+ * - all:     equal weight (1x each)
+ *
+ * If N4 boost is active (after 3 consecutive N5 correct), all picks are N4 only.
+ */
+export function selectQuizItems(
+  allKanji: KanjiEntry[],
+  allVocab: VocabularyEntry[],
+  mode: JlptLevelMode,
+  count: number,
+): { kanji: KanjiEntry[]; vocab: VocabularyEntry[] } {
+  try {
+    const boostActive = loadN4BoostRemaining() > 0;
+    const effectiveMode = boostActive ? "n4focus" : mode;
+
+    // Build weighted pools
+    type WeightedKanji = { item: KanjiEntry; weight: number };
+    type WeightedVocab = { item: VocabularyEntry; weight: number };
+
+    const wKanji: WeightedKanji[] = allKanji
+      .filter((k) => {
+        if (effectiveMode === "n5only") return k.jlptLevel === "N5";
+        if (effectiveMode === "n4focus" && boostActive)
+          return k.jlptLevel === "N4";
+        return true;
+      })
+      .map((k) => {
+        let w = 1;
+        if (effectiveMode === "n4focus") {
+          if (k.jlptLevel === "N4") w = 4;
+        }
+        return { item: k, weight: w };
+      });
+
+    const wVocab: WeightedVocab[] = allVocab
+      .filter((v) => {
+        if (effectiveMode === "n5only") return v.jlptLevel === "N5";
+        if (effectiveMode === "n4focus" && boostActive)
+          return v.jlptLevel === "N4";
+        return true;
+      })
+      .map((v) => {
+        let w = 1;
+        if (effectiveMode === "n4focus") {
+          if (v.jlptLevel === "N4") w = 4;
+          if (PRIORITY_N4_WORDS.has(v.vocabulary)) w += 3; // priority boost on top
+        }
+        return { item: v, weight: w };
+      });
+
+    // Expand by weight then shuffle — simple weighted sampling
+    function expandAndShuffle<T>(weighted: { item: T; weight: number }[]): T[] {
+      const expanded: T[] = [];
+      for (const { item, weight } of weighted) {
+        for (let i = 0; i < weight; i++) expanded.push(item);
+      }
+      return shuffle(expanded);
+    }
+
+    const expandedKanji = expandAndShuffle(wKanji);
+    const expandedVocab = expandAndShuffle(wVocab);
+
+    // 55% kanji / 45% vocab split (same as existing session generator)
+    const kanjiCount = Math.round(count * 0.55);
+    const vocabCount = count - kanjiCount;
+
+    // De-duplicate after weighted expansion
+    const seenKanji = new Set<string>();
+    const selectedKanji: KanjiEntry[] = [];
+    for (const k of expandedKanji) {
+      if (!seenKanji.has(k.character)) {
+        seenKanji.add(k.character);
+        selectedKanji.push(k);
+        if (selectedKanji.length >= kanjiCount) break;
+      }
+    }
+
+    const seenVocab = new Set<string>();
+    const selectedVocab: VocabularyEntry[] = [];
+    for (const v of expandedVocab) {
+      if (!seenVocab.has(v.vocabulary)) {
+        seenVocab.add(v.vocabulary);
+        selectedVocab.push(v);
+        if (selectedVocab.length >= vocabCount) break;
+      }
+    }
+
+    return { kanji: selectedKanji, vocab: selectedVocab };
+  } catch (e) {
+    console.warn("[masteryEngine] selectQuizItems failed:", e);
+    // Safe fallback — equal distribution
+    const k = Math.round(count * 0.55);
+    return {
+      kanji: allKanji.slice(0, k),
+      vocab: allVocab.slice(0, count - k),
+    };
+  }
+}
+
 function getItemId(item: KanjiEntry | VocabularyEntry): string {
   if ("character" in item) return `kanji_${item.character}`;
   return `vocab_${item.vocabulary}`;
@@ -238,11 +453,6 @@ function shuffle<T>(arr: T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-function pickRandom<T>(arr: T[], count: number): T[] {
-  if (arr.length <= count) return [...arr];
-  return shuffle(arr).slice(0, count);
 }
 
 /**
@@ -438,6 +648,7 @@ export function generateQuizSession(
   kanjiData: KanjiEntry[],
   vocabularyData: VocabularyEntry[],
   masteryData: MasteryData[],
+  levelMode: JlptLevelMode = "n4focus",
 ): AdaptiveQuestion[] {
   try {
     const safeKanji = Array.isArray(kanjiData) ? kanjiData : [];
@@ -449,9 +660,9 @@ export function generateQuizSession(
 
     const targetCount = mode === "quick" ? 5 : mode === "study" ? 15 : 20;
 
-    // ---------- Determine source items ----------
-    let kanjiPool: KanjiEntry[];
-    let vocabPool: VocabularyEntry[];
+    // ---------- Determine source items via selectQuizItems ----------
+    let selectedKanji: KanjiEntry[];
+    let selectedVocab: VocabularyEntry[];
 
     if (mode === "weakness") {
       const allItems: (KanjiEntry | VocabularyEntry)[] = [
@@ -461,31 +672,31 @@ export function generateQuizSession(
       const weakItems = getWeakItems(allItems, 1);
 
       if (weakItems.length === 0) {
-        // Fall back to quick mode
-        kanjiPool = pickRandom(safeKanji, 3);
-        vocabPool = pickRandom(safeVocab, 2);
+        // Fall back: use selectQuizItems for the fallback pool
+        const selected = selectQuizItems(safeKanji, safeVocab, levelMode, 5);
+        selectedKanji = selected.kanji;
+        selectedVocab = selected.vocab;
       } else {
-        kanjiPool = weakItems.filter(isKanjiEntry) as KanjiEntry[];
-        vocabPool = weakItems.filter(
+        const weakKanji = weakItems.filter(isKanjiEntry) as KanjiEntry[];
+        const weakVocab = weakItems.filter(
           (i) => !isKanjiEntry(i),
         ) as VocabularyEntry[];
+        // Apply level-mode weighting even on weakness pool
+        const kCount = Math.round(targetCount * 0.55);
+        const vCount = targetCount - kCount;
+        selectedKanji = weakKanji.slice(0, kCount);
+        selectedVocab = weakVocab.slice(0, vCount);
       }
     } else {
-      kanjiPool = shuffle(safeKanji);
-      vocabPool = shuffle(safeVocab);
+      const selected = selectQuizItems(
+        safeKanji,
+        safeVocab,
+        levelMode,
+        targetCount,
+      );
+      selectedKanji = selected.kanji;
+      selectedVocab = selected.vocab;
     }
-
-    // ---------- Compute counts ----------
-    // 55% kanji, 45% vocab
-    const kanjiCount = Math.round(targetCount * 0.55);
-    const vocabCount = targetCount - kanjiCount;
-
-    // Clamp to available pool sizes
-    const actualKanjiCount = Math.min(kanjiCount, kanjiPool.length);
-    const actualVocabCount = Math.min(vocabCount, vocabPool.length);
-
-    const selectedKanji = kanjiPool.slice(0, actualKanjiCount);
-    const selectedVocab = vocabPool.slice(0, actualVocabCount);
 
     const questions: AdaptiveQuestion[] = [];
 
@@ -937,5 +1148,579 @@ export function generateHumanReadableReport(
   } catch (e) {
     console.warn("[masteryEngine] generateHumanReadableReport failed:", e);
     return "=== LEARNING REPORT ===\n\nTidak dapat membuat laporan saat ini.\n";
+  }
+}
+
+// ============================================================================
+// KANJI MASTERY TRACKING
+// ============================================================================
+
+export interface VocabularyMasteryRecord {
+  vocabId: string;
+  seenCount: number;
+  correctCount: number;
+  wrongCount: number;
+  lookupCount: number;
+  masteryLevel: number; // 0–5
+  lastSeen: string | null;
+  lastCorrect: string | null;
+  lastWrong: string | null;
+  status: "Belum Tersentuh" | "Sedang Belajar" | "Cukup Paham" | "Dikuasai";
+}
+
+export interface ReadingSessionRecord {
+  sessionId: string;
+  date: string;
+  totalWords: number;
+  knownWords: number;
+  unknownWords: number;
+  accuracy: number; // 0-100
+  durationSeconds: number;
+  lookupCount: number;
+  weakKanjiEncountered: string[];
+  weakVocabEncountered: string[];
+}
+
+export interface KanjiMasteryRecord {
+  kanjiId: string;
+  seenCount: number;
+  correctCount: number;
+  wrongCount: number;
+  lookupCount: number;
+  masteryLevel: number; // 0–5, increments +0.5 correct / -1 wrong
+  lastSeen: string | null;
+  lastCorrect: string | null;
+  lastWrong: string | null;
+  status: "Belum Tersentuh" | "Sedang Belajar" | "Cukup Paham" | "Dikuasai";
+}
+
+// ============================================================================
+// VOCABULARY MASTERY TRACKING
+// ============================================================================
+
+export function loadVocabTracking(): Record<string, VocabularyMasteryRecord> {
+  try {
+    const stored = localStorage.getItem(VOCAB_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed as Record<string, VocabularyMasteryRecord>;
+  } catch (e) {
+    console.warn("[masteryEngine] loadVocabTracking failed:", e);
+    return {};
+  }
+}
+
+export function saveVocabTracking(
+  data: Record<string, VocabularyMasteryRecord>,
+): void {
+  try {
+    if (typeof data !== "object" || data === null) return;
+    localStorage.setItem(VOCAB_TRACKING_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("[masteryEngine] saveVocabTracking failed:", e);
+  }
+}
+
+function getOrCreateVocabRecord(vocabId: string): {
+  all: Record<string, VocabularyMasteryRecord>;
+  record: VocabularyMasteryRecord;
+} {
+  const all = loadVocabTracking();
+  const record: VocabularyMasteryRecord = all[vocabId] ?? {
+    vocabId,
+    seenCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    lookupCount: 0,
+    masteryLevel: 0,
+    lastSeen: null,
+    lastCorrect: null,
+    lastWrong: null,
+    status: "Belum Tersentuh",
+  };
+  return { all, record };
+}
+
+export function getVocabStatus(
+  tracking: VocabularyMasteryRecord,
+): VocabularyMasteryRecord["status"] {
+  if (tracking.seenCount === 0) return "Belum Tersentuh";
+  if (tracking.seenCount > 0 && tracking.masteryLevel < 2)
+    return "Sedang Belajar";
+  if (tracking.masteryLevel >= 2 && tracking.masteryLevel < 4)
+    return "Cukup Paham";
+  return "Dikuasai";
+}
+
+export function recordVocabSeen(vocabId: string): void {
+  try {
+    const { all, record } = getOrCreateVocabRecord(vocabId);
+    record.seenCount += 1;
+    record.lastSeen = new Date().toISOString();
+    record.status = getVocabStatus(record);
+    all[vocabId] = record;
+    saveVocabTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordVocabSeen failed:", e);
+  }
+}
+
+export function recordVocabCorrect(vocabId: string): void {
+  try {
+    const { all, record } = getOrCreateVocabRecord(vocabId);
+    record.correctCount += 1;
+    record.masteryLevel = Math.min(5, record.masteryLevel + 0.5);
+    const now = new Date().toISOString();
+    record.lastCorrect = now;
+    record.lastSeen = now;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getVocabStatus(record);
+    all[vocabId] = record;
+    saveVocabTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordVocabCorrect failed:", e);
+  }
+}
+
+export function recordVocabWrong(vocabId: string): void {
+  try {
+    const { all, record } = getOrCreateVocabRecord(vocabId);
+    record.wrongCount += 1;
+    record.masteryLevel = Math.max(0, record.masteryLevel - 1);
+    const now = new Date().toISOString();
+    record.lastWrong = now;
+    record.lastSeen = now;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getVocabStatus(record);
+    all[vocabId] = record;
+    saveVocabTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordVocabWrong failed:", e);
+  }
+}
+
+export function recordVocabLookup(vocabId: string): void {
+  try {
+    const { all, record } = getOrCreateVocabRecord(vocabId);
+    record.lookupCount += 1;
+    record.lastSeen = new Date().toISOString();
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getVocabStatus(record);
+    all[vocabId] = record;
+    saveVocabTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordVocabLookup failed:", e);
+  }
+}
+
+export function getVocabScore(tracking: VocabularyMasteryRecord): number {
+  try {
+    return (
+      (tracking.correctCount * 10 + tracking.masteryLevel * 5) /
+      (tracking.correctCount + tracking.wrongCount + 1)
+    );
+  } catch (_e) {
+    return 0;
+  }
+}
+
+export function getWeakVocab(
+  allTracking: Record<string, VocabularyMasteryRecord>,
+): VocabularyMasteryRecord[] {
+  try {
+    return Object.values(allTracking)
+      .filter((r) => r.masteryLevel < 2 && r.wrongCount > 3)
+      .sort((a, b) => b.wrongCount - a.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakVocab failed:", e);
+    return [];
+  }
+}
+
+// ============================================================================
+// READING ANALYTICS
+// ============================================================================
+
+export function loadReadingAnalytics(): ReadingSessionRecord[] {
+  try {
+    const stored = localStorage.getItem(READING_ANALYTICS_KEY);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed as ReadingSessionRecord[];
+  } catch (e) {
+    console.warn("[masteryEngine] loadReadingAnalytics failed:", e);
+    return [];
+  }
+}
+
+export function saveReadingAnalytics(sessions: ReadingSessionRecord[]): void {
+  try {
+    if (!Array.isArray(sessions)) return;
+    localStorage.setItem(READING_ANALYTICS_KEY, JSON.stringify(sessions));
+  } catch (e) {
+    console.warn("[masteryEngine] saveReadingAnalytics failed:", e);
+  }
+}
+
+export function recordReadingSession(
+  session: Omit<ReadingSessionRecord, "sessionId" | "date">,
+): void {
+  try {
+    const all = loadReadingAnalytics();
+    const newSession: ReadingSessionRecord = {
+      ...session,
+      sessionId: `reading_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      date: new Date().toISOString(),
+    };
+    all.push(newSession);
+    // Keep last 100 sessions
+    if (all.length > 100) all.shift();
+    saveReadingAnalytics(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordReadingSession failed:", e);
+  }
+}
+
+export function computeReadingScore(): number {
+  try {
+    const sessions = loadReadingAnalytics();
+    if (sessions.length === 0) return 0;
+    // Weighted: 40% accuracy, 30% speed (faster = better), 30% coverage
+    const recent = sessions.slice(-10);
+    const avgAccuracy =
+      recent.reduce((s, r) => s + r.accuracy, 0) / recent.length;
+    const avgDuration =
+      recent.reduce((s, r) => s + r.durationSeconds, 0) / recent.length;
+    const avgCoverage =
+      recent.reduce((s, r) => s + r.knownWords / Math.max(r.totalWords, 1), 0) /
+      recent.length;
+    // Speed score: ideal 60s per session, faster = higher score up to 100
+    const speedScore = Math.min(100, Math.max(0, 120 - avgDuration));
+    return Math.round(
+      avgAccuracy * 0.4 + speedScore * 0.3 + avgCoverage * 100 * 0.3,
+    );
+  } catch (e) {
+    console.warn("[masteryEngine] computeReadingScore failed:", e);
+    return 0;
+  }
+}
+
+// ============================================================================
+// OVERALL N4 READINESS SCORE
+// ============================================================================
+
+export function computeOverallN4Readiness(): number {
+  try {
+    const kanjiTracking = loadKanjiTracking();
+    const vocabTracking = loadVocabTracking();
+    const radicalTracking = loadRadicalTracking();
+
+    const kanjiRecords = Object.values(kanjiTracking);
+    const vocabRecords = Object.values(vocabTracking);
+    const radicalRecords = Object.values(radicalTracking);
+
+    const kanjiScore =
+      kanjiRecords.length > 0
+        ? kanjiRecords.reduce((s, r) => s + getKanjiScore(r), 0) /
+          kanjiRecords.length
+        : 0;
+
+    const vocabScore =
+      vocabRecords.length > 0
+        ? vocabRecords.reduce((s, r) => s + getVocabScore(r), 0) /
+          vocabRecords.length
+        : 0;
+
+    const radicalScore =
+      radicalRecords.length > 0
+        ? radicalRecords.reduce((s, r) => s + getRadicalScore(r), 0) /
+          radicalRecords.length
+        : 0;
+
+    const readingScore = computeReadingScore() / 10; // normalize 0-100 to 0-10
+
+    // Weighted formula: 50% Kanji + 30% Vocabulary + 20% Radical
+    // Reading score is a bonus modifier (up to +10%)
+    const baseScore = kanjiScore * 0.5 + vocabScore * 0.3 + radicalScore * 0.2;
+    const bonus = Math.min(10, readingScore * 0.1);
+
+    return Math.min(100, Math.round((baseScore + bonus) * 10));
+  } catch (e) {
+    console.warn("[masteryEngine] computeOverallN4Readiness failed:", e);
+    return 0;
+  }
+}
+
+const KANJI_TRACKING_KEY = "kanjiTracking";
+
+export function loadKanjiTracking(): Record<string, KanjiMasteryRecord> {
+  try {
+    const stored = localStorage.getItem(KANJI_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed as Record<string, KanjiMasteryRecord>;
+  } catch (e) {
+    console.warn("[masteryEngine] loadKanjiTracking failed:", e);
+    return {};
+  }
+}
+
+export function saveKanjiTracking(
+  data: Record<string, KanjiMasteryRecord>,
+): void {
+  try {
+    if (typeof data !== "object" || data === null) return;
+    localStorage.setItem(KANJI_TRACKING_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("[masteryEngine] saveKanjiTracking failed:", e);
+  }
+}
+
+function getOrCreateKanjiRecord(kanjiId: string): {
+  all: Record<string, KanjiMasteryRecord>;
+  record: KanjiMasteryRecord;
+} {
+  const all = loadKanjiTracking();
+  const record: KanjiMasteryRecord = all[kanjiId] ?? {
+    kanjiId,
+    seenCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    lookupCount: 0,
+    masteryLevel: 0,
+    lastSeen: null,
+    lastCorrect: null,
+    lastWrong: null,
+    status: "Belum Tersentuh",
+  };
+  return { all, record };
+}
+
+export function getKanjiStatus(
+  tracking: KanjiMasteryRecord,
+): KanjiMasteryRecord["status"] {
+  if (tracking.seenCount === 0) return "Belum Tersentuh";
+  if (tracking.seenCount > 0 && tracking.masteryLevel < 2)
+    return "Sedang Belajar";
+  if (tracking.masteryLevel >= 2 && tracking.masteryLevel < 4)
+    return "Cukup Paham";
+  return "Dikuasai";
+}
+
+export function recordKanjiSeen(kanjiId: string): void {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.seenCount += 1;
+    record.lastSeen = new Date().toISOString();
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiSeen failed:", e);
+  }
+}
+
+export function recordKanjiCorrect(kanjiId: string): void {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.correctCount += 1;
+    record.masteryLevel = Math.min(5, record.masteryLevel + 0.5);
+    const now = new Date().toISOString();
+    record.lastCorrect = now;
+    record.lastSeen = now;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiCorrect failed:", e);
+  }
+}
+
+export function recordKanjiWrong(kanjiId: string): void {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.wrongCount += 1;
+    record.masteryLevel = Math.max(0, record.masteryLevel - 1);
+    const now = new Date().toISOString();
+    record.lastWrong = now;
+    record.lastSeen = now;
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiWrong failed:", e);
+  }
+}
+
+export function recordKanjiLookup(kanjiId: string): void {
+  try {
+    const { all, record } = getOrCreateKanjiRecord(kanjiId);
+    record.lookupCount += 1;
+    record.lastSeen = new Date().toISOString();
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getKanjiStatus(record);
+    all[kanjiId] = record;
+    saveKanjiTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordKanjiLookup failed:", e);
+  }
+}
+
+export function getKanjiScore(tracking: KanjiMasteryRecord): number {
+  try {
+    return (
+      (tracking.correctCount * 10 + tracking.masteryLevel * 5) /
+      (tracking.correctCount + tracking.wrongCount + 1)
+    );
+  } catch (_e) {
+    return 0;
+  }
+}
+
+export function getWeakKanji(
+  allTracking: Record<string, KanjiMasteryRecord>,
+): KanjiMasteryRecord[] {
+  try {
+    return Object.values(allTracking)
+      .filter((r) => r.masteryLevel < 2 && r.wrongCount > 3)
+      .sort((a, b) => b.wrongCount - a.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakKanji failed:", e);
+    return [];
+  }
+}
+
+// ============================================================================
+// RADICAL MASTERY TRACKING
+// ============================================================================
+
+export interface RadicalMasteryRecord {
+  radicalId: string;
+  seenCount: number;
+  correctCount: number;
+  wrongCount: number;
+  masteryLevel: number; // 0–5
+  status: "Belum Tersentuh" | "Sedang Belajar" | "Cukup Paham" | "Dikuasai";
+}
+
+const RADICAL_TRACKING_KEY = "radicalTracking";
+
+export function loadRadicalTracking(): Record<string, RadicalMasteryRecord> {
+  try {
+    const stored = localStorage.getItem(RADICAL_TRACKING_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (typeof parsed !== "object" || parsed === null) return {};
+    return parsed as Record<string, RadicalMasteryRecord>;
+  } catch (e) {
+    console.warn("[masteryEngine] loadRadicalTracking failed:", e);
+    return {};
+  }
+}
+
+export function saveRadicalTracking(
+  data: Record<string, RadicalMasteryRecord>,
+): void {
+  try {
+    if (typeof data !== "object" || data === null) return;
+    localStorage.setItem(RADICAL_TRACKING_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("[masteryEngine] saveRadicalTracking failed:", e);
+  }
+}
+
+function getOrCreateRadicalRecord(radicalId: string): {
+  all: Record<string, RadicalMasteryRecord>;
+  record: RadicalMasteryRecord;
+} {
+  const all = loadRadicalTracking();
+  const record: RadicalMasteryRecord = all[radicalId] ?? {
+    radicalId,
+    seenCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    masteryLevel: 0,
+    status: "Belum Tersentuh",
+  };
+  return { all, record };
+}
+
+export function getRadicalStatus(
+  tracking: RadicalMasteryRecord,
+): RadicalMasteryRecord["status"] {
+  if (tracking.seenCount === 0) return "Belum Tersentuh";
+  if (tracking.seenCount > 0 && tracking.masteryLevel < 2)
+    return "Sedang Belajar";
+  if (tracking.masteryLevel >= 2 && tracking.masteryLevel < 4)
+    return "Cukup Paham";
+  return "Dikuasai";
+}
+
+export function recordRadicalSeen(radicalId: string): void {
+  try {
+    const { all, record } = getOrCreateRadicalRecord(radicalId);
+    record.seenCount += 1;
+    record.status = getRadicalStatus(record);
+    all[radicalId] = record;
+    saveRadicalTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordRadicalSeen failed:", e);
+  }
+}
+
+export function recordRadicalCorrect(radicalId: string): void {
+  try {
+    const { all, record } = getOrCreateRadicalRecord(radicalId);
+    record.correctCount += 1;
+    record.masteryLevel = Math.min(5, record.masteryLevel + 0.5);
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getRadicalStatus(record);
+    all[radicalId] = record;
+    saveRadicalTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordRadicalCorrect failed:", e);
+  }
+}
+
+export function recordRadicalWrong(radicalId: string): void {
+  try {
+    const { all, record } = getOrCreateRadicalRecord(radicalId);
+    record.wrongCount += 1;
+    record.masteryLevel = Math.max(0, record.masteryLevel - 1);
+    if (record.seenCount === 0) record.seenCount = 1;
+    record.status = getRadicalStatus(record);
+    all[radicalId] = record;
+    saveRadicalTracking(all);
+  } catch (e) {
+    console.warn("[masteryEngine] recordRadicalWrong failed:", e);
+  }
+}
+
+export function getRadicalScore(tracking: RadicalMasteryRecord): number {
+  try {
+    return (
+      (tracking.correctCount * 10 + tracking.masteryLevel * 5) /
+      (tracking.correctCount + tracking.wrongCount + 1)
+    );
+  } catch (_e) {
+    return 0;
+  }
+}
+
+export function getWeakRadicals(
+  allTracking: Record<string, RadicalMasteryRecord>,
+): RadicalMasteryRecord[] {
+  try {
+    return Object.values(allTracking)
+      .filter((r) => r.masteryLevel < 2 && r.wrongCount > 2)
+      .sort((a, b) => b.wrongCount - a.wrongCount);
+  } catch (e) {
+    console.warn("[masteryEngine] getWeakRadicals failed:", e);
+    return [];
   }
 }

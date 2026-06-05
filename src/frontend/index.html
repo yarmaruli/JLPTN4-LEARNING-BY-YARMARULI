@@ -3,16 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Belajar Kanji JLPT N4 &amp; N5</title>
-    <meta name="description" content="Built with caffeine.ai" />
-    <meta property="og:title" content="Belajar Kanji JLPT N4 &amp; N5" />
-    <meta property="og:description" content="Built with caffeine.ai" />
+    <title>Kan-Ji-Kan — Belajar Kanji JLPT N4</title>
+    <meta name="description" content="Kan-Ji-Kan — Platform pembelajaran kanji dan kosakata JLPT N4 &amp; N5. Quiz adaptif 80% N4, Smart Reading, Kanji Mastery Tracking. Offline penuh." />
+    <meta property="og:title" content="Kan-Ji-Kan — Belajar Kanji JLPT N4" />
+    <meta property="og:description" content="Platform pembelajaran kanji dan kosakata JLPT N4 &amp; N5 dengan quiz adaptif, reading, dan mastery tracking offline." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  </head>
+    <meta name="theme-color" content="#1E3A5F" />
+<link rel="manifest" href="/manifest.json" />
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            console.log('[SW] Registered:', reg.scope);
+          }).catch(function(err) {
+            console.warn('[SW] Registration failed:', err);
+          });
+        });
+      }
+    </script>
   </body>
 </html>

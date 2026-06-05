@@ -21,12 +21,14 @@ import { kanjiData, vocabularyData } from "../data/kanjiData";
 import {
   type AdaptiveQuestion,
   type DifficultyLevel,
+  type JlptLevelMode,
   type QuizMode,
   generateQuizSession,
   getMasteryItem,
   getWeakItems,
   loadMasteryData,
   maybeRequeueQuestion,
+  recordQuizAnswer,
   updateMasteryItem,
 } from "../lib/masteryEngine";
 import { type QuizSession, saveQuizSession } from "../lib/quizHistory";
@@ -122,6 +124,14 @@ export function QuizSection() {
   const [selectedMode, setSelectedMode] = useState<QuizMode | null>(null);
   const [selectedJlptLevel, setSelectedJlptLevel] = useState<JlptFilter>("N4");
 
+  // Derive jlptLevelMode from the JLPT filter selection
+  const jlptLevelMode: JlptLevelMode =
+    selectedJlptLevel === "N4"
+      ? "n4focus"
+      : selectedJlptLevel === "N5"
+        ? "n5only"
+        : "all";
+
   // quiz state
   const [questions, setQuestions] = useState<AdaptiveQuestion[]>([]);
   const [remaining, setRemaining] = useState<AdaptiveQuestion[]>([]);
@@ -187,6 +197,7 @@ export function QuizSection() {
         filteredKanji,
         filteredVocab,
         mastery,
+        jlptLevelMode,
       );
 
       if (generated.length === 0) {
@@ -205,7 +216,7 @@ export function QuizSection() {
       setAnswers([]);
       setPhase("quiz");
     },
-    [hasData, filteredKanji, filteredVocab],
+    [hasData, filteredKanji, filteredVocab, jlptLevelMode],
   );
 
   // ── answer handling ───────────────────────────────────────────────────────
@@ -221,6 +232,17 @@ export function QuizSection() {
 
       updateMasteryItem(currentQuestion.itemId, isCorrect);
       const masteryAfter = getMasteryItem(currentQuestion.itemId).masteryLevel;
+
+      // Record for N4 adaptive difficulty tracking
+      const itemJlptLevel =
+        currentQuestion.category === "kanji"
+          ? (filteredKanji.find(
+              (k) => `kanji_${k.character}` === currentQuestion.itemId,
+            )?.jlptLevel ?? "N4")
+          : (filteredVocab.find(
+              (v) => `vocab_${v.vocabulary}` === currentQuestion.itemId,
+            )?.jlptLevel ?? "N4");
+      recordQuizAnswer(itemJlptLevel, isCorrect);
 
       setSelectedAnswerIdx(optionIdx);
       setIsAnswered(true);
@@ -249,7 +271,7 @@ export function QuizSection() {
         );
       }
     },
-    [isAnswered, currentQuestion, currentIndex],
+    [isAnswered, currentQuestion, currentIndex, filteredKanji, filteredVocab],
   );
 
   const handleNext = useCallback(() => {
@@ -295,6 +317,46 @@ export function QuizSection() {
     setDataError(false);
     reviewedItems.current = new Set();
   }, []);
+
+  // ── explanation data ─────────────────────────────────────────────────────
+
+  const getExplanationData = useCallback(
+    (question: AdaptiveQuestion) => {
+      if (question.category === "kanji") {
+        const entry = filteredKanji.find(
+          (k) => `kanji_${k.character}` === question.itemId,
+        );
+        return entry
+          ? {
+              correctAnswer: question.options[question.correctIndex] ?? "",
+              hiragana: null as string | null,
+              romaji: entry.romaji || null,
+              meaning: entry.meaning || null,
+              explanation: entry.explanation || null,
+              exampleSentence: null as string | null,
+              grammarNote: null as string | null,
+              radical: entry.radical || null,
+            }
+          : null;
+      }
+      const entry = filteredVocab.find(
+        (v) => `vocab_${v.vocabulary}` === question.itemId,
+      );
+      return entry
+        ? {
+            correctAnswer: question.options[question.correctIndex] ?? "",
+            hiragana: null as string | null,
+            romaji: entry.romaji || null,
+            meaning: entry.meaning || null,
+            explanation: entry.explanation || null,
+            exampleSentence: null as string | null,
+            grammarNote: null as string | null,
+            radical: entry.radical || null,
+          }
+        : null;
+    },
+    [filteredKanji, filteredVocab],
+  );
 
   // ── render helpers ───────────────────────────────────────────────────────
 
@@ -786,6 +848,118 @@ export function QuizSection() {
             </Alert>
           )}
 
+          {/* explanation panel — shown after answering */}
+          {isAnswered &&
+            currentQuestion &&
+            (() => {
+              const expl = getExplanationData(currentQuestion);
+              if (!expl) return null;
+              const isCorrectAnswer =
+                selectedAnswerIdx === currentQuestion.correctIndex;
+              return (
+                <div
+                  className={`rounded-xl border-l-4 bg-card shadow-md p-5 space-y-3 ${
+                    isCorrectAnswer ? "border-l-green-500" : "border-l-red-500"
+                  }`}
+                  data-ocid="quiz.explanation_panel"
+                >
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                    📖 Penjelasan
+                  </p>
+
+                  {/* 1. Jawaban Benar */}
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                    <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                      Jawaban Benar
+                    </span>
+                    <span className="text-xl font-bold text-primary">
+                      {expl.correctAnswer}
+                    </span>
+                  </div>
+
+                  {/* 2. Hiragana */}
+                  {expl.hiragana && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                      <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                        Hiragana
+                      </span>
+                      <span className="text-base font-medium">
+                        {expl.hiragana}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* 3. Romaji */}
+                  {expl.romaji && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                      <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                        Romaji
+                      </span>
+                      <span className="text-base italic text-foreground/80">
+                        {expl.romaji}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* 4. Arti Indonesia */}
+                  {expl.meaning && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                      <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                        Arti Indonesia
+                      </span>
+                      <span className="text-base font-semibold text-foreground">
+                        {expl.meaning}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* 5. Penjelasan */}
+                  {expl.explanation && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                        Penjelasan
+                      </span>
+                      <span className="text-sm text-muted-foreground flex-1">
+                        {expl.explanation}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* 6. Contoh Kalimat */}
+                  {expl.exampleSentence && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                        Contoh Kalimat
+                      </span>
+                      <span className="text-sm italic text-foreground/80 flex-1">
+                        {expl.exampleSentence}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* 7. Grammar terkait */}
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                    <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                      Grammar terkait
+                    </span>
+                    <span className="text-sm text-foreground/70">
+                      {expl.grammarNote ?? "-"}
+                    </span>
+                  </div>
+
+                  {/* 8. Radikal terkait */}
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 items-baseline">
+                    <span className="text-xs font-semibold text-muted-foreground w-28 shrink-0">
+                      Radikal terkait
+                    </span>
+                    <span className="text-sm font-medium">
+                      {expl.radical ?? "-"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })()}
+
           {/* next button */}
           {isAnswered && (
             <Button
@@ -795,7 +969,7 @@ export function QuizSection() {
               size="lg"
               data-ocid="quiz.next_button"
             >
-              {remaining.length === 0 ? "Lihat Hasil" : "Pertanyaan Berikutnya"}
+              {remaining.length === 0 ? "Lihat Hasil" : "Lanjut ›"}
               <ChevronRight className="w-4 h-4 ml-2" />
             </Button>
           )}

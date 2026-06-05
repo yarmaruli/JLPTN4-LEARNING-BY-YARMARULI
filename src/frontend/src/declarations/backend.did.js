@@ -8,10 +8,344 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const WeakItem = IDL.Record({
+  'itemId' : IDL.Text,
+  'wrongCount' : IDL.Nat,
+  'masteryLevel' : IDL.Nat,
+  'itemType' : IDL.Text,
+  'correctCount' : IDL.Nat,
+  'accuracy' : IDL.Nat,
+});
+export const KanjiDashboardStats = IDL.Record({
+  'total' : IDL.Nat,
+  'intermediate' : IDL.Nat,
+  'strongItems' : IDL.Vec(WeakItem),
+  'mastered' : IDL.Nat,
+  'learning' : IDL.Nat,
+  'weakItems' : IDL.Vec(WeakItem),
+  'highFrequency' : IDL.Nat,
+  'untouched' : IDL.Nat,
+});
+export const MasteryStatus = IDL.Variant({
+  'Learning' : IDL.Null,
+  'Untouched' : IDL.Null,
+  'Intermediate' : IDL.Null,
+  'Mastered' : IDL.Null,
+});
+export const KanjiMasteryPublic = IDL.Record({
+  'status' : MasteryStatus,
+  'wrongCount' : IDL.Nat,
+  'lastCorrect' : IDL.Int,
+  'lastWrong' : IDL.Int,
+  'masteryLevel' : IDL.Nat,
+  'seenCount' : IDL.Nat,
+  'correctCount' : IDL.Nat,
+  'lookupCount' : IDL.Nat,
+  'kanjiId' : IDL.Text,
+  'lastSeen' : IDL.Int,
+});
+export const RadicalDashboardStats = IDL.Record({
+  'total' : IDL.Nat,
+  'intermediate' : IDL.Nat,
+  'mastered' : IDL.Nat,
+  'learning' : IDL.Nat,
+  'weakItems' : IDL.Vec(WeakItem),
+  'untouched' : IDL.Nat,
+});
+export const RadicalMasteryPublic = IDL.Record({
+  'status' : MasteryStatus,
+  'wrongCount' : IDL.Nat,
+  'radicalId' : IDL.Text,
+  'masteryLevel' : IDL.Nat,
+  'seenCount' : IDL.Nat,
+  'correctCount' : IDL.Nat,
+  'lastSeen' : IDL.Int,
+});
+export const ScoreSummary = IDL.Record({
+  'overallN4ReadinessScore' : IDL.Nat,
+  'kanjiScore' : IDL.Nat,
+  'vocabularyScore' : IDL.Nat,
+  'radicalScore' : IDL.Nat,
+  'readingScore' : IDL.Nat,
+});
+export const VocabDashboardStats = IDL.Record({
+  'total' : IDL.Nat,
+  'intermediate' : IDL.Nat,
+  'strongItems' : IDL.Vec(WeakItem),
+  'mastered' : IDL.Nat,
+  'learning' : IDL.Nat,
+  'weakItems' : IDL.Vec(WeakItem),
+  'highFrequency' : IDL.Nat,
+  'untouched' : IDL.Nat,
+});
+export const VocabMasteryPublic = IDL.Record({
+  'status' : MasteryStatus,
+  'wrongCount' : IDL.Nat,
+  'lastCorrect' : IDL.Int,
+  'lastWrong' : IDL.Int,
+  'masteryLevel' : IDL.Nat,
+  'seenCount' : IDL.Nat,
+  'correctCount' : IDL.Nat,
+  'lookupCount' : IDL.Nat,
+  'vocabId' : IDL.Text,
+  'lastSeen' : IDL.Int,
+});
+export const ReadingSessionPublic = IDL.Record({
+  'kanjiFailures' : IDL.Vec(IDL.Text),
+  'wordsLookedUp' : IDL.Vec(IDL.Text),
+  'score' : IDL.Nat,
+  'durationSeconds' : IDL.Nat,
+  'timestamp' : IDL.Int,
+  'sessionId' : IDL.Text,
+  'unknownWords' : IDL.Vec(IDL.Text),
+});
+export const AdaptiveQuizRatio = IDL.Record({
+  'kanjiPercent' : IDL.Nat,
+  'vocabularyPercent' : IDL.Nat,
+  'radicalPercent' : IDL.Nat,
+});
+export const AdaptiveQuizSessionPublic = IDL.Record({
+  'completedAt' : IDL.Opt(IDL.Int),
+  'totalQuestions' : IDL.Nat,
+  'correctAnswers' : IDL.Nat,
+  'sessionId' : IDL.Text,
+  'ratio' : AdaptiveQuizRatio,
+});
+
+export const idlService = IDL.Service({
+  'completeAdaptiveSession' : IDL.Func([IDL.Text, IDL.Nat, IDL.Nat], [], []),
+  'getKanjiDashboard' : IDL.Func([], [KanjiDashboardStats], ['query']),
+  'getKanjiMastery' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(KanjiMasteryPublic)],
+      ['query'],
+    ),
+  'getRadicalDashboard' : IDL.Func([], [RadicalDashboardStats], ['query']),
+  'getRadicalMastery' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(RadicalMasteryPublic)],
+      ['query'],
+    ),
+  'getScoreSummary' : IDL.Func([], [ScoreSummary], ['query']),
+  'getVocabDashboard' : IDL.Func([], [VocabDashboardStats], ['query']),
+  'getVocabMastery' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(VocabMasteryPublic)],
+      ['query'],
+    ),
+  'getWeakKanji' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+  'getWeakRadicals' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+  'getWeakVocab' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+  'listKanjiMastery' : IDL.Func(
+      [IDL.Nat, IDL.Nat],
+      [IDL.Vec(KanjiMasteryPublic)],
+      ['query'],
+    ),
+  'listReadingSessions' : IDL.Func(
+      [IDL.Nat],
+      [IDL.Vec(ReadingSessionPublic)],
+      ['query'],
+    ),
+  'saveReadingSession' : IDL.Func(
+      [
+        IDL.Text,
+        IDL.Nat,
+        IDL.Nat,
+        IDL.Vec(IDL.Text),
+        IDL.Vec(IDL.Text),
+        IDL.Vec(IDL.Text),
+      ],
+      [],
+      [],
+    ),
+  'startAdaptiveSession' : IDL.Func(
+      [IDL.Text, IDL.Nat, IDL.Nat, IDL.Nat],
+      [AdaptiveQuizSessionPublic],
+      [],
+    ),
+  'trackKanjiCorrect' : IDL.Func([IDL.Text], [], []),
+  'trackKanjiLookup' : IDL.Func([IDL.Text], [], []),
+  'trackKanjiSeen' : IDL.Func([IDL.Text], [], []),
+  'trackKanjiWrong' : IDL.Func([IDL.Text], [], []),
+  'trackRadicalCorrect' : IDL.Func([IDL.Text], [], []),
+  'trackRadicalSeen' : IDL.Func([IDL.Text], [], []),
+  'trackRadicalWrong' : IDL.Func([IDL.Text], [], []),
+  'trackVocabCorrect' : IDL.Func([IDL.Text], [], []),
+  'trackVocabLookup' : IDL.Func([IDL.Text], [], []),
+  'trackVocabSeen' : IDL.Func([IDL.Text], [], []),
+  'trackVocabWrong' : IDL.Func([IDL.Text], [], []),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const WeakItem = IDL.Record({
+    'itemId' : IDL.Text,
+    'wrongCount' : IDL.Nat,
+    'masteryLevel' : IDL.Nat,
+    'itemType' : IDL.Text,
+    'correctCount' : IDL.Nat,
+    'accuracy' : IDL.Nat,
+  });
+  const KanjiDashboardStats = IDL.Record({
+    'total' : IDL.Nat,
+    'intermediate' : IDL.Nat,
+    'strongItems' : IDL.Vec(WeakItem),
+    'mastered' : IDL.Nat,
+    'learning' : IDL.Nat,
+    'weakItems' : IDL.Vec(WeakItem),
+    'highFrequency' : IDL.Nat,
+    'untouched' : IDL.Nat,
+  });
+  const MasteryStatus = IDL.Variant({
+    'Learning' : IDL.Null,
+    'Untouched' : IDL.Null,
+    'Intermediate' : IDL.Null,
+    'Mastered' : IDL.Null,
+  });
+  const KanjiMasteryPublic = IDL.Record({
+    'status' : MasteryStatus,
+    'wrongCount' : IDL.Nat,
+    'lastCorrect' : IDL.Int,
+    'lastWrong' : IDL.Int,
+    'masteryLevel' : IDL.Nat,
+    'seenCount' : IDL.Nat,
+    'correctCount' : IDL.Nat,
+    'lookupCount' : IDL.Nat,
+    'kanjiId' : IDL.Text,
+    'lastSeen' : IDL.Int,
+  });
+  const RadicalDashboardStats = IDL.Record({
+    'total' : IDL.Nat,
+    'intermediate' : IDL.Nat,
+    'mastered' : IDL.Nat,
+    'learning' : IDL.Nat,
+    'weakItems' : IDL.Vec(WeakItem),
+    'untouched' : IDL.Nat,
+  });
+  const RadicalMasteryPublic = IDL.Record({
+    'status' : MasteryStatus,
+    'wrongCount' : IDL.Nat,
+    'radicalId' : IDL.Text,
+    'masteryLevel' : IDL.Nat,
+    'seenCount' : IDL.Nat,
+    'correctCount' : IDL.Nat,
+    'lastSeen' : IDL.Int,
+  });
+  const ScoreSummary = IDL.Record({
+    'overallN4ReadinessScore' : IDL.Nat,
+    'kanjiScore' : IDL.Nat,
+    'vocabularyScore' : IDL.Nat,
+    'radicalScore' : IDL.Nat,
+    'readingScore' : IDL.Nat,
+  });
+  const VocabDashboardStats = IDL.Record({
+    'total' : IDL.Nat,
+    'intermediate' : IDL.Nat,
+    'strongItems' : IDL.Vec(WeakItem),
+    'mastered' : IDL.Nat,
+    'learning' : IDL.Nat,
+    'weakItems' : IDL.Vec(WeakItem),
+    'highFrequency' : IDL.Nat,
+    'untouched' : IDL.Nat,
+  });
+  const VocabMasteryPublic = IDL.Record({
+    'status' : MasteryStatus,
+    'wrongCount' : IDL.Nat,
+    'lastCorrect' : IDL.Int,
+    'lastWrong' : IDL.Int,
+    'masteryLevel' : IDL.Nat,
+    'seenCount' : IDL.Nat,
+    'correctCount' : IDL.Nat,
+    'lookupCount' : IDL.Nat,
+    'vocabId' : IDL.Text,
+    'lastSeen' : IDL.Int,
+  });
+  const ReadingSessionPublic = IDL.Record({
+    'kanjiFailures' : IDL.Vec(IDL.Text),
+    'wordsLookedUp' : IDL.Vec(IDL.Text),
+    'score' : IDL.Nat,
+    'durationSeconds' : IDL.Nat,
+    'timestamp' : IDL.Int,
+    'sessionId' : IDL.Text,
+    'unknownWords' : IDL.Vec(IDL.Text),
+  });
+  const AdaptiveQuizRatio = IDL.Record({
+    'kanjiPercent' : IDL.Nat,
+    'vocabularyPercent' : IDL.Nat,
+    'radicalPercent' : IDL.Nat,
+  });
+  const AdaptiveQuizSessionPublic = IDL.Record({
+    'completedAt' : IDL.Opt(IDL.Int),
+    'totalQuestions' : IDL.Nat,
+    'correctAnswers' : IDL.Nat,
+    'sessionId' : IDL.Text,
+    'ratio' : AdaptiveQuizRatio,
+  });
+  
+  return IDL.Service({
+    'completeAdaptiveSession' : IDL.Func([IDL.Text, IDL.Nat, IDL.Nat], [], []),
+    'getKanjiDashboard' : IDL.Func([], [KanjiDashboardStats], ['query']),
+    'getKanjiMastery' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(KanjiMasteryPublic)],
+        ['query'],
+      ),
+    'getRadicalDashboard' : IDL.Func([], [RadicalDashboardStats], ['query']),
+    'getRadicalMastery' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(RadicalMasteryPublic)],
+        ['query'],
+      ),
+    'getScoreSummary' : IDL.Func([], [ScoreSummary], ['query']),
+    'getVocabDashboard' : IDL.Func([], [VocabDashboardStats], ['query']),
+    'getVocabMastery' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(VocabMasteryPublic)],
+        ['query'],
+      ),
+    'getWeakKanji' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+    'getWeakRadicals' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+    'getWeakVocab' : IDL.Func([IDL.Nat], [IDL.Vec(WeakItem)], ['query']),
+    'listKanjiMastery' : IDL.Func(
+        [IDL.Nat, IDL.Nat],
+        [IDL.Vec(KanjiMasteryPublic)],
+        ['query'],
+      ),
+    'listReadingSessions' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Vec(ReadingSessionPublic)],
+        ['query'],
+      ),
+    'saveReadingSession' : IDL.Func(
+        [
+          IDL.Text,
+          IDL.Nat,
+          IDL.Nat,
+          IDL.Vec(IDL.Text),
+          IDL.Vec(IDL.Text),
+          IDL.Vec(IDL.Text),
+        ],
+        [],
+        [],
+      ),
+    'startAdaptiveSession' : IDL.Func(
+        [IDL.Text, IDL.Nat, IDL.Nat, IDL.Nat],
+        [AdaptiveQuizSessionPublic],
+        [],
+      ),
+    'trackKanjiCorrect' : IDL.Func([IDL.Text], [], []),
+    'trackKanjiLookup' : IDL.Func([IDL.Text], [], []),
+    'trackKanjiSeen' : IDL.Func([IDL.Text], [], []),
+    'trackKanjiWrong' : IDL.Func([IDL.Text], [], []),
+    'trackRadicalCorrect' : IDL.Func([IDL.Text], [], []),
+    'trackRadicalSeen' : IDL.Func([IDL.Text], [], []),
+    'trackRadicalWrong' : IDL.Func([IDL.Text], [], []),
+    'trackVocabCorrect' : IDL.Func([IDL.Text], [], []),
+    'trackVocabLookup' : IDL.Func([IDL.Text], [], []),
+    'trackVocabSeen' : IDL.Func([IDL.Text], [], []),
+    'trackVocabWrong' : IDL.Func([IDL.Text], [], []),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

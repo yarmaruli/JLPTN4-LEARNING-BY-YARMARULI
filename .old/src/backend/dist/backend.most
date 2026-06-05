@@ -1,4 +1,77 @@
 // Version: 1.0.0
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type KanjiMasteryRecord__943601087 =
+  {
+    var correctCount : Nat;
+    kanjiId : Text;
+    var lastCorrect : Int;
+    var lastSeen : Int;
+    var lastWrong : Int;
+    var lookupCount : Nat;
+    var masteryLevel : Nat;
+    var seenCount : Nat;
+    var wrongCount : Nat
+  };
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type RadicalMasteryRecord__758306102 =
+  {
+    var correctCount : Nat;
+    var lastSeen : Int;
+    var masteryLevel : Nat;
+    radicalId : Text;
+    var seenCount : Nat;
+    var wrongCount : Nat
+  };
+type ReadingSessionRecord__308619712 =
+  {
+    var durationSeconds : Nat;
+    var kanjiFailures : [Text];
+    var score : Nat;
+    sessionId : Text;
+    var timestamp : Int;
+    var unknownWords : [Text];
+    userId : Principal;
+    var wordsLookedUp : [Text]
+  };
+type VocabMasteryRecord__386482358 =
+  {
+    var correctCount : Nat;
+    var lastCorrect : Int;
+    var lastSeen : Int;
+    var lastWrong : Int;
+    var lookupCount : Nat;
+    var masteryLevel : Nat;
+    var seenCount : Nat;
+    vocabId : Text;
+    var wrongCount : Nat
+  };
 actor {
-  
+  stable kanjiMastery :
+    {
+      var root : Node__1000929467<Text, KanjiMasteryRecord__943601087>;
+      var size : Nat__1040412405
+    };
+  stable radicalMastery :
+    {
+      var root : Node__1000929467<Text, RadicalMasteryRecord__758306102>;
+      var size : Nat__1040412405
+    };
+  stable readingSessions :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?ReadingSessionRecord__308619712]];
+      var elementIndex : Nat__1040412405
+    };
+  stable vocabMastery :
+    {
+      var root : Node__1000929467<Text, VocabMasteryRecord__386482358>;
+      var size : Nat__1040412405
+    }
 };

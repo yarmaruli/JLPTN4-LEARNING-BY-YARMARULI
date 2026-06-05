@@ -89,10 +89,665 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface backendInterface {
+export interface KanjiDashboardStats {
+    total: bigint;
+    intermediate: bigint;
+    strongItems: Array<WeakItem>;
+    mastered: bigint;
+    learning: bigint;
+    weakItems: Array<WeakItem>;
+    highFrequency: bigint;
+    untouched: bigint;
 }
+export interface AdaptiveQuizSessionPublic {
+    completedAt?: bigint;
+    totalQuestions: bigint;
+    correctAnswers: bigint;
+    sessionId: string;
+    ratio: AdaptiveQuizRatio;
+}
+export interface AdaptiveQuizRatio {
+    kanjiPercent: bigint;
+    vocabularyPercent: bigint;
+    radicalPercent: bigint;
+}
+export interface RadicalMasteryPublic {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    radicalId: string;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lastSeen: bigint;
+}
+export interface KanjiMasteryPublic {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    kanjiId: string;
+    lastSeen: bigint;
+}
+export interface WeakItem {
+    itemId: string;
+    wrongCount: bigint;
+    masteryLevel: bigint;
+    itemType: string;
+    correctCount: bigint;
+    accuracy: bigint;
+}
+export interface VocabDashboardStats {
+    total: bigint;
+    intermediate: bigint;
+    strongItems: Array<WeakItem>;
+    mastered: bigint;
+    learning: bigint;
+    weakItems: Array<WeakItem>;
+    highFrequency: bigint;
+    untouched: bigint;
+}
+export interface ScoreSummary {
+    overallN4ReadinessScore: bigint;
+    kanjiScore: bigint;
+    vocabularyScore: bigint;
+    radicalScore: bigint;
+    readingScore: bigint;
+}
+export interface ReadingSessionPublic {
+    kanjiFailures: Array<string>;
+    wordsLookedUp: Array<string>;
+    score: bigint;
+    durationSeconds: bigint;
+    timestamp: bigint;
+    sessionId: string;
+    unknownWords: Array<string>;
+}
+export interface RadicalDashboardStats {
+    total: bigint;
+    intermediate: bigint;
+    mastered: bigint;
+    learning: bigint;
+    weakItems: Array<WeakItem>;
+    untouched: bigint;
+}
+export interface VocabMasteryPublic {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    vocabId: string;
+    lastSeen: bigint;
+}
+export enum MasteryStatus {
+    Learning = "Learning",
+    Untouched = "Untouched",
+    Intermediate = "Intermediate",
+    Mastered = "Mastered"
+}
+export interface backendInterface {
+    completeAdaptiveSession(sessionId: string, totalQuestions: bigint, correctAnswers: bigint): Promise<void>;
+    getKanjiDashboard(): Promise<KanjiDashboardStats>;
+    getKanjiMastery(kanjiId: string): Promise<KanjiMasteryPublic | null>;
+    getRadicalDashboard(): Promise<RadicalDashboardStats>;
+    getRadicalMastery(radicalId: string): Promise<RadicalMasteryPublic | null>;
+    getScoreSummary(): Promise<ScoreSummary>;
+    getVocabDashboard(): Promise<VocabDashboardStats>;
+    getVocabMastery(vocabId: string): Promise<VocabMasteryPublic | null>;
+    getWeakKanji(topN: bigint): Promise<Array<WeakItem>>;
+    getWeakRadicals(topN: bigint): Promise<Array<WeakItem>>;
+    getWeakVocab(topN: bigint): Promise<Array<WeakItem>>;
+    listKanjiMastery(offset: bigint, limit: bigint): Promise<Array<KanjiMasteryPublic>>;
+    listReadingSessions(limit: bigint): Promise<Array<ReadingSessionPublic>>;
+    saveReadingSession(sessionId: string, score: bigint, durationSeconds: bigint, wordsLookedUp: Array<string>, unknownWords: Array<string>, kanjiFailures: Array<string>): Promise<void>;
+    startAdaptiveSession(sessionId: string, kanjiPercent: bigint, vocabPercent: bigint, radicalPercent: bigint): Promise<AdaptiveQuizSessionPublic>;
+    trackKanjiCorrect(kanjiId: string): Promise<void>;
+    trackKanjiLookup(kanjiId: string): Promise<void>;
+    trackKanjiSeen(kanjiId: string): Promise<void>;
+    trackKanjiWrong(kanjiId: string): Promise<void>;
+    trackRadicalCorrect(radicalId: string): Promise<void>;
+    trackRadicalSeen(radicalId: string): Promise<void>;
+    trackRadicalWrong(radicalId: string): Promise<void>;
+    trackVocabCorrect(vocabId: string): Promise<void>;
+    trackVocabLookup(vocabId: string): Promise<void>;
+    trackVocabSeen(vocabId: string): Promise<void>;
+    trackVocabWrong(vocabId: string): Promise<void>;
+}
+import type { AdaptiveQuizRatio as _AdaptiveQuizRatio, AdaptiveQuizSessionPublic as _AdaptiveQuizSessionPublic, KanjiMasteryPublic as _KanjiMasteryPublic, MasteryStatus as _MasteryStatus, RadicalMasteryPublic as _RadicalMasteryPublic, VocabMasteryPublic as _VocabMasteryPublic } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async completeAdaptiveSession(arg0: string, arg1: bigint, arg2: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.completeAdaptiveSession(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.completeAdaptiveSession(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async getKanjiDashboard(): Promise<KanjiDashboardStats> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getKanjiDashboard();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getKanjiDashboard();
+            return result;
+        }
+    }
+    async getKanjiMastery(arg0: string): Promise<KanjiMasteryPublic | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getKanjiMastery(arg0);
+                return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getKanjiMastery(arg0);
+            return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getRadicalDashboard(): Promise<RadicalDashboardStats> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getRadicalDashboard();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getRadicalDashboard();
+            return result;
+        }
+    }
+    async getRadicalMastery(arg0: string): Promise<RadicalMasteryPublic | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getRadicalMastery(arg0);
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getRadicalMastery(arg0);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getScoreSummary(): Promise<ScoreSummary> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getScoreSummary();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getScoreSummary();
+            return result;
+        }
+    }
+    async getVocabDashboard(): Promise<VocabDashboardStats> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getVocabDashboard();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getVocabDashboard();
+            return result;
+        }
+    }
+    async getVocabMastery(arg0: string): Promise<VocabMasteryPublic | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getVocabMastery(arg0);
+                return from_candid_opt_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getVocabMastery(arg0);
+            return from_candid_opt_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getWeakKanji(arg0: bigint): Promise<Array<WeakItem>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWeakKanji(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWeakKanji(arg0);
+            return result;
+        }
+    }
+    async getWeakRadicals(arg0: bigint): Promise<Array<WeakItem>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWeakRadicals(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWeakRadicals(arg0);
+            return result;
+        }
+    }
+    async getWeakVocab(arg0: bigint): Promise<Array<WeakItem>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWeakVocab(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWeakVocab(arg0);
+            return result;
+        }
+    }
+    async listKanjiMastery(arg0: bigint, arg1: bigint): Promise<Array<KanjiMasteryPublic>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.listKanjiMastery(arg0, arg1);
+                return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.listKanjiMastery(arg0, arg1);
+            return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async listReadingSessions(arg0: bigint): Promise<Array<ReadingSessionPublic>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.listReadingSessions(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.listReadingSessions(arg0);
+            return result;
+        }
+    }
+    async saveReadingSession(arg0: string, arg1: bigint, arg2: bigint, arg3: Array<string>, arg4: Array<string>, arg5: Array<string>): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.saveReadingSession(arg0, arg1, arg2, arg3, arg4, arg5);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.saveReadingSession(arg0, arg1, arg2, arg3, arg4, arg5);
+            return result;
+        }
+    }
+    async startAdaptiveSession(arg0: string, arg1: bigint, arg2: bigint, arg3: bigint): Promise<AdaptiveQuizSessionPublic> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.startAdaptiveSession(arg0, arg1, arg2, arg3);
+                return from_candid_AdaptiveQuizSessionPublic_n13(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.startAdaptiveSession(arg0, arg1, arg2, arg3);
+            return from_candid_AdaptiveQuizSessionPublic_n13(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async trackKanjiCorrect(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackKanjiCorrect(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackKanjiCorrect(arg0);
+            return result;
+        }
+    }
+    async trackKanjiLookup(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackKanjiLookup(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackKanjiLookup(arg0);
+            return result;
+        }
+    }
+    async trackKanjiSeen(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackKanjiSeen(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackKanjiSeen(arg0);
+            return result;
+        }
+    }
+    async trackKanjiWrong(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackKanjiWrong(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackKanjiWrong(arg0);
+            return result;
+        }
+    }
+    async trackRadicalCorrect(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackRadicalCorrect(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackRadicalCorrect(arg0);
+            return result;
+        }
+    }
+    async trackRadicalSeen(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackRadicalSeen(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackRadicalSeen(arg0);
+            return result;
+        }
+    }
+    async trackRadicalWrong(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackRadicalWrong(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackRadicalWrong(arg0);
+            return result;
+        }
+    }
+    async trackVocabCorrect(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackVocabCorrect(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackVocabCorrect(arg0);
+            return result;
+        }
+    }
+    async trackVocabLookup(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackVocabLookup(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackVocabLookup(arg0);
+            return result;
+        }
+    }
+    async trackVocabSeen(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackVocabSeen(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackVocabSeen(arg0);
+            return result;
+        }
+    }
+    async trackVocabWrong(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.trackVocabWrong(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.trackVocabWrong(arg0);
+            return result;
+        }
+    }
+}
+function from_candid_AdaptiveQuizSessionPublic_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _AdaptiveQuizSessionPublic): AdaptiveQuizSessionPublic {
+    return from_candid_record_n14(_uploadFile, _downloadFile, value);
+}
+function from_candid_KanjiMasteryPublic_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _KanjiMasteryPublic): KanjiMasteryPublic {
+    return from_candid_record_n3(_uploadFile, _downloadFile, value);
+}
+function from_candid_MasteryStatus_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _MasteryStatus): MasteryStatus {
+    return from_candid_variant_n5(_uploadFile, _downloadFile, value);
+}
+function from_candid_RadicalMasteryPublic_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _RadicalMasteryPublic): RadicalMasteryPublic {
+    return from_candid_record_n8(_uploadFile, _downloadFile, value);
+}
+function from_candid_VocabMasteryPublic_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _VocabMasteryPublic): VocabMasteryPublic {
+    return from_candid_record_n11(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_KanjiMasteryPublic]): KanjiMasteryPublic | null {
+    return value.length === 0 ? null : from_candid_KanjiMasteryPublic_n2(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_opt_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_RadicalMasteryPublic]): RadicalMasteryPublic | null {
+    return value.length === 0 ? null : from_candid_RadicalMasteryPublic_n7(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_opt_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_VocabMasteryPublic]): VocabMasteryPublic | null {
+    return value.length === 0 ? null : from_candid_VocabMasteryPublic_n10(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    status: _MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    vocabId: string;
+    lastSeen: bigint;
+}): {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    vocabId: string;
+    lastSeen: bigint;
+} {
+    return {
+        status: from_candid_MasteryStatus_n4(_uploadFile, _downloadFile, value.status),
+        wrongCount: value.wrongCount,
+        lastCorrect: value.lastCorrect,
+        lastWrong: value.lastWrong,
+        masteryLevel: value.masteryLevel,
+        seenCount: value.seenCount,
+        correctCount: value.correctCount,
+        lookupCount: value.lookupCount,
+        vocabId: value.vocabId,
+        lastSeen: value.lastSeen
+    };
+}
+function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    completedAt: [] | [bigint];
+    totalQuestions: bigint;
+    correctAnswers: bigint;
+    sessionId: string;
+    ratio: _AdaptiveQuizRatio;
+}): {
+    completedAt?: bigint;
+    totalQuestions: bigint;
+    correctAnswers: bigint;
+    sessionId: string;
+    ratio: AdaptiveQuizRatio;
+} {
+    return {
+        completedAt: record_opt_to_undefined(from_candid_opt_n15(_uploadFile, _downloadFile, value.completedAt)),
+        totalQuestions: value.totalQuestions,
+        correctAnswers: value.correctAnswers,
+        sessionId: value.sessionId,
+        ratio: value.ratio
+    };
+}
+function from_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    status: _MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    kanjiId: string;
+    lastSeen: bigint;
+}): {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    lastCorrect: bigint;
+    lastWrong: bigint;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lookupCount: bigint;
+    kanjiId: string;
+    lastSeen: bigint;
+} {
+    return {
+        status: from_candid_MasteryStatus_n4(_uploadFile, _downloadFile, value.status),
+        wrongCount: value.wrongCount,
+        lastCorrect: value.lastCorrect,
+        lastWrong: value.lastWrong,
+        masteryLevel: value.masteryLevel,
+        seenCount: value.seenCount,
+        correctCount: value.correctCount,
+        lookupCount: value.lookupCount,
+        kanjiId: value.kanjiId,
+        lastSeen: value.lastSeen
+    };
+}
+function from_candid_record_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    status: _MasteryStatus;
+    wrongCount: bigint;
+    radicalId: string;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lastSeen: bigint;
+}): {
+    status: MasteryStatus;
+    wrongCount: bigint;
+    radicalId: string;
+    masteryLevel: bigint;
+    seenCount: bigint;
+    correctCount: bigint;
+    lastSeen: bigint;
+} {
+    return {
+        status: from_candid_MasteryStatus_n4(_uploadFile, _downloadFile, value.status),
+        wrongCount: value.wrongCount,
+        radicalId: value.radicalId,
+        masteryLevel: value.masteryLevel,
+        seenCount: value.seenCount,
+        correctCount: value.correctCount,
+        lastSeen: value.lastSeen
+    };
+}
+function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    Learning: null;
+} | {
+    Untouched: null;
+} | {
+    Intermediate: null;
+} | {
+    Mastered: null;
+}): MasteryStatus {
+    return "Learning" in value ? MasteryStatus.Learning : "Untouched" in value ? MasteryStatus.Untouched : "Intermediate" in value ? MasteryStatus.Intermediate : "Mastered" in value ? MasteryStatus.Mastered : value;
+}
+function from_candid_vec_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_KanjiMasteryPublic>): Array<KanjiMasteryPublic> {
+    return value.map((x)=>from_candid_KanjiMasteryPublic_n2(_uploadFile, _downloadFile, x));
 }
 export interface CreateActorOptions {
     agent?: Agent;
